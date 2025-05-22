@@ -7,16 +7,30 @@ function updateConvertedAmount(convertedAmount) {
     resultElement.textContent = `Converted Amount: ${convertedAmount.toLocaleString('tr-TR', { style: 'currency', currency: 'TRY' })}`;
 }
 
-// Hardcoded wage data (country, hourly wage, currency)
-const countryWages = [
-    { country: "Turkey", wage: 51.4, currency: "TRY" },
-    { country: "Germany", wage: 12, currency: "EUR" },
-    { country: "USA", wage: 7.25, currency: "USD" },
-    { country: "France", wage: 11.52, currency: "EUR" },
-    { country: "UK", wage: 10.42, currency: "GBP" },
-    { country: "Russia", wage: 162.0, currency: "RUB" },
-    { country: "Japan", wage: 961, currency: "JPY" }
-];
+// Example Wage.txt content as a string (replace with your actual data)
+const wageTxt = `57,Guyana,$211.99\n51,Turkey,₺51.4\n12,Germany,€12\n7.25,USA,$7.25\n11.52,France,€11.52\n10.42,UK,£10.42\n162,Russia,₽162\n961,Japan,¥961`;
+
+function parseWageTxt(txt) {
+    return txt.split('\n').map(line => {
+        const [wage, country, currencyWage] = line.split(',');
+        // Extract currency symbol and value
+        const match = currencyWage.match(/([\D]+)([\d.]+)/);
+        let currency = '', wageValue = 0;
+        if (match) {
+            currency = match[1].replace(/\s/g, '');
+            wageValue = parseFloat(match[2]);
+        }
+        // Map symbols to ISO codes
+        const symbolToCode = { '$': 'USD', '€': 'EUR', '₺': 'TRY', '£': 'GBP', '₽': 'RUB', '¥': 'JPY' };
+        return {
+            country: country.trim(),
+            wage: parseFloat(wage),
+            currency: symbolToCode[currency] || currency
+        };
+    });
+}
+
+const countryWages = parseWageTxt(wageTxt);
 
 function updateCountryComparisons(amount, currency, exchangeRates) {
     const comparisonElement = document.getElementById('comparison');
