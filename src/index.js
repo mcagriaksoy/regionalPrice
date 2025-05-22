@@ -7,6 +7,31 @@ function updateConvertedAmount(convertedAmount) {
     resultElement.textContent = `Converted Amount: ${convertedAmount.toLocaleString('tr-TR', { style: 'currency', currency: 'TRY' })}`;
 }
 
+// Hardcoded wage data (country, hourly wage, currency)
+const countryWages = [
+    { country: "Turkey", wage: 51.4, currency: "TRY" },
+    { country: "Germany", wage: 12, currency: "EUR" },
+    { country: "USA", wage: 7.25, currency: "USD" },
+    { country: "France", wage: 11.52, currency: "EUR" },
+    { country: "UK", wage: 10.42, currency: "GBP" },
+    { country: "Russia", wage: 162.0, currency: "RUB" },
+    { country: "Japan", wage: 961, currency: "JPY" }
+];
+
+function updateCountryComparisons(amount, currency, exchangeRates) {
+    const comparisonElement = document.getElementById('comparison');
+    let html = '<ul>';
+    countryWages.forEach(({ country, wage, currency: wageCurrency }) => {
+        // Convert input amount to the country's currency
+        const toTRY = amount * (exchangeRates[currency] || 1); // input to TRY
+        const countryAmount = toTRY / (exchangeRates[wageCurrency] || 1); // TRY to country currency
+        const hours = (countryAmount / wage).toFixed(2);
+        html += `<li>${countryAmount.toLocaleString(undefined, { style: 'currency', currency: wageCurrency })} in ${country} (${hours} hours of minimum wage)</li>`;
+    });
+    html += '</ul>';
+    comparisonElement.innerHTML = html;
+}
+
 function handleFormSubmit(event) {
     event.preventDefault();
 
@@ -29,6 +54,7 @@ function handleFormSubmit(event) {
     const convertedAmount = convertCurrency(amount, exchangeRate);
 
     updateConvertedAmount(convertedAmount);
+    updateCountryComparisons(amount, currency, exchangeRates);
 }
 
 document.addEventListener('DOMContentLoaded', () => {

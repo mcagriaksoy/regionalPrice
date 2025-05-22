@@ -1,0 +1,20 @@
+Luxembourg - $13.78
+Australia - $12.14
+France - $11.66
+New Zealand - $11.20
+Germany - $10.87
+Netherlands - $10.44
+Belgium - $10.38
+United Kingdom - $10.34
+Ireland - $9.62
+Canada - $9.52
+Mexico - $1.05
+Turkey - $1.93
+Brazil - $2.18
+Chile - $2.25
+Russia - $2.27
+Colombia - $2.66
+Hungary - $2.90
+Poland - $3.35
+Estonia - $3.40
+Slovakia - $3.43
