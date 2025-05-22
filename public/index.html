@@ -2,20 +2,79 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Currency Converter</title>
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #f4f6fb;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #fff;
+            padding: 2rem 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            min-width: 340px;
+        }
+        h2 {
+            margin-bottom: 1.5rem;
+            color: #2d3748;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #4a5568;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 0.7rem;
+            margin-bottom: 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        button {
+            background: #3182ce;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: #2563eb;
+        }
+        #result {
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            color: #2b6cb0;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Currency Converter</h1>
+        <h2>Currency Converter</h2>
         <form id="currency-form">
-            <label for="amount">Amount in USD:</label>
-            <input type="number" id="amount" required>
-            <button type="submit">Convert</button>
+            <label for="amount">Amount</label>
+            <input type="number" id="amount" placeholder="Enter amount" required min="0" step="any" />
+            <label for="currency">From Currency</label>
+            <select id="currency">
+                <option value="USD">USD - US Dollar</option>
+                <option value="EUR">EUR - Euro</option>
+                <option value="GBP">GBP - British Pound</option>
+                <option value="RUB">RUB - Russian Ruble</option>
+                <option value="JPY">JPY - Japanese Yen</option>
+                <option value="TRY">TRY - Turkish Lira</option>
+            </select>
+            <button type="submit">Convert to TRY</button>
         </form>
         <div id="result"></div>
     </div>
-    <script src="../src/index.js"></script>
+    <script src="index.js"></script>
 </body>
 </html>
