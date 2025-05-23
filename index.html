@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>regional Price Calculator</title>
@@ -14,27 +15,33 @@
             height: 100vh;
             margin: 0;
         }
+
         .container {
             background: #fff;
             padding: 2.5rem 2.5rem 2rem 2.5rem;
             border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.10);
             min-width: 370px;
             max-width: 420px;
             width: 100%;
         }
+
         h2 {
             margin-bottom: 1.2rem;
             color: #2d3748;
             text-align: center;
         }
+
         label {
             display: block;
             margin-bottom: 0.5rem;
             color: #4a5568;
             font-weight: 500;
         }
-        input, select, button {
+
+        input,
+        select,
+        button {
             width: 100%;
             padding: 0.7rem;
             margin-bottom: 1rem;
@@ -42,11 +49,14 @@
             border-radius: 8px;
             font-size: 1rem;
         }
-        input:focus, select:focus {
+
+        input:focus,
+        select:focus {
             outline: none;
             border-color: #3182ce;
             box-shadow: 0 0 0 2px #90cdf4;
         }
+
         button {
             background: linear-gradient(90deg, #3182ce 0%, #2563eb 100%);
             color: #fff;
@@ -54,11 +64,13 @@
             cursor: pointer;
             font-weight: bold;
             transition: background 0.2s, box-shadow 0.2s;
-            box-shadow: 0 2px 8px rgba(49,130,206,0.08);
+            box-shadow: 0 2px 8px rgba(49, 130, 206, 0.08);
         }
+
         button:hover {
             background: linear-gradient(90deg, #2563eb 0%, #3182ce 100%);
         }
+
         #result {
             margin-top: 1rem;
             font-size: 1.2rem;
@@ -66,27 +78,32 @@
             text-align: center;
             font-weight: 500;
         }
+
         #comparison {
             margin-top: 2rem;
             background: #f7fafc;
             border-radius: 12px;
             padding: 1.2rem 1rem 1rem 1rem;
-            box-shadow: 0 2px 8px rgba(49,130,206,0.04);
+            box-shadow: 0 2px 8px rgba(49, 130, 206, 0.04);
         }
+
         #comparison ul {
             list-style: none;
             padding: 0;
             margin: 0;
         }
+
         #comparison li {
             padding: 0.5rem 0;
             border-bottom: 1px solid #e2e8f0;
             font-size: 1rem;
             color: #374151;
         }
+
         #comparison li:last-child {
             border-bottom: none;
         }
+
         .spinner {
             display: none;
             margin: 0 auto 1rem auto;
@@ -97,12 +114,23 @@
             height: 32px;
             animation: spin 1s linear infinite;
         }
+
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
     </style>
+    <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+        data-id="mcagriaksoy" data-description="Support me on Buy me a coffee!"
+        data-message="Thank you for using this App! Waiting your supports ❤️" data-color="#FF5F5F"
+        data-position="Right" data-x_margin="18" data-y_margin="18"></script>
 </head>
+
 <body>
     <div class="container">
         <h2>Regional Price Comparison</h2>
@@ -132,4 +160,5 @@
     </div>
     <script src="src/index.js"></script>
 </body>
+
 </html>
