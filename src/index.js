@@ -141,7 +141,8 @@ function calculateRelativePrices(userPrice, userCountry) {
 
 function renderTable(prices, currency, shownCount = 6) {
     const container = document.getElementById('result-table-container');
-    let html = `<table style="width:100%;border-collapse:collapse;text-align:center;">
+    let html = `<div id="table-scroll-container" style="max-height:400px;overflow-y:auto;border-radius:12px;box-shadow:0 2px 8px rgba(49,130,206,0.04);">
+    <table style="width:100%;border-collapse:collapse;text-align:center;">
         <thead>
             <tr style="background:#f4f6fb;">
                 <th style="padding:8px;border-bottom:1px solid #e2e8f0;">Flag</th>
@@ -157,16 +158,37 @@ function renderTable(prices, currency, shownCount = 6) {
             <td style="font-weight:bold;">${price.toFixed(2)} ${currency}</td>
         </tr>`;
     });
-    html += '</tbody></table>';
+    html += '</tbody></table></div>';
     if (prices.length > shownCount) {
         html += `<button id="show-more-btn" style="margin-top:1rem;padding:0.7rem 1.5rem;font-size:1rem;background:#3182ce;color:#fff;border:none;border-radius:8px;cursor:pointer;">↓ Show More ↓</button>`;
     }
+    // Modal for PayPal donation
+    html += `
+    <div id="paypal-modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.4);z-index:1000;justify-content:center;align-items:center;">
+      <div style="background:#fff;padding:2rem 2.5rem;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,0.15);max-width:350px;text-align:center;position:relative;">
+        <button id="close-paypal-modal" style="position:absolute;top:10px;right:10px;background:none;border:none;font-size:1.5rem;cursor:pointer;">&times;</button>
+        <h3 style="margin-bottom:1rem;">Support this project!</h3>
+        <p style="margin-bottom:1.5rem;">If you find this tool useful, consider donating via PayPal to support further development.</p>
+        <form action="https://www.paypal.com/donate" method="post" target="_top">
+<input type="hidden" name="hosted_button_id" value="QD5J7HPVUXW5G" />
+<input type="image" style="width:120px;" src="https://www.paypalobjects.com/en_US/DK/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+<img alt="" border="0" src="https://www.paypal.com/en_DE/i/scr/pixel.gif" width="1" height="1" />
+</form>
+ </div>
+    </div>`;
     container.innerHTML = html;
     // Add event listener for Show More
     const showMoreBtn = document.getElementById('show-more-btn');
     if (showMoreBtn) {
-        showMoreBtn.onclick = function () {
-            renderTable(prices, currency, shownCount + 6);
+        showMoreBtn.onclick = function() {
+            document.getElementById('paypal-modal').style.display = 'flex';
+        };
+    }
+    // Add event listener for closing modal
+    const closeModalBtn = document.getElementById('close-paypal-modal');
+    if (closeModalBtn) {
+        closeModalBtn.onclick = function() {
+            document.getElementById('paypal-modal').style.display = 'none';
         };
     }
 }

@@ -1,43 +1,35 @@
-# Currency Converter
+# Regional Price Calculator
 
-This project is a simple currency converter that allows users to convert an amount in USD to Turkish Lira (TRY). It features a user-friendly interface where users can input the amount they wish to convert and see the equivalent value in Turkish Lira.
+Easily compare and localize your product prices for over 100 countries based on real-world minimum wage data. Enter your home country, a price in EUR or USD, and instantly see what the equivalent price would be in other countries, adjusted for local purchasing power.
 
-## Project Structure
+Setting the right price for your app, game, or software across multiple countries can be challenging. Our regional price calculator simplifies this process by providing recommended pricing tailored to different regions. With real-time exchange rate considerations, market trends, and purchasing power data, developers can ensure their pricing aligns with local expectations and remains competitive worldwide.
 
-```
-currency-converter
-├── src
-│   └── index.js        # JavaScript code for handling currency conversion
-├── public
-│   └── index.html      # Main HTML document for the webpage
-├── README.md           # Documentation for the project
-└── package.json        # Configuration file for npm
-```
+This tool helps you maximize revenue, maintain fair pricing, and streamline localization efforts, making it an essential asset for anyone launching digital products globally. Whether you're an indie developer or part of a larger team, our app ensures smart pricing decisions with ease.
 
-## Getting Started
+## Features
+- Supports 100+ countries with up-to-date wage data
+- Instantly calculates and displays equivalent prices for all countries
+- Clean, modern UI with country flags
+- Scrollable results table for easy comparison
+- "Show More" button with donation prompt for project support
 
-To get started with the currency converter, follow these steps:
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/yourusername/currency-converter.git
-   cd currency-converter
-   ```
-
-2. **Install dependencies:**
-   Make sure you have Node.js installed. Then run:
-   ```bash
-   npm install
-   ```
-
-3. **Run the application:**
-   You can open the `public/index.html` file in your web browser to view the application.
+## How It Works
+1. Select your home country and enter a price in EUR or USD.
+2. The calculator uses minimum wage data to compute what the same product would cost in every other country.
+3. Results are shown in a scrollable table with country flags and calculated prices.
+4. Click "Show More" to see a donation prompt and support the project!
 
 ## Usage
+- Open `index.html` in your browser or deploy via GitHub Pages. `https://mcagriaksoy.github.io/regionalPrice/`
+- All calculations are performed client-side; no data is sent to a server.
 
-- Enter the amount in USD that you want to convert.
-- Click the "Convert" button to see the equivalent amount in Turkish Lira.
+## Data Source
+- Wage data is hardcoded from public sources (see `Wage.txt`).
 
-## License
+## Support
+If you find this tool useful, consider supporting via [PayPal](https://www.paypal.com/donate/?hosted_button_id=QD5J7HPVUXW5G) or [BuyMeACoffee](https://www.buymeacoffee.com/mcagriaksoy).
 
-This project is licensed under the MIT License. See the LICENSE file for more details.
+---
+
+*Created by mcagriaksoy. Contributions and feedback welcome!*
+
