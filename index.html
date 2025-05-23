@@ -3,7 +3,28 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>regional Price Calculator</title>
+    
+    <!-- Basic Meta Tags -->
+    <title>Regional Price Advisor</title>
+    <meta name="description" content="Kendi uygulamanızın fiyatını girin, bölgesel fiyat analizimize göre en uygun fiyat önerilerini alın. RegionalPrice ile fiyatlandırma kararınızı kolaylaştırın.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mcagriaksoy.github.io/regionalPrice/">
+    <meta property="og:title" content="Regional Price Advisor – Bölgesel Fiyatlandırma Yardımcınız">
+    <meta property="og:description" content="Uygulamanızın fiyatına göre, dünya çapında tavsiye edilen fiyatları görün. RegionalPrice ile global pazarda doğru konumlanın.">
+    <meta property="og:image" content="https://mcagriaksoy.github.io/regionalPrice/preview.png">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://mcagriaksoy.github.io/regionalPrice/">
+    <meta name="twitter:title" content="Regional Price Advisor – Bölgesel Fiyatlandırma Tavsiyesi">
+    <meta name="twitter:description" content="Kendi fiyatınızı girin, önerilen fiyat aralıklarını görün. Global uygulama pazarı için doğru fiyat stratejisini oluşturun.">
+    <meta name="twitter:image" content="https://mcagriaksoy.github.io/regionalPrice/preview.png">
+
+    <!-- Favicon (opsiyonel) -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -46,7 +67,7 @@
             border-radius: 20px;
             box-shadow: 0 8px 32px rgba(229, 57, 53, 0.10);
             min-width: 370px;
-            max-width: 420px;
+            max-width: 780px;
             width: 100%;
         }
 
@@ -232,9 +253,9 @@
         <div class="spinner" id="spinner"></div>
         <div id="result-table-container" style="margin-top:2rem;"></div>
     </div>
-
-    <script src="src/index.js"></script>
     <script src="src/data.js"></script>
+    <script src="src/index.js"></script>
+
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0GPLWP4J43"></script>
@@ -245,6 +266,9 @@
 
     gtag('config', 'G-0GPLWP4J43');
     </script>
+
+    <div style="position:fixed;bottom:0;left:0;width:100%;text-align:center;padding:1rem;background-color:#fff;">
+        <p style="margin:0;font-size:0.8rem;color:#555;">© 2025 Regional Price Advisor. All rights reserved. by Mehmet C.Aksoy</p>
 </body>
 
 </html>

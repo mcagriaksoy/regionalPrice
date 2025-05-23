@@ -1,7 +1,4 @@
-import { wageData } from './data.js';
-
-
-wageData.sort((a, b) => a.country.localeCompare(b.country));
+// wageData.sort((a, b) => a.country.localeCompare(b.country));
 
 function convertCurrency(amount, exchangeRate) {
     return amount * exchangeRate;
@@ -45,8 +42,24 @@ function calculateRelativePrices(userPrice, userCountry) {
     }));
 }
 
-// Sorting state
-let currentSort = { by: 'country', asc: true };
+// Helper: country to currency code (expand as needed)
+const countryCurrencyMap = {
+    'Turkey': '₺',
+    'USA': 'USD',
+    'UK': 'GBP',
+    'Germany': 'EUR',
+    'France': 'EUR',
+    'Russia': 'RUB',
+    'Japan': 'JPY',
+    'Guyana': 'GYD',
+    'New Zealand': 'NZD',
+    'Luxembourg': 'EUR',
+    'Belgium': 'EUR',
+    'Ireland': 'EUR',
+};
+
+// Sorting state (no button selected by default)
+let currentSort = { by: null, asc: true };
 
 // Helper to sort prices array
 function sortPrices(prices, by, asc = true) {
@@ -64,6 +77,34 @@ function sortPrices(prices, by, asc = true) {
     return sorted;
 }
 
+// Enhance: highlight active sort button
+function updateSortButtonStyles() {
+    const sortCountryBtn = document.getElementById('sort-country-btn');
+    const sortPriceBtn = document.getElementById('sort-price-btn');
+    if (sortCountryBtn) {
+        if (currentSort.by === 'country') {
+            sortCountryBtn.style.background = '#e53935';
+            sortCountryBtn.style.color = '#fff';
+            sortCountryBtn.innerHTML = `Country ${currentSort.asc ? '▲' : '▼'}`;
+        } else {
+            sortCountryBtn.style.background = '#fff';
+            sortCountryBtn.style.color = '#333';
+            sortCountryBtn.innerHTML = 'Country';
+        }
+    }
+    if (sortPriceBtn) {
+        if (currentSort.by === 'price') {
+            sortPriceBtn.style.background = '#e53935';
+            sortPriceBtn.style.color = '#fff';
+            sortPriceBtn.innerHTML = `Price ${currentSort.asc ? '▲' : '▼'}`;
+        } else {
+            sortPriceBtn.style.background = '#fff';
+            sortPriceBtn.style.color = '#333';
+            sortPriceBtn.innerHTML = 'Price';
+        }
+    }
+}
+
 function renderTable(prices, currency, shownCount = 5) {
     const container = document.getElementById('result-table-container');
     // Add Selling Price header
@@ -72,33 +113,39 @@ function renderTable(prices, currency, shownCount = 5) {
     html += `
     <div style="margin-bottom:0.7rem;display:flex;gap:1rem;align-items:center;">
       <span style="font-weight:bold;">Order by:</span>
-      <button id="sort-country-btn" style="padding:0.3rem 1rem;border-radius:6px;border:1px solid #e2e8f0;background:${currentSort.by==='country'?'#e53935':'#fff'};color:${currentSort.by==='country'?'#fff':'#333'};font-weight:bold;cursor:pointer;">Country ${currentSort.by==='country'?(currentSort.asc?'▲':'▼'):''}</button>
-      <button id="sort-price-btn" style="padding:0.3rem 1rem;border-radius:6px;border:1px solid #e2e8f0;background:${currentSort.by==='price'?'#e53935':'#fff'};color:${currentSort.by==='price'?'#fff':'#333'};font-weight:bold;cursor:pointer;">Price ${currentSort.by==='price'?(currentSort.asc?'▲':'▼'):''}</button>
+      <button id="sort-country-btn" style="padding:0.3rem 1rem;border-radius:6px;border:1px solid #e2e8f0;background:#fff;color:#333;font-weight:bold;cursor:pointer;">Country</button>
+      <button id="sort-price-btn" style="padding:0.3rem 1rem;border-radius:6px;border:1px solid #e2e8f0;background:#fff;color:#333;font-weight:bold;cursor:pointer;">Price</button>
     </div>
     `;
 
     // Sort prices before rendering
-    const sortedPrices = sortPrices(prices, currentSort.by, currentSort.asc);
+    let sortedPrices = prices;
+    if (currentSort.by) {
+        sortedPrices = sortPrices(prices, currentSort.by, currentSort.asc);
+    }
 
-    html += `<div id="table-scroll-container" style="max-height:60vh;overflow-y:auto;border-radius:12px;box-shadow:0 2px 8px rgba(223, 48, 25, 0.04);">
-    <table style="width:100%;border-collapse:collapse;text-align:center;">
+    html += `<div id="table-scroll-container" style="max-width:1000px;width:100%;margin:0 auto;overflow-x:auto;border-radius:12px;box-shadow:0 2px 8px rgba(223, 48, 25, 0.04);">
+    <table style="width:100%;min-width:800px;border-collapse:collapse;text-align:center;">
         <thead>
             <tr style="background:#f4f6fb;">
-                <th style="padding:8px;border-bottom:1px solid #e2e8f0;">Flag</th>
-                <th style="padding:8px;border-bottom:1px solid #e2e8f0;">Country</th>
-                <th style="padding:8px;border-bottom:1px solid #e2e8f0;">Price (${currency})</th>
-                <th style="padding:8px;border-bottom:1px solid #e2e8f0;">Local Price</th>
+                <th style="padding:8px 12px;border-bottom:1px solid #e2e8f0;">Flag</th>
+                <th style="padding:8px 12px;border-bottom:1px solid #e2e8f0;">Country</th>
+                <th style="padding:8px 12px;border-bottom:1px solid #e2e8f0;">Price (${currency})</th>
+                <th style="padding:8px 12px;border-bottom:1px solid #e2e8f0;">Local Price</th>
+                <th style="padding:8px 12px;border-bottom:1px solid #e2e8f0;">Profit %</th>
             </tr>
         </thead>
         <tbody>`;
     sortedPrices.slice(0, shownCount).forEach(({ country, flagUrl, price }) => {
-        // Find local wage for this country
         const localWage = wageData.find(w => w.country === country)?.wage || 0;
+        const localCurrency = countryCurrencyMap[country] || currency;
+        const profitPercent = localWage > 0 ? ((price - localWage) / localWage) * 100 : 0;
         html += `<tr>
-            <td style="font-size:2rem;">${flagUrl ? `<img src="${flagUrl}" alt="${country} flag" style="width:32px;height:24px;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,0.08);">` : ''}</td>
-            <td>${country}</td>
-            <td style="font-weight:bold;">${price.toFixed(2)} ${currency}</td>
-            <td style="font-weight:bold;">${localWage.toLocaleString(undefined, { style: 'currency', currency: currency })}</td>
+            <td style="font-size:2rem;padding:8px 12px;">${flagUrl ? `<img src="${flagUrl}" alt="${country} flag" style="width:32px;height:24px;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,0.08);">` : ''}</td>
+            <td style="padding:8px 12px;">${country}</td>
+            <td style="font-weight:bold;padding:8px 12px;">${price.toFixed(2)} ${currency}</td>
+            <td style="font-weight:bold;padding:8px 12px;">${localWage.toLocaleString(undefined, { style: 'currency', currency: localCurrency })}</td>
+            <td style="font-weight:bold;padding:8px 12px;color:${profitPercent>=0?'#388e3c':'#d32f2f'};">${profitPercent.toFixed(1)}%</td>
         </tr>`;
     });
     html += '</tbody></table></div>';
@@ -129,7 +176,7 @@ function renderTable(prices, currency, shownCount = 5) {
         <ul style="padding-left:1.2em;">
           <li>1. Select your country and enter the price you want to compare.</li>
           <li>2. Choose the currency (EUR or USD).</li>
-          <li>3. Click 'Calculate Regional Prices' to see the comparison table.</li>
+          <li>3. Click 'Calculate' to see the comparison table.</li>
           <li>4. Use 'Show More' to see more countries.</li>
         </ul>
       </div>
@@ -148,6 +195,7 @@ function renderTable(prices, currency, shownCount = 5) {
                 currentSort.asc = true;
             }
             renderTable(prices, currency, shownCount);
+            updateSortButtonStyles();
         };
     }
     if (sortPriceBtn) {
@@ -159,8 +207,11 @@ function renderTable(prices, currency, shownCount = 5) {
                 currentSort.asc = false;
             }
             renderTable(prices, currency, shownCount);
+            updateSortButtonStyles();
         };
     }
+    // Set initial sort button styles
+    updateSortButtonStyles();
 
     // Add event listener for Show More
     if (typeof window.paypalModalClosed === 'undefined') window.paypalModalClosed = false;
@@ -221,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Populate currency select if needed
     const currencySelect = document.getElementById('currency');
     if (currencySelect && currencySelect.options.length === 0) {
-        currencySelect.innerHTML = '<option value="EUR">EUR - Euro</option><option value="USD">USD - US Dollar</option>';
+        currencySelect.innerHTML = '<option value="€">EUR - Euro</option><option value="$">USD - US Dollar</option>';
     }
     const form = document.getElementById('price-form');
     form.addEventListener('submit', function (event) {

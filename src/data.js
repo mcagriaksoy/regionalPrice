@@ -1,10 +1,10 @@
-// Sort wageData alphabetically by country
 const wageData = [
+    { country: 'Turkey', wage: 501.6 },
+    { country: 'UK', wage: 1952.7 },
     { country: 'Switzerland', wage: 4215.55 },
     { country: 'Australia', wage: 2461.53 },
     { country: 'New Zealand', wage: 2452.02 },
     { country: 'Luxembourg', wage: 2438.65 },
-    { country: 'UK', wage: 1952.7 },
     { country: 'Belgium', wage: 1942.04 },
     { country: 'Ireland', wage: 1870.59 },
     { country: 'Netherlands', wage: 1851.3 },
@@ -108,5 +108,3 @@ const wageData = [
     { country: 'Rwanda', wage: 2.54 },
     { country: 'Uganda', wage: 1.63 }
 ];
-
-export { wageData };
