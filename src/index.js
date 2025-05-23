@@ -6,7 +6,9 @@ function convertCurrency(amount, exchangeRate) {
 
 function updateConvertedAmount(convertedAmount) {
     const resultElement = document.getElementById('result');
-    resultElement.innerHTML = `<span style="font-size:1.3rem;color:#2563eb;font-weight:bold;">Converted Amount:</span><br><span style="font-size:1.5rem;">${convertedAmount.toLocaleString('tr-TR', { style: 'currency', currency: 'TRY' })}</span>`;
+    resultElement.innerHTML = `
+    <span style="font-size:1.3rem;color:#2563eb;font-weight:bold;">Converted Amount:</span><br><span style="font-size:1.5rem;">${
+        convertedAmount.toLocaleString('tr-TR', { style: 'currency', currency: 'TRY' })}</span>`;
 }
 
 // Helper to get flag image URL from country name
@@ -44,7 +46,7 @@ function calculateRelativePrices(userPrice, userCountry) {
 
 // Helper: country to currency code (expand as needed)
 const countryCurrencyMap = {
-    'Turkey': '₺',
+    'Turkey': 'TRY',
     'USA': 'USD',
     'UK': 'GBP',
     'Germany': 'EUR',
@@ -52,7 +54,6 @@ const countryCurrencyMap = {
     'Russia': 'RUB',
     'Japan': 'JPY',
     'Guyana': 'GYD',
-    'New Zealand': 'NZD',
     'Luxembourg': 'EUR',
     'Belgium': 'EUR',
     'Ireland': 'EUR',
@@ -105,7 +106,7 @@ function updateSortButtonStyles() {
     }
 }
 
-function renderTable(prices, currency, shownCount = 5) {
+function renderTable(prices, currency, shownCount = 5, userPrice = null) {
     const container = document.getElementById('result-table-container');
     // Add Selling Price header
     let html = `<h2 style="margin-bottom:1rem;font-size:1.4rem;color:#d32f2f;font-weight:bold;">Selling Price</h2>`;
@@ -124,8 +125,9 @@ function renderTable(prices, currency, shownCount = 5) {
         sortedPrices = sortPrices(prices, currentSort.by, currentSort.asc);
     }
 
-    html += `<div id="table-scroll-container" style="max-width:1000px;width:100%;margin:0 auto;overflow-x:auto;border-radius:12px;box-shadow:0 2px 8px rgba(223, 48, 25, 0.04);">
-    <table style="width:100%;min-width:800px;border-collapse:collapse;text-align:center;">
+    // Set a fixed height and enable vertical scroll for the table container
+    html += `<div id="table-scroll-container" style="max-width:1000px;width:100%;margin:0 auto;overflow-x:auto;overflow-y:auto;max-height:420px;border-radius:12px;box-shadow:0 2px 8px rgba(223, 48, 25, 0.04);"> 
+    <table style="width:100%;min-width:780px;border-collapse:collapse;text-align:center;">
         <thead>
             <tr style="background:#f4f6fb;">
                 <th style="padding:8px 12px;border-bottom:1px solid #e2e8f0;">Flag</th>
@@ -136,16 +138,21 @@ function renderTable(prices, currency, shownCount = 5) {
             </tr>
         </thead>
         <tbody>`;
+    // Use userPrice for profit calculation
     sortedPrices.slice(0, shownCount).forEach(({ country, flagUrl, price }) => {
         const localWage = wageData.find(w => w.country === country)?.wage || 0;
         const localCurrency = countryCurrencyMap[country] || currency;
-        const profitPercent = localWage > 0 ? ((price - localWage) / localWage) * 100 : 0;
+        // Fix profit calculation: profit = ((price - userPrice) / userPrice) * 100
+        let profitPercent = 0;
+        if (userPrice && userPrice !== 0) {
+            profitPercent = ((price - userPrice) / userPrice) * 100;
+        }
         html += `<tr>
             <td style="font-size:2rem;padding:8px 12px;">${flagUrl ? `<img src="${flagUrl}" alt="${country} flag" style="width:32px;height:24px;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,0.08);">` : ''}</td>
             <td style="padding:8px 12px;">${country}</td>
             <td style="font-weight:bold;padding:8px 12px;">${price.toFixed(2)} ${currency}</td>
             <td style="font-weight:bold;padding:8px 12px;">${localWage.toLocaleString(undefined, { style: 'currency', currency: localCurrency })}</td>
-            <td style="font-weight:bold;padding:8px 12px;color:${profitPercent>=0?'#388e3c':'#d32f2f'};">${profitPercent.toFixed(1)}%</td>
+            <td style="font-weight:bold;padding:8px 12px;color:${profitPercent >= 0 ? '#388e3c' : '#d32f2f'};">${profitPercent.toFixed(1)}%</td>
         </tr>`;
     });
     html += '</tbody></table></div>';
@@ -187,7 +194,7 @@ function renderTable(prices, currency, shownCount = 5) {
     const sortCountryBtn = document.getElementById('sort-country-btn');
     const sortPriceBtn = document.getElementById('sort-price-btn');
     if (sortCountryBtn) {
-        sortCountryBtn.onclick = function() {
+        sortCountryBtn.onclick = function () {
             if (currentSort.by === 'country') {
                 currentSort.asc = !currentSort.asc;
             } else {
@@ -199,7 +206,7 @@ function renderTable(prices, currency, shownCount = 5) {
         };
     }
     if (sortPriceBtn) {
-        sortPriceBtn.onclick = function() {
+        sortPriceBtn.onclick = function () {
             if (currentSort.by === 'price') {
                 currentSort.asc = !currentSort.asc;
             } else {
@@ -218,9 +225,10 @@ function renderTable(prices, currency, shownCount = 5) {
     let shownCountCurrent = shownCount;
     const showMoreBtn = document.getElementById('show-more-btn');
     if (showMoreBtn) {
-        showMoreBtn.onclick = function() {
+        showMoreBtn.onclick = function () {
             shownCountCurrent += 10;
-            renderTable(prices, currency, shownCountCurrent);
+            // Pass userPrice to keep profit calculation correct
+            renderTable(prices, currency, shownCountCurrent, userPrice);
             if (!window.paypalModalClosed) {
                 const modal = document.getElementById('paypal-modal');
                 modal.style.display = 'flex';
@@ -230,7 +238,7 @@ function renderTable(prices, currency, shownCount = 5) {
         };
     }
     // Add event delegation for closing modal
-    document.addEventListener('click', function(event) {
+    document.addEventListener('click', function (event) {
         const modal = document.getElementById('paypal-modal');
         if (modal && modal.style.display !== 'none') {
             if (event.target && event.target.id === 'close-paypal-modal') {
@@ -256,7 +264,7 @@ function renderTable(prices, currency, shownCount = 5) {
     // How to use button
     const howBtn = document.getElementById('how-to-use-btn');
     if (howBtn) {
-        howBtn.onclick = function() {
+        howBtn.onclick = function () {
             const howModal = document.getElementById('how-to-use-modal');
             howModal.style.display = 'flex';
             howModal.style.justifyContent = 'center';
@@ -284,7 +292,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const currency = document.getElementById('currency').value;
             const homeCountry = document.getElementById('home-country').value;
             const prices = calculateRelativePrices(price, homeCountry);
-            renderTable(prices, currency, 6);
+            // Pass userPrice to renderTable for profit calculation
+            renderTable(prices, currency, 6, price);
             spinner.style.display = 'none';
         }, 400);
     });
@@ -338,7 +347,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // How to use button event
     const howBtn = document.getElementById('how-to-use-btn');
     if (howBtn) {
-        howBtn.onclick = function() {
+        howBtn.onclick = function () {
             const howModal = document.getElementById('how-to-use-modal');
             howModal.style.display = 'flex';
             howModal.style.justifyContent = 'center';
@@ -346,7 +355,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
     // How to use modal close event
-    document.addEventListener('click', function(event) {
+    document.addEventListener('click', function (event) {
         const howModal = document.getElementById('how-to-use-modal');
         if (howModal && howModal.style.display !== 'none') {
             if (event.target && event.target.id === 'close-how-to-use-modal') {
