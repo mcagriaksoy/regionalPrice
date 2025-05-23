@@ -7,7 +7,11 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
     <style>
         body {
-            background: linear-gradient(120deg, #f4f6fb 0%, #e3e9f7 100%);
+            position: relative;
+            background-image: url('src/background.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
             font-family: 'Roboto', sans-serif;
             display: flex;
             justify-content: center;
@@ -16,11 +20,31 @@
             margin: 0;
         }
 
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            background-image: url('src/background.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            filter: blur(10px) brightness(0.9);
+        }
+
+        .container, #google_translate_element {
+            position: relative;
+            z-index: 1;
+        }
+
         .container {
             background: #fff;
             padding: 2.5rem 2.5rem 2rem 2.5rem;
             border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.10);
+            box-shadow: 0 8px 32px rgba(229, 57, 53, 0.10);
             min-width: 370px;
             max-width: 420px;
             width: 100%;
@@ -28,14 +52,14 @@
 
         h2 {
             margin-bottom: 1.2rem;
-            color: #2d3748;
+            color: #d32f2f;
             text-align: center;
         }
 
         label {
             display: block;
             margin-bottom: 0.5rem;
-            color: #4a5568;
+            color: #b71c1c;
             font-weight: 500;
         }
 
@@ -45,7 +69,7 @@
             width: 100%;
             padding: 0.7rem;
             margin-bottom: 1rem;
-            border: 1px solid #e2e8f0;
+            border: 1px solid #ffcdd2;
             border-radius: 8px;
             font-size: 1rem;
         }
@@ -53,38 +77,38 @@
         input:focus,
         select:focus {
             outline: none;
-            border-color: #3182ce;
-            box-shadow: 0 0 0 2px #90cdf4;
+            border-color: #e53935;
+            box-shadow: 0 0 0 2px #ffcdd2;
         }
 
         button {
-            background: linear-gradient(90deg, #3182ce 0%, #2563eb 100%);
+            background: linear-gradient(90deg, #e53935 0%, #d32f2f 100%);
             color: #fff;
             border: none;
             cursor: pointer;
             font-weight: bold;
             transition: background 0.2s, box-shadow 0.2s;
-            box-shadow: 0 2px 8px rgba(49, 130, 206, 0.08);
+            box-shadow: 0 2px 8px rgba(229, 57, 53, 0.08);
         }
 
         button:hover {
-            background: linear-gradient(90deg, #2563eb 0%, #3182ce 100%);
+            background: linear-gradient(90deg, #d32f2f 0%, #e53935 100%);
         }
 
         #result {
             margin-top: 1rem;
             font-size: 1.2rem;
-            color: #2b6cb0;
+            color: #d32f2f;
             text-align: center;
             font-weight: 500;
         }
 
         #comparison {
             margin-top: 2rem;
-            background: #f7fafc;
+            background: #fff0f0;
             border-radius: 12px;
             padding: 1.2rem 1rem 1rem 1rem;
-            box-shadow: 0 2px 8px rgba(49, 130, 206, 0.04);
+            box-shadow: 0 2px 8px rgba(229, 57, 53, 0.04);
         }
 
         #comparison ul {
@@ -95,9 +119,9 @@
 
         #comparison li {
             padding: 0.5rem 0;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px solid #ffcdd2;
             font-size: 1rem;
-            color: #374151;
+            color: #b71c1c;
         }
 
         #comparison li:last-child {
@@ -107,8 +131,8 @@
         .spinner {
             display: none;
             margin: 0 auto 1rem auto;
-            border: 4px solid #e2e8f0;
-            border-top: 4px solid #3182ce;
+            border: 4px solid #ffcdd2;
+            border-top: 4px solid #e53935;
             border-radius: 50%;
             width: 32px;
             height: 32px;
@@ -124,7 +148,56 @@
                 transform: rotate(360deg);
             }
         }
+
+        /* How to use button style */
+        #how-to-use-btn {
+            position: fixed;
+            top: 32px;
+            right: 16px;
+            z-index: 1200;
+            padding: 0.5rem 0.9rem;
+            font-size: 1.2rem;
+            background-image: url('src/background.jpg');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(229, 57, 53, 0.18);
+            letter-spacing: 0.02em;
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #how-to-use-btn span {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        #how-to-use-modal h3 {
+            color: #d32f2f;
+        }
+
+        #how-to-use-modal button {
+            border: 2px solid #e53935;
+            color: #d32f2f;
+        }
     </style>
+    <!-- Google Translate Widget -->
+    <div id="google_translate_element" style="position:fixed;top:12px;left:12px;z-index:2000;"></div>
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+      }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
         data-id="mcagriaksoy" data-description="Support me on Buy me a coffee!"
         data-message="Thank you for using this App! Waiting your supports ❤️" data-color="#FF5F5F"
@@ -159,6 +232,7 @@
         <div class="spinner" id="spinner"></div>
         <div id="result-table-container" style="margin-top:2rem;"></div>
     </div>
+
     <script src="src/index.js"></script>
 </body>
 
