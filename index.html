@@ -105,27 +105,30 @@
 </head>
 <body>
     <div class="container">
-        <h2>Currency Converter</h2>
-        <form id="currency-form">
-            <label for="amount">Amount</label>
-            <input type="number" id="amount" placeholder="Enter amount" required min="0" step="any" />
-            <label for="currency">From Currency</label>
-            <select id="currency">
-                <option value="USD">USD - US Dollar</option>
-                <option value="EUR">EUR - Euro</option>
-                <option value="GBP">GBP - British Pound</option>
-                <option value="RUB">RUB - Russian Ruble</option>
-                <option value="JPY">JPY - Japanese Yen</option>
-                <option value="TRY">TRY - Turkish Lira</option>
+        <h2>Regional Price Comparison</h2>
+        <form id="price-form">
+            <label for="home-country">Your Country</label>
+            <select id="home-country" required>
+                <option value="Turkey">Turkey</option>
+                <option value="Germany">Germany</option>
+                <option value="USA">USA</option>
+                <option value="France">France</option>
+                <option value="UK">UK</option>
+                <option value="Russia">Russia</option>
+                <option value="Japan">Japan</option>
+                <option value="Guyana">Guyana</option>
             </select>
-            <button type="submit">Convert to TRY</button>
+            <label for="price">Price</label>
+            <input type="number" id="price" placeholder="Enter price" required min="0" step="any" />
+            <label for="currency">Currency</label>
+            <select id="currency" required>
+                <option value="EUR">EUR - Euro</option>
+                <option value="USD">USD - US Dollar</option>
+            </select>
+            <button type="submit">Calculate Regional Prices</button>
         </form>
         <div class="spinner" id="spinner"></div>
-        <div id="result"></div>
-        <div id="comparison">
-            <strong>Country Wage Comparison</strong>
-            <div id="comparison-list" style="margin-top:0.5rem;"></div>
-        </div>
+        <div id="result-table-container" style="margin-top:2rem;"></div>
     </div>
     <script src="index.js"></script>
 </body>

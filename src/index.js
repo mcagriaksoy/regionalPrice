@@ -32,59 +32,59 @@ function parseWageTxt(txt) {
 
 const countryWages = parseWageTxt(wageTxt);
 
-function updateCountryComparisons(amount, currency, exchangeRates) {
-    const comparisonList = document.getElementById('comparison-list');
-    let html = '<ul>';
-    countryWages.forEach(({ country, wage, currency: wageCurrency }) => {
-        // Convert input amount to the country's currency
-        const toTRY = amount * (exchangeRates[currency] || 1); // input to TRY
-        const countryAmount = toTRY / (exchangeRates[wageCurrency] || 1); // TRY to country currency
-        const hours = (countryAmount / wage).toFixed(2);
-        html += `<li><span style='font-weight:bold;'>${countryAmount.toLocaleString(undefined, { style: 'currency', currency: wageCurrency })}</span> in <span style='color:#2563eb;'>${country}</span> <span style='color:#888;'>(~${hours} hours min. wage)</span></li>`;
-    });
-    html += '</ul>';
-    comparisonList.innerHTML = html;
+// Predefined weights for each country (example values)
+const countryData = [
+    { name: 'Turkey', weight: 1.0, flag: '🇹🇷' },
+    { name: 'Germany', weight: 1.6, flag: '🇩🇪' },
+    { name: 'USA', weight: 1.3, flag: '🇺🇸' },
+    { name: 'France', weight: 1.5, flag: '🇫🇷' },
+    { name: 'UK', weight: 1.4, flag: '🇬🇧' },
+    { name: 'Russia', weight: 0.8, flag: '🇷🇺' },
+    { name: 'Japan', weight: 1.2, flag: '🇯🇵' },
+    { name: 'Guyana', weight: 0.7, flag: '🇬🇾' }
+];
+
+function calculatePrices(basePrice) {
+    return countryData.map(country => ({
+        ...country,
+        price: basePrice * country.weight
+    }));
 }
 
-function handleFormSubmit(event) {
-    event.preventDefault();
-    const spinner = document.getElementById('spinner');
-    spinner.style.display = 'block';
-    setTimeout(() => {
-        const amountInput = document.getElementById('amount');
-        const currencySelect = document.getElementById('currency');
-        const amount = parseFloat(amountInput.value);
-        const currency = currencySelect.value;
-
-        // Example exchange rates to TRY (should be updated with real data or API)
-        const exchangeRates = {
-            USD: 32.0,
-            EUR: 34.5,
-            GBP: 40.2,
-            RUB: 0.35,
-            JPY: 0.21,
-            TRY: 1
-        };
-
-        const exchangeRate = exchangeRates[currency] || 1;
-        const convertedAmount = convertCurrency(amount, exchangeRate);
-
-        updateConvertedAmount(convertedAmount);
-        updateCountryComparisons(amount, currency, exchangeRates);
-        spinner.style.display = 'none';
-    }, 600);
+function renderTable(prices, currency) {
+    const container = document.getElementById('result-table-container');
+    let html = `<table style="width:100%;border-collapse:collapse;text-align:center;">
+        <thead>
+            <tr style="background:#f4f6fb;">
+                <th style="padding:8px;border-bottom:1px solid #e2e8f0;">Flag</th>
+                <th style="padding:8px;border-bottom:1px solid #e2e8f0;">Country</th>
+                <th style="padding:8px;border-bottom:1px solid #e2e8f0;">Price (${currency})</th>
+            </tr>
+        </thead>
+        <tbody>`;
+    prices.forEach(({ name, flag, price }) => {
+        html += `<tr>
+            <td style="font-size:1.5rem;">${flag}</td>
+            <td>${name}</td>
+            <td style="font-weight:bold;">${price.toFixed(2)} ${currency}</td>
+        </tr>`;
+    });
+    html += '</tbody></table>';
+    container.innerHTML = html;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('currency-form');
-    form.addEventListener('submit', handleFormSubmit);
-    // Initial comparison (optional, for better UX)
-    updateCountryComparisons(1, 'USD', {
-        USD: 32.0,
-        EUR: 34.5,
-        GBP: 40.2,
-        RUB: 0.35,
-        JPY: 0.21,
-        TRY: 1
+    const form = document.getElementById('price-form');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const spinner = document.getElementById('spinner');
+        spinner.style.display = 'block';
+        setTimeout(() => {
+            const price = parseFloat(document.getElementById('price').value);
+            const currency = document.getElementById('currency').value;
+            const prices = calculatePrices(price);
+            renderTable(prices, currency);
+            spinner.style.display = 'none';
+        }, 400);
     });
 });
