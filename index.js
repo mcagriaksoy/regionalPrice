@@ -64,7 +64,7 @@ function renderTable(prices, currency) {
         <tbody>`;
     prices.forEach(({ name, flag, price }) => {
         html += `<tr>
-            <td style="font-size:2rem;">${flag}</td>
+            <td style="font-size:1.5rem;">${flag}</td>
             <td>${name}</td>
             <td style="font-weight:bold;">${price.toFixed(2)} ${currency}</td>
         </tr>`;
