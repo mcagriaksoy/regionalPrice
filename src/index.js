@@ -7,47 +7,39 @@ function updateConvertedAmount(convertedAmount) {
     resultElement.innerHTML = `<span style="font-size:1.3rem;color:#2563eb;font-weight:bold;">Converted Amount:</span><br><span style="font-size:1.5rem;">${convertedAmount.toLocaleString('tr-TR', { style: 'currency', currency: 'TRY' })}</span>`;
 }
 
-// Example Wage.txt content as a string (replace with your actual data)
-const wageTxt = `57,Guyana,$211.99\n51,Turkey,₺51.4\n12,Germany,€12\n7.25,USA,$7.25\n11.52,France,€11.52\n10.42,UK,£10.42\n162,Russia,₽162\n961,Japan,¥961`;
-
-function parseWageTxt(txt) {
-    return txt.split('\n').map(line => {
-        const [wage, country, currencyWage] = line.split(',');
-        // Extract currency symbol and value
-        const match = currencyWage.match(/([\D]+)([\d.]+)/);
-        let currency = '', wageValue = 0;
-        if (match) {
-            currency = match[1].replace(/\s/g, '');
-            wageValue = parseFloat(match[2]);
-        }
-        // Map symbols to ISO codes
-        const symbolToCode = { '$': 'USD', '€': 'EUR', '₺': 'TRY', '£': 'GBP', '₽': 'RUB', '¥': 'JPY' };
-        return {
-            country: country.trim(),
-            wage: parseFloat(wage),
-            currency: symbolToCode[currency] || currency
-        };
-    });
-}
-
-const countryWages = parseWageTxt(wageTxt);
-
-// Predefined weights for each country (example values)
-const countryData = [
-    { name: 'Turkey', weight: 1.0, flag: '🇹🇷' },
-    { name: 'Germany', weight: 1.6, flag: '🇩🇪' },
-    { name: 'USA', weight: 1.3, flag: '🇺🇸' },
-    { name: 'France', weight: 1.5, flag: '🇫🇷' },
-    { name: 'UK', weight: 1.4, flag: '🇬🇧' },
-    { name: 'Russia', weight: 0.8, flag: '🇷🇺' },
-    { name: 'Japan', weight: 1.2, flag: '🇯🇵' },
-    { name: 'Guyana', weight: 0.7, flag: '🇬🇾' }
+// Wage data extracted from Wage.txt
+const wageData = [
+    { country: 'Estonia', wage: 689.41 },
+    { country: 'Australia', wage: 2461.53 },
+    { country: 'Turkey', wage: 524.0 },
+    { country: 'Germany', wage: 1838.44 },
+    { country: 'USA', wage: 1256.67 },
+    { country: 'France', wage: 1734.69 },
+    { country: 'UK', wage: 1952.7 },
+    { country: 'Russia', wage: 212.6 },
+    { country: 'Japan', wage: 1468.73 },
+    { country: 'Guyana', wage: 211.99 },
+    // ...add more countries as needed from Wage.txt...
 ];
 
-function calculatePrices(basePrice) {
-    return countryData.map(country => ({
-        ...country,
-        price: basePrice * country.weight
+// Helper to get flag emoji from country name (works for most countries)
+function getFlagEmoji(country) {
+    const isoMap = {
+        'Estonia': 'EE', 'Australia': 'AU', 'Turkey': 'TR', 'Germany': 'DE', 'USA': 'US', 'France': 'FR', 'UK': 'GB', 'Russia': 'RU', 'Japan': 'JP', 'Guyana': 'GY'
+        // ...add more mappings as needed...
+    };
+    const code = isoMap[country];
+    if (!code) return '🏳️';
+    return code.replace(/./g, char => String.fromCodePoint(127397 + char.charCodeAt()));
+}
+
+function calculateRelativePrices(userPrice, userCountry) {
+    const home = wageData.find(w => w.country === userCountry);
+    if (!home) return [];
+    return wageData.map(w => ({
+        country: w.country,
+        flag: getFlagEmoji(w.country),
+        price: (userPrice / home.wage) * w.wage
     }));
 }
 
@@ -62,10 +54,10 @@ function renderTable(prices, currency) {
             </tr>
         </thead>
         <tbody>`;
-    prices.forEach(({ name, flag, price }) => {
+    prices.forEach(({ country, flag, price }) => {
         html += `<tr>
             <td style="font-size:2rem;">${flag}</td>
-            <td>${name}</td>
+            <td>${country}</td>
             <td style="font-weight:bold;">${price.toFixed(2)} ${currency}</td>
         </tr>`;
     });
@@ -82,7 +74,8 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             const price = parseFloat(document.getElementById('price').value);
             const currency = document.getElementById('currency').value;
-            const prices = calculatePrices(price);
+            const homeCountry = document.getElementById('home-country').value;
+            const prices = calculateRelativePrices(price, homeCountry);
             renderTable(prices, currency);
             spinner.style.display = 'none';
         }, 400);
