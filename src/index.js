@@ -13,22 +13,7 @@ function updateConvertedAmount(convertedAmount) {
 
 // Helper to get flag image URL from country name
 function getFlagImageUrl(country) {
-    const isoMap = {
-        'Estonia': 'ee', 'Australia': 'au', 'Turkey': 'tr', 'Germany': 'de', 'USA': 'us', 'France': 'fr', 'UK': 'gb', 'Russia': 'ru', 'Japan': 'jp', 'Guyana': 'gy',
-        'New Zealand': 'nz', 'Luxembourg': 'lu', 'Belgium': 'be', 'Ireland': 'ie', 'Netherlands': 'nl', 'San Marino': 'sm', 'Israel': 'il', 'South Korea': 'kr',
-        'Spain': 'es', 'Slovenia': 'si', 'Cyprus': 'cy', 'The Bahamas': 'bs', 'Greece': 'gr', 'Portugal': 'pt', 'Oman': 'om', 'Malta': 'mt', 'Lithuania': 'lt',
-        'Barbados': 'bb', 'Palau': 'pw', 'Slovakia': 'sk', 'Iran': 'ir', 'Antigua and Barbuda': 'ag', 'Marshall Islands': 'mh', 'Dominica': 'dm',
-        'Saint Kitts and Nevis': 'kn', 'Montenegro': 'me', 'Trinidad and Tobago': 'tt', 'Latvia': 'lv', 'Argentina': 'ar', 'Seychelles': 'sc', 'Serbia': 'rs',
-        'Saint Vincent and the Grenadines': 'vc', 'Jordan': 'jo', 'Guatemala': 'gt', 'Grenada': 'gd', 'Fiji': 'fj', 'Libya': 'ly', 'Belize': 'bz',
-        'Morocco': 'ma', 'Albania': 'al', 'Qatar': 'qa', 'Gabon': 'ga', 'Thailand': 'th', 'Kuwait': 'kw', 'Iraq': 'iq', 'Peru': 'pe', 'Ukraine': 'ua',
-        'Russia': 'ru', 'Guyana': 'gy', 'Equatorial Guinea': 'gq', 'Papua New Guinea': 'pg', 'Solomon Islands': 'sb', 'Kiribati': 'ki', 'Cambodia': 'kh',
-        'Suriname': 'sr', 'Belarus': 'by', 'Azerbaijan': 'az', 'Indonesia': 'id', 'Vietnam': 'vn', 'Armenia': 'am', 'Philippines': 'ph', 'Mongolia': 'mn',
-        'Haiti': 'ht', 'Algeria': 'dz', 'Cape Verde': 'cv', 'Comoros': 'km', 'Kenya': 'ke', 'Nepal': 'np', 'Pakistan': 'pk', 'East Timor': 'tl',
-        'Mozambique': 'mz', 'Lesotho': 'ls', 'Chad': 'td', 'Kazakhstan': 'kz', 'Democratic Republic of the Congo': 'cd', 'Myanmar': 'mm', 'Senegal': 'sn',
-        'Uzbekistan': 'uz', 'Afghanistan': 'af', 'Angola': 'ao', 'Sierra Leone': 'sl', 'Central African Republic': 'cf', 'Bhutan': 'bt', 'India': 'in',
-        'Tanzania': 'tz', 'Togo': 'tg', 'Ghana': 'gh', 'Niger': 'ne', 'Tajikistan': 'tj', 'Malawi': 'mw', 'Sri Lanka': 'lk', 'Guinea-Bissau': 'gw',
-        'Eswatini': 'sz', 'The Gambia': 'gm', 'Kyrgyzstan': 'kg', 'Bangladesh': 'bd', 'Georgia': 'ge', 'Rwanda': 'rw', 'Uganda': 'ug'
-    };
+    // isoMap is now loaded from data.js
     let code = isoMap[country];
     if (!code) return null;
     return `https://flagcdn.com/48x36/${code}.png`;
@@ -173,21 +158,7 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null) {
 </form>
  </div>
     </div>`;
-    // How to use modal
-    html += `
-    <button id="how-to-use-btn" style="position:fixed;top:40px;right:18px;z-index:1200;padding:0.5rem 1.1rem;font-size:1.1rem;background:linear-gradient(90deg,#e53935 0%,#d32f2f 100%);color:#fff;border:none;border-radius:20px;cursor:pointer;font-weight:bold;box-shadow:0 2px 8px rgba(229,57,53,0.18);letter-spacing:0.02em;">?</button>
-    <div id="how-to-use-modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(229,57,53,0.10);z-index:2000;justify-content:center;align-items:center;">
-      <div style="background:#fff;padding:2rem 2.5rem;border-radius:16px;box-shadow:0 4px 24px rgba(229,57,53,0.15);max-width:400px;text-align:left;position:relative;">
-        <button id="close-how-to-use-modal" style="position:absolute;top:10px;right:10px;background:#fff;border:2px solid #e53935;border-radius:50%;font-size:1.7rem;cursor:pointer;line-height:1;width:38px;height:38px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(229,57,53,0.12);color:#d32f2f;z-index:10;">&#10005;</button>
-        <h3 style="margin-bottom:1rem;color:#d32f2f;">How to use</h3>
-        <ul style="padding-left:1.2em;">
-          <li>1. Select your country and enter the price you want to compare.</li>
-          <li>2. Choose the currency (EUR or USD).</li>
-          <li>3. Click 'Calculate' to see the comparison table.</li>
-          <li>4. Use 'Show More' to see more countries.</li>
-        </ul>
-      </div>
-    </div>`;
+
     container.innerHTML = html;
 
     // Sorting button events
@@ -297,73 +268,5 @@ document.addEventListener('DOMContentLoaded', () => {
             spinner.style.display = 'none';
         }, 400);
     });
-    // Add How to use button and modal to body if not present
-    if (!document.getElementById('how-to-use-btn')) {
-        const howBtn = document.createElement('button');
-        howBtn.id = 'how-to-use-btn';
-        howBtn.innerHTML = '?';
-        howBtn.style.position = 'fixed';
-        howBtn.style.top = '40px';
-        howBtn.style.right = '18px';
-        howBtn.style.zIndex = '1200';
-        howBtn.style.padding = '0.5rem 1.1rem';
-        howBtn.style.fontSize = '1.1rem';
-        howBtn.style.background = 'linear-gradient(90deg,#e53935 0%,#d32f2f 100%)';
-        howBtn.style.color = '#fff';
-        howBtn.style.border = 'none';
-        howBtn.style.borderRadius = '20px';
-        howBtn.style.cursor = 'pointer';
-        howBtn.style.fontWeight = 'bold';
-        howBtn.style.boxShadow = '0 2px 8px rgba(229,57,53,0.18)';
-        howBtn.style.letterSpacing = '0.02em';
-        document.body.appendChild(howBtn);
-    }
-    if (!document.getElementById('how-to-use-modal')) {
-        const howModal = document.createElement('div');
-        howModal.id = 'how-to-use-modal';
-        howModal.style.display = 'none';
-        howModal.style.position = 'fixed';
-        howModal.style.top = '0';
-        howModal.style.left = '0';
-        howModal.style.width = '100vw';
-        howModal.style.height = '100vh';
-        howModal.style.background = 'rgba(229,57,53,0.10)';
-        howModal.style.zIndex = '2000';
-        howModal.style.justifyContent = 'center';
-        howModal.style.alignItems = 'center';
-        howModal.innerHTML = `
-      <div style="background:#fff;padding:2rem 2.5rem;border-radius:16px;box-shadow:0 4px 24px rgba(229,57,53,0.15);max-width:400px;text-align:left;position:relative;">
-        <button id="close-how-to-use-modal" style="position:absolute;top:10px;right:10px;background:#fff;border:2px solid #e53935;border-radius:50%;font-size:1.7rem;cursor:pointer;line-height:1;width:38px;height:38px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(229,57,53,0.12);color:#d32f2f;z-index:10;">&#10005;</button>
-        <h3 style="margin-bottom:1rem;color:#d32f2f;">How to use</h3>
-        <ul style="padding-left:1.2em;">
-          <li>1. Select your country and enter the price you want to compare.</li>
-          <li>2. Choose the currency (EUR or USD).</li>
-          <li>3. Click 'Calculate Regional Prices' to see the comparison table.</li>
-          <li>4. Use 'Show More' to see more countries.</li>
-        </ul>
-      </div>`;
-        document.body.appendChild(howModal);
-    }
-    // How to use button event
-    const howBtn = document.getElementById('how-to-use-btn');
-    if (howBtn) {
-        howBtn.onclick = function () {
-            const howModal = document.getElementById('how-to-use-modal');
-            howModal.style.display = 'flex';
-            howModal.style.justifyContent = 'center';
-            howModal.style.alignItems = 'center';
-        };
-    }
-    // How to use modal close event
-    document.addEventListener('click', function (event) {
-        const howModal = document.getElementById('how-to-use-modal');
-        if (howModal && howModal.style.display !== 'none') {
-            if (event.target && event.target.id === 'close-how-to-use-modal') {
-                howModal.style.display = 'none';
-            }
-            if (event.target && event.target.id === 'how-to-use-modal') {
-                howModal.style.display = 'none';
-            }
-        }
-    });
+
 });

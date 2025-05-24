@@ -170,45 +170,59 @@
             }
         }
 
-        /* How to use button style */
-        #how-to-use-btn {
+        /* Navigation Bar */
+        .navbar {
             position: fixed;
-            top: 32px;
-            right: 16px;
-            z-index: 1200;
-            padding: 0.5rem 0.9rem;
-            font-size: 1.2rem;
-            background-image: url('src/background.jpg');
-            background-size: cover;
-            background-position: center;
-            color: #fff;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 2px 8px rgba(229, 57, 53, 0.18);
-            letter-spacing: 0.02em;
-            width: 44px;
-            height: 44px;
-            min-width: 44px;
-            min-height: 44px;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(229,57,53,0.08);
+            z-index: 2001;
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            height: 56px;
         }
 
-        #how-to-use-btn span {
-            font-size: 1.5rem;
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar li {
+            display: inline;
+        }
+
+        .navbar a {
+            color: #d32f2f;
             font-weight: bold;
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: background 0.15s;
         }
 
-        #how-to-use-modal h3 {
-            color: #d32f2f;
+        .navbar a.active, .navbar a:hover {
+            background: #ffeaea;
         }
 
-        #how-to-use-modal button {
-            border: 2px solid #e53935;
-            color: #d32f2f;
+        .page-section {
+            display: none;
+            margin-top: 72px; /* space for navbar */
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        /* Adjust container for navbar */
+        .container {
+            margin-top: 0;
         }
     </style>
     <!-- Google Translate Widget -->
@@ -226,33 +240,117 @@
 </head>
 
 <body>
-    <div class="container">
-        <img src="src/icon.png" alt="App Icon" style="display:block;margin:0 auto 1rem auto;width:48px;height:48px;">
-        <h2>Regional Price Comparison</h2>
-        <form id="price-form">
-            <label for="home-country">Your Country</label>
-            <select id="home-country" required>
-                <option value="Turkey">Turkey</option>
-                <option value="Germany">Germany</option>
-                <option value="USA">USA</option>
-                <option value="France">France</option>
-                <option value="UK">UK</option>
-                <option value="Russia">Russia</option>
-                <option value="Japan">Japan</option>
-                <option value="Guyana">Guyana</option>
-            </select>
-            <label for="price">Price</label>
-            <input type="number" id="price" placeholder="Enter price" required min="0" step="any" />
-            <label for="currency">Currency</label>
-            <select id="currency" required>
-                <option value="EUR">EUR - Euro</option>
-                <option value="USD">USD - US Dollar</option>
-            </select>
-            <button type="submit">Calculate Regional Prices</button>
-        </form>
-        <div class="spinner" id="spinner"></div>
-        <div id="result-table-container" style="margin-top:2rem;"></div>
-    </div>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="#" id="nav-home" class="active">Home</a></li>
+            <li><a href="#" id="nav-contact">Contact Us</a></li>
+            <li><a href="#" id="nav-help">Help</a></li>
+        </ul>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home-section" class="page-section active">
+        <div class="container">
+            <img src="src/icon.png" alt="App Icon" style="display:block;margin:0 auto 1rem auto;width:48px;height:48px;">
+            <h2>Regional Price Comparison</h2>
+            <!-- Description for main page -->
+            <p style="text-align:center;color:#444;font-size:1.08rem;margin-bottom:1.4rem;">
+                Take the guesswork out of pricing! Our regional price calculator helps app, game, and software developers determine recommended prices for each country, ensuring fair and competitive pricing across global markets.
+            </p>
+            <form id="price-form">
+                <label for="home-country">Your Country</label>
+                <select id="home-country" required>
+                    <option value="Turkey">Turkey</option>
+                    <option value="Germany">Germany</option>
+                    <option value="USA">USA</option>
+                    <option value="France">France</option>
+                    <option value="UK">UK</option>
+                    <option value="Russia">Russia</option>
+                    <option value="Japan">Japan</option>
+                    <option value="Guyana">Guyana</option>
+                </select>
+                <label for="price">Price</label>
+                <input type="number" id="price" placeholder="Enter price" required min="0" step="any" />
+                <label for="currency">Currency</label>
+                <select id="currency" required>
+                    <option value="EUR">EUR - Euro</option>
+                    <option value="USD">USD - US Dollar</option>
+                </select>
+                <button type="submit">Calculate Regional Prices</button>
+            </form>
+            <div class="spinner" id="spinner"></div>
+            <div id="result-table-container" style="margin-top:2rem;"></div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact-section" class="page-section">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <form
+              id="contact-form"
+              action="https://formspree.io/f/xvganlll"
+              method="POST"
+            >
+              <label>
+                Your email:
+                <input type="email" name="email">
+              </label>
+              <label>
+                Your message:
+                <textarea name="message" style="min-height:260px;height:460px;resize:horizontal;"></textarea>
+              </label>
+              <button type="submit">Send</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Help Section -->
+    <section id="help-section" class="page-section">
+        <div class="container">
+            <h2>Help</h2>
+            <ul>
+                <li>1. Select your country and enter the price you want to compare.</li>
+                <li>2. Choose the currency (EUR or USD).</li>
+                <li>3. Click 'Calculate Regional Prices' to see the comparison table.</li>
+                <li>4. Use 'Show More' to see more countries.</li>
+            </ul>
+            <!-- FAQ Section -->
+            <div style="margin-top:2.2rem;">
+                <h3 style="color:#d32f2f;font-size:1.25rem;margin-bottom:1rem;">❓ Frequently Asked Questions (FAQ)</h3>
+                <div style="margin-bottom:1.2rem;">
+                    <strong>💸 What is an app price and why does it matter?</strong>
+                    <div style="margin-left:1.2em;color:#444;">The app price is the amount users are willing to pay for your app. It directly affects your revenue and how many users you can attract.</div>
+                </div>
+                <div style="margin-bottom:1.2rem;">
+                    <strong>🌍 What is regional pricing?</strong>
+                    <div style="margin-left:1.2em;color:#444;">Regional pricing means offering your app at different prices depending on the country or region. This helps you set fair prices based on local purchasing power.</div>
+                </div>
+                <div style="margin-bottom:1.2rem;">
+                    <strong>📊 What does this tool do?</strong>
+                    <div style="margin-left:1.2em;color:#444;">This tool takes your base app price and suggests recommended prices for other regions. It helps you build a balanced global pricing strategy.</div>
+                </div>
+                <div style="margin-bottom:1.2rem;">
+                    <strong>🛠️ What data are the price suggestions based on?</strong>
+                    <div style="margin-left:1.2em;color:#444;">The tool uses indicators such as Purchasing Power Parity (PPP) and regional economic factors to suggest fair prices. More data sources may be added in the future.</div>
+                </div>
+                <div style="margin-bottom:1.2rem;">
+                    <strong>📱 Which platforms does this apply to?</strong>
+                    <div style="margin-left:1.2em;color:#444;">This tool can be used for both iOS (App Store) and Android (Google Play) apps. Both platforms support regional pricing.</div>
+                </div>
+                <div style="margin-bottom:1.2rem;">
+                    <strong>🔐 Are my inputs saved anywhere?</strong>
+                    <div style="margin-left:1.2em;color:#444;">No. All price inputs are processed locally in your browser. Nothing is stored or sent to a server.</div>
+                </div>
+                <div style="margin-bottom:1.2rem;">
+                    <strong>📈 Why are prices lower in some countries?</strong>
+                    <div style="margin-left:1.2em;color:#444;">Prices vary based on local income levels and purchasing power. In lower-income countries, the recommended price is adjusted accordingly to remain accessible.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <script src="src/data.js"></script>
     <script src="src/index.js"></script>
 
@@ -267,24 +365,22 @@
     gtag('config', 'G-0GPLWP4J43');
     </script>
 
-    <form
-  action="https://formspree.io/f/xvganlll"
-  method="POST"
->
-  <label>
-    Your email:
-    <input type="email" name="email">
-  </label>
-  <label>
-    Your message:
-    <textarea name="message"></textarea>
-  </label>
-  <!-- your other form fields go here -->
-  <button type="submit">Send</button>
-</form>
-
     <div style="position:fixed;bottom:0;left:0;width:100%;text-align:center;padding:1rem;background-color:#fff;">
         <p style="margin:0;font-size:0.8rem;color:#555;">© 2025 Regional Price Advisor. All rights reserved. by Mehmet C.Aksoy</p>
+    </div>
+    <script>
+    // Navigation logic
+    function showSection(section) {
+        document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+        document.getElementById(section + '-section').classList.add('active');
+        document.querySelectorAll('.navbar a').forEach(a => a.classList.remove('active'));
+        document.getElementById('nav-' + section).classList.add('active');
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+    document.getElementById('nav-home').onclick = function(e){ e.preventDefault(); showSection('home'); };
+    document.getElementById('nav-contact').onclick = function(e){ e.preventDefault(); showSection('contact'); };
+    document.getElementById('nav-help').onclick = function(e){ e.preventDefault(); showSection('help'); };
+    </script>
 </body>
 
 </html>

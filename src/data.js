@@ -108,3 +108,21 @@ const wageData = [
     { country: 'Rwanda', wage: 2.54 },
     { country: 'Uganda', wage: 1.63 }
 ];
+
+// Country name to ISO code map for flags
+const isoMap = {
+    'Estonia': 'ee', 'Australia': 'au', 'Turkey': 'tr', 'Germany': 'de', 'USA': 'us', 'France': 'fr', 'UK': 'gb', 'Russia': 'ru', 'Japan': 'jp', 'Guyana': 'gy',
+    'New Zealand': 'nz', 'Luxembourg': 'lu', 'Belgium': 'be', 'Ireland': 'ie', 'Netherlands': 'nl', 'San Marino': 'sm', 'Israel': 'il', 'South Korea': 'kr',
+    'Spain': 'es', 'Slovenia': 'si', 'Cyprus': 'cy', 'The Bahamas': 'bs', 'Greece': 'gr', 'Portugal': 'pt', 'Oman': 'om', 'Malta': 'mt', 'Lithuania': 'lt',
+    'Barbados': 'bb', 'Palau': 'pw', 'Slovakia': 'sk', 'Iran': 'ir', 'Antigua and Barbuda': 'ag', 'Marshall Islands': 'mh', 'Dominica': 'dm',
+    'Saint Kitts and Nevis': 'kn', 'Montenegro': 'me', 'Trinidad and Tobago': 'tt', 'Latvia': 'lv', 'Argentina': 'ar', 'Seychelles': 'sc', 'Serbia': 'rs',
+    'Saint Vincent and the Grenadines': 'vc', 'Jordan': 'jo', 'Guatemala': 'gt', 'Grenada': 'gd', 'Fiji': 'fj', 'Libya': 'ly', 'Belize': 'bz',
+    'Morocco': 'ma', 'Albania': 'al', 'Qatar': 'qa', 'Gabon': 'ga', 'Thailand': 'th', 'Kuwait': 'kw', 'Iraq': 'iq', 'Peru': 'pe', 'Ukraine': 'ua',
+    'Russia': 'ru', 'Guyana': 'gy', 'Equatorial Guinea': 'gq', 'Papua New Guinea': 'pg', 'Solomon Islands': 'sb', 'Kiribati': 'ki', 'Cambodia': 'kh',
+    'Suriname': 'sr', 'Belarus': 'by', 'Azerbaijan': 'az', 'Indonesia': 'id', 'Vietnam': 'vn', 'Armenia': 'am', 'Philippines': 'ph', 'Mongolia': 'mn',
+    'Haiti': 'ht', 'Algeria': 'dz', 'Cape Verde': 'cv', 'Comoros': 'km', 'Kenya': 'ke', 'Nepal': 'np', 'Pakistan': 'pk', 'East Timor': 'tl',
+    'Mozambique': 'mz', 'Lesotho': 'ls', 'Chad': 'td', 'Kazakhstan': 'kz', 'Democratic Republic of the Congo': 'cd', 'Myanmar': 'mm', 'Senegal': 'sn',
+    'Uzbekistan': 'uz', 'Afghanistan': 'af', 'Angola': 'ao', 'Sierra Leone': 'sl', 'Central African Republic': 'cf', 'Bhutan': 'bt', 'India': 'in',
+    'Tanzania': 'tz', 'Togo': 'tg', 'Ghana': 'gh', 'Niger': 'ne', 'Tajikistan': 'tj', 'Malawi': 'mw', 'Sri Lanka': 'lk', 'Guinea-Bissau': 'gw',
+    'Eswatini': 'sz', 'The Gambia': 'gm', 'Kyrgyzstan': 'kg', 'Bangladesh': 'bd', 'Georgia': 'ge', 'Rwanda': 'rw', 'Uganda': 'ug'
+};
