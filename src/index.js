@@ -91,10 +91,18 @@ function updateSortButtonStyles() {
     }
 }
 
-function renderTable(prices, currency, shownCount = 5, userPrice = null) {
+function renderTable(prices, currency, shownCount = 5, userPrice = null, searchTerm = '') {
     const container = document.getElementById('result-table-container');
     // Add Selling Price header
     let html = `<h2 style="margin-bottom:1rem;font-size:1.4rem;color:#d32f2f;font-weight:bold;">Selling Price</h2>`;
+
+    // Search box
+    html += `
+    <div style="margin-bottom:1rem;display:flex;align-items:center;gap:0.7rem;">
+      <input id="country-search-box" type="text" placeholder="Search country..." style="flex:1;padding:0.5rem 1rem;border-radius:6px;border:1px solid #e2e8f0;font-size:1rem;">
+    </div>
+    `;
+
     // Sorting controls
     html += `
     <div style="margin-bottom:0.7rem;display:flex;gap:1rem;align-items:center;">
@@ -104,10 +112,17 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null) {
     </div>
     `;
 
+    // Filter prices by search term
+    let filteredPrices = prices;
+    if (searchTerm && searchTerm.trim() !== '') {
+        const term = searchTerm.trim().toLowerCase();
+        filteredPrices = prices.filter(p => p.country.toLowerCase().includes(term));
+    }
+
     // Sort prices before rendering
-    let sortedPrices = prices;
+    let sortedPrices = filteredPrices;
     if (currentSort.by) {
-        sortedPrices = sortPrices(prices, currentSort.by, currentSort.asc);
+        sortedPrices = sortPrices(filteredPrices, currentSort.by, currentSort.asc);
     }
 
     // Set a fixed height and enable vertical scroll for the table container
@@ -123,11 +138,9 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null) {
             </tr>
         </thead>
         <tbody>`;
-    // Use userPrice for profit calculation
     sortedPrices.slice(0, shownCount).forEach(({ country, flagUrl, price }) => {
         const localWage = wageData.find(w => w.country === country)?.wage || 0;
         const localCurrency = countryCurrencyMap[country] || currency;
-        // Fix profit calculation: profit = ((price - userPrice) / userPrice) * 100
         let profitPercent = 0;
         if (userPrice && userPrice !== 0) {
             profitPercent = ((price - userPrice) / userPrice) * 100;
@@ -141,7 +154,7 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null) {
         </tr>`;
     });
     html += '</tbody></table></div>';
-    if (prices.length > shownCount) {
+    if (filteredPrices.length > shownCount) {
         html += `<button id="show-more-btn" style="margin-top:1rem;padding:0.7rem 1.5rem;font-size:1rem;background:linear-gradient(90deg,#e53935 0%,#d32f2f 100%);color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:bold;box-shadow:0 2px 8px rgba(229,57,53,0.12);transition:background 0.2s;">↓ Show More ↓</button>`;
     }
     // Modal for PayPal donation
@@ -172,7 +185,7 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null) {
                 currentSort.by = 'country';
                 currentSort.asc = true;
             }
-            renderTable(prices, currency, shownCount);
+            renderTable(prices, currency, shownCount, userPrice, document.getElementById('country-search-box').value);
             updateSortButtonStyles();
         };
     }
@@ -184,7 +197,7 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null) {
                 currentSort.by = 'price';
                 currentSort.asc = false;
             }
-            renderTable(prices, currency, shownCount);
+            renderTable(prices, currency, shownCount, userPrice, document.getElementById('country-search-box').value);
             updateSortButtonStyles();
         };
     }
@@ -198,8 +211,7 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null) {
     if (showMoreBtn) {
         showMoreBtn.onclick = function () {
             shownCountCurrent += 10;
-            // Pass userPrice to keep profit calculation correct
-            renderTable(prices, currency, shownCountCurrent, userPrice);
+            renderTable(prices, currency, shownCountCurrent, userPrice, document.getElementById('country-search-box').value);
             if (!window.paypalModalClosed) {
                 const modal = document.getElementById('paypal-modal');
                 modal.style.display = 'flex';
@@ -208,6 +220,17 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null) {
             }
         };
     }
+
+    // Search box event
+    const searchBox = document.getElementById('country-search-box');
+    if (searchBox) {
+        searchBox.value = searchTerm || '';
+        searchBox.oninput = function () {
+            // When searching, show all matches (no paging)
+            renderTable(prices, currency, 1000, userPrice, searchBox.value);
+        };
+    }
+
     // Add event delegation for closing modal
     document.addEventListener('click', function (event) {
         const modal = document.getElementById('paypal-modal');
@@ -264,9 +287,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const homeCountry = document.getElementById('home-country').value;
             const prices = calculateRelativePrices(price, homeCountry);
             // Pass userPrice to renderTable for profit calculation
-            renderTable(prices, currency, 6, price);
+            renderTable(prices, currency, 6, price, '');
             spinner.style.display = 'none';
         }, 400);
     });
-
 });
