@@ -123,18 +123,20 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null, searchT
     }
 
     // Set a fixed height and enable vertical scroll for the table container
-    html += `<div id="table-scroll-container" style="max-width:1000px;width:100%;margin:0 auto;overflow-x:auto;overflow-y:auto;max-height:420px;border-radius:12px;box-shadow:0 2px 8px rgba(223, 48, 25, 0.04);"> 
-    <table style="width:100%;min-width:780px;border-collapse:collapse;text-align:center;">
-        <thead>
-            <tr style="background:#f4f6fb;">
-                <th style="padding:8px 12px;border-bottom:1px solid #e2e8f0;">Flag</th>
-                <th style="padding:8px 12px;border-bottom:1px solid #e2e8f0;">Country</th>
-                <th style="padding:8px 12px;border-bottom:1px solid #e2e8f0;">Price (${currency})</th>
-                <th style="padding:8px 12px;border-bottom:1px solid #e2e8f0;">Local Price</th>
-                <th style="padding:8px 12px;border-bottom:1px solid #e2e8f0;">Profit %</th>
-            </tr>
-        </thead>
-        <tbody>`;
+    html += `
+    <div style="display:flex;flex-direction:column;align-items:center;width:100%;position:relative;">
+      <div id="table-scroll-container" style="max-width:1000px;width:100%;margin:0 auto;overflow-x:auto;overflow-y:auto;max-height:60vh;min-height:100px;border-radius:12px;box-shadow:0 2px 8px rgba(223, 48, 25, 0.04);background:#fff;position:relative;">
+        <table style="width:100%;min-width:780px;border-collapse:collapse;text-align:center;">
+            <thead>
+                <tr style="background:#f4f6fb;">
+                    <th style="padding:8px 12px;border-bottom:1px solid #e2e8f0;">Flag</th>
+                    <th style="padding:8px 12px;border-bottom:1px solid #e2e8f0;">Country</th>
+                    <th style="padding:8px 12px;border-bottom:1px solid #e2e8f0;">Price (${currency})</th>
+                    <th style="padding:8px 12px;border-bottom:1px solid #e2e8f0;">Local Price</th>
+                    <th style="padding:8px 12px;border-bottom:1px solid #e2e8f0;">Profit %</th>
+                </tr>
+            </thead>
+            <tbody>`;
     sortedPrices.slice(0, shownCount).forEach(({ country, flagUrl, price }) => {
         const localWage = wageData.find(w => w.country === country)?.wage || 0;
         const localCurrency = countryCurrencyMap[country] || currency;
@@ -150,10 +152,15 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null, searchT
             <td style="font-weight:bold;padding:8px 12px;color:${profitPercent >= 0 ? '#388e3c' : '#d32f2f'};">${profitPercent.toFixed(1)}%</td>
         </tr>`;
     });
-    html += '</tbody></table></div>';
+    html += '</tbody></table>';
+    // Move Show More button inside scroll container, sticky at bottom
     if (filteredPrices.length > shownCount) {
-        html += `<button id="show-more-btn" style="margin-top:1rem;padding:0.7rem 1.5rem;font-size:1rem;background:linear-gradient(90deg,#e53935 0%,#d32f2f 100%);color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:bold;box-shadow:0 2px 8px rgba(229,57,53,0.12);transition:background 0.2s;">↓ Show More ↓</button>`;
+        html += `<div style="position:sticky;bottom:0;z-index:2;background:#fff;display:flex;justify-content:center;width:100%;box-shadow:0 -2px 8px rgba(229,57,53,0.06);">
+          <button id="show-more-btn" style="margin:0.5rem 0 0.5rem 0;padding:0.7rem 1.5rem;font-size:1rem;background:linear-gradient(90deg,#e53935 0%,#d32f2f 100%);color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:bold;box-shadow:0 2px 8px rgba(229,57,53,0.12);transition:background 0.2s;">↓ Show More ↓</button>
+        </div>`;
     }
+    html += `</div>`; // close table-scroll-container
+    html += `</div>`; // close flex wrapper
     // Modal for PayPal donation
     html += `
     <div id="paypal-modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(229,57,53,0.12);z-index:1000;justify-content:center;align-items:center;">
