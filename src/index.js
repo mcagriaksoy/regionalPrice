@@ -326,4 +326,5 @@ document.addEventListener('DOMContentLoaded', () => {
             calculateBtn.textContent = 'New Search';
         }, 400);
     });
+
 });
