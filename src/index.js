@@ -93,11 +93,8 @@ function updateSortButtonStyles() {
 
 function renderTable(prices, currency, shownCount = 5, userPrice = null, searchTerm = '') {
     const container = document.getElementById('result-table-container');
-    // Add Selling Price header
-    let html = `<h2 style="margin-bottom:1rem;font-size:1.4rem;color:#d32f2f;font-weight:bold;">Selling Price</h2>`;
-
     // Search box
-    html += `
+    let html = `
     <div style="margin-bottom:1rem;display:flex;align-items:center;gap:0.7rem;">
       <input id="country-search-box" type="text" placeholder="Search country..." style="flex:1;padding:0.5rem 1rem;border-radius:6px;border:1px solid #e2e8f0;font-size:1rem;">
     </div>
@@ -276,19 +273,50 @@ document.addEventListener('DOMContentLoaded', () => {
     if (currencySelect && currencySelect.options.length === 0) {
         currencySelect.innerHTML = '<option value="€">EUR - Euro</option><option value="$">USD - US Dollar</option>';
     }
+    const priceInput = document.getElementById('price');
     const form = document.getElementById('price-form');
+    const calculateBtn = form.querySelector('button[type="submit"]');
+
+    // Group the label+input/select for hiding
+    const homeCountryLabel = form.querySelector('label[for="home-country"]');
+    const priceLabel = form.querySelector('label[for="price"]');
+    const currencyLabel = form.querySelector('label[for="currency"]');
+
+    function setFormFieldsVisible(visible) {
+        // Hide/show label and input/select together
+        [homeCountryLabel, homeCountrySelect, priceLabel, priceInput, currencyLabel, currencySelect].forEach(el => {
+            if (el) el.style.display = visible ? '' : 'none';
+        });
+    }
+
+    // Initial state
+    setFormFieldsVisible(true);
+    calculateBtn.textContent = 'Calculate Regional Prices';
+
+    function resetForm() {
+        setFormFieldsVisible(true);
+        calculateBtn.textContent = 'Calculate Regional Prices';
+        form.reset();
+        document.getElementById('result-table-container').innerHTML = '';
+    }
+
     form.addEventListener('submit', function (event) {
         event.preventDefault();
+        if (calculateBtn.textContent === 'New Search') {
+            resetForm();
+            return;
+        }
         const spinner = document.getElementById('spinner');
         spinner.style.display = 'block';
         setTimeout(() => {
-            const price = parseFloat(document.getElementById('price').value);
-            const currency = document.getElementById('currency').value;
-            const homeCountry = document.getElementById('home-country').value;
+            const price = parseFloat(priceInput.value);
+            const currency = currencySelect.value;
+            const homeCountry = homeCountrySelect.value;
             const prices = calculateRelativePrices(price, homeCountry);
-            // Pass userPrice to renderTable for profit calculation
             renderTable(prices, currency, 6, price, '');
             spinner.style.display = 'none';
+            setFormFieldsVisible(false);
+            calculateBtn.textContent = 'New Search';
         }, 400);
     });
 });
