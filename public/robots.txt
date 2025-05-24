@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://mcagriaksoy.github.io/regionalPrice/sitemap.xml

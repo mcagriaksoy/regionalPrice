@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="UTF-8">
     <!-- Mobile viewport -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=0.95">
 
     <!-- Basic Meta Tags -->
     <title>Regional Price Advisor</title>
@@ -30,14 +30,14 @@
     <meta name="twitter:image" content="https://mcagriaksoy.github.io/regionalPrice/preview.png">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/x-icon" href="./favicon.ico">
 
     <!--  Fonts and Styles -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
     <style>
         body {
             position: relative;
-            background-image: url('src/background.jpg');
+            background-image: url('../src/img/background.jpg');
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center center;
@@ -57,7 +57,7 @@
             width: 100vw;
             height: 100vh;
             z-index: 0;
-            background-image: url('src/background.jpg');
+            background-image: url('../src/img/background.jpg');
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center center;
@@ -233,14 +233,7 @@
             margin-top: 0;
         }
     </style>
-    <!-- Google Translate Widget -->
-    <div id="google_translate_element" style="position:fixed;top:12px;left:12px;z-index:2000;"></div>
-    <script type="text/javascript">
-      function googleTranslateElementInit() {
-        new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
-      }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <!-- Buy Me a Coffee Widget -->
     <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
         data-id="mcagriaksoy" data-description="Support me on Buy me a coffee!"
         data-message="Thank you for using this App! Waiting your supports ❤️" data-color="#FF5F5F"
@@ -265,7 +258,7 @@
     <!-- Home Section -->
     <section id="home-section" class="page-section active">
         <div class="container">
-            <img src="src/icon.png" alt="App Icon" style="display:block;margin:0 auto 1rem auto;width:48px;height:48px;">
+            <img src="favicon.ico" alt="App Icon" style="display:block;margin:0 auto 1rem auto;width:48px;height:48px;">
             <h2>Regional Price Comparison</h2>
             <!-- Description for main page -->
             <p style="text-align:center;color:#444;font-size:1.08rem;margin-bottom:1.4rem;">
@@ -364,8 +357,8 @@
         </div>
     </section>
 
-    <script src="src/data.js"></script>
-    <script src="src/index.js"></script>
+    <script src="../src/data.js"></script>
+    <script src="../src/index.js"></script>
 
 
     <!-- Google tag (gtag.js) -->
