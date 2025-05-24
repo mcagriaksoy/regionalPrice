@@ -2,7 +2,7 @@
   "name": "currency-converter",
   "version": "1.0.0",
   "description": "A simple currency converter that converts USD to Turkish Lira.",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
     "start": "live-server public"
   },
