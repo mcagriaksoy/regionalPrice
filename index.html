@@ -4,8 +4,8 @@
 <head>
 	<!-- Required meta tags -->
 	<meta charset="UTF-8">
-	<!-- Mobile viewport -->
-	<meta name="viewport" content="width=device-width, initial-scale=0.95">
+	<!-- Mobile viewport - correct complete version -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
 	<!-- Basic Meta Tags -->
 	<title>Regional Price Calculator</title>
@@ -44,27 +44,30 @@
 
 
 	<!-- CSS Files -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
 	<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
 
-	<link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
-	<link rel="stylesheet" href="css/animate.css">
-
-	<link rel="stylesheet" href="css/owl.carousel.min.css">
-	<link rel="stylesheet" href="css/owl.theme.default.min.css">
-	<link rel="stylesheet" href="css/magnific-popup.css">
-
-	<link rel="stylesheet" href="css/aos.css">
-
-	<link rel="stylesheet" href="css/ionicons.min.css">
-
-	<link rel="stylesheet" href="css/flaticon.css">
-	<link rel="stylesheet" href="css/icomoon.css">
-	<link rel="stylesheet" href="css/style.css">
+	<!-- Critical CSS -->
 	<style>
+		/* Essential styles for above-the-fold content */
 		.d-none { display: none !important; }
+		.navbar { position: fixed; width: 100%; z-index: 1030; }
+		.navbar-brand { font-size: 1.5rem; font-weight: bold; }
+		.hero { min-height: 100vh; position: relative; }
 	</style>
+
+	<!-- Defer non-critical CSS -->
+	<link rel="stylesheet" href="css/open-iconic-bootstrap.min.css" media="print" onload="this.media='all'">
+	<link rel="stylesheet" href="css/animate.css" media="print" onload="this.media='all'">
+	<link rel="stylesheet" href="css/owl.carousel.min.css" media="print" onload="this.media='all'">
+	<link rel="stylesheet" href="css/owl.theme.default.min.css" media="print" onload="this.media='all'">
+	<link rel="stylesheet" href="css/magnific-popup.css" media="print" onload="this.media='all'">
+	<link rel="stylesheet" href="css/aos.css" media="print" onload="this.media='all'">
+	<link rel="stylesheet" href="css/ionicons.min.css" media="print" onload="this.media='all'">
+	<link rel="stylesheet" href="css/style.css" media="print" onload="this.media='all'">
+	
+	<!-- Remove unused CSS -->
+	<!-- <link rel="stylesheet" href="css/flaticon.css"> -->
+	<!-- <link rel="stylesheet" href="css/icomoon.css"> -->
 </head>
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
@@ -97,7 +100,7 @@
 					<div class="row d-md-flex no-gutters slider-text align-items-end justify-content-end"
 						data-scrollax-parent="true">
 						<div class="one-third js-fullheight order-md-last img"
-							style="background-image:url(images/animation_2.jpg);">
+							style="background-image:url(images/animation_2.webp);">
 							<div class="overlay"></div>
 						</div>
 						<div class="one-forth d-flex  align-items-center ftco-animate"
@@ -120,7 +123,7 @@
 					<div class="row d-flex no-gutters slider-text align-items-end justify-content-end"
 						data-scrollax-parent="true">
 						<div class="one-third js-fullheight order-md-last img"
-							style="background-image:url(images/dark_theme_map.jpg);">
+							style="background-image:url(images/dark_theme_map.webp);">
 							<div class="overlay"></div>
 						</div>
 						<div class="one-forth d-flex align-items-center ftco-animate"
@@ -145,7 +148,7 @@
 					<div class="img-about img d-flex align-items-stretch">
 						<div class="overlay"></div>
 						<div class="img d-flex align-self-stretch align-items-center"
-							style="background-image:url(images/dark_theme_map.jpg);">
+							style="background-image:url(images/dark_theme_map.webp);">
 						</div>
 					</div>
 				</div>
@@ -314,7 +317,7 @@
 			<div class="row d-flex">
 				<div class="col-md-4 d-flex ftco-animate">
 					<div class="blog-entry justify-content-end">
-						<a href="single.html" class="block-20" style="background-image: url('images/image_1.jpg');">
+						<a href="single.html" class="block-20" style="background-image: url('images/image_1.webp');">
 						</a>
 						<div class="text mt-3 float-right d-block">
 							<div class="d-flex align-items-center mb-3 meta">
@@ -333,7 +336,7 @@
 				</div>
 				<div class="col-md-4 d-flex ftco-animate">
 					<div class="blog-entry justify-content-end">
-						<a href="single.html" class="block-20" style="background-image: url('images/image_2.jpg');">
+						<a href="single.html" class="block-20" style="background-image: url('images/image_2.webp');">
 						</a>
 						<div class="text mt-3 float-right d-block">
 							<div class="d-flex align-items-center mb-3 meta">
@@ -352,7 +355,7 @@
 				</div>
 				<div class="col-md-4 d-flex ftco-animate">
 					<div class="blog-entry">
-						<a href="single.html" class="block-20" style="background-image: url('images/image_3.jpg');">
+						<a href="single.html" class="block-20" style="background-image: url('images/image_3.webp');">
 						</a>
 						<div class="text mt-3 float-right d-block">
 							<div class="d-flex align-items-center mb-3 meta">
@@ -412,7 +415,7 @@
 		</div>
 	</section>
 
-	<section class="ftco-section ftco-hireme img margin-top" style="background-image: url(images/bg_1.jpg)">
+	<section class="ftco-section ftco-hireme img margin-top" style="background-image: url(images/bg_1.webp)">
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-md-7 ftco-animate text-center">
@@ -459,7 +462,7 @@
 				</div>
 
 				<div class="col-md-6 d-flex">
-					<div class="img" style="background-image: url(images/about.jpg);"></div>
+					<div class="img" style="background-image: url(images/about.webp);"></div>
 				</div>
 			</div>
 		</div>
