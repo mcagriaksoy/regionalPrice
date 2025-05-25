@@ -1,0 +1,18 @@
+/* Critical styles for above-the-fold content */
+:root {
+    --primary-color: #333;
+    --background-color: #fff;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.header,
+.main-content {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
