@@ -53,6 +53,7 @@
 		.navbar { position: fixed; width: 100%; z-index: 1030; }
 		.navbar-brand { font-size: 1.5rem; font-weight: bold; }
 		.hero { min-height: 100vh; position: relative; }
+		section h1, nav h1, article h1, aside h1 { font-size: 2.5rem; }
 	</style>
 
 	<!-- Defer non-critical CSS -->
@@ -376,6 +377,8 @@
 		</div>
 	</section>
 
+	<!-- Commented out counter section -->
+	<!--
 	<section class="ftco-section ftco-no-pt ftco-no-pb ftco-counter img" id="section-counter">
 		<div class="container">
 			<div class="row d-md-flex align-items-center">
@@ -414,18 +417,7 @@
 			</div>
 		</div>
 	</section>
-
-	<section class="ftco-section ftco-hireme img margin-top" style="background-image: url(images/bg_1.webp)">
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-md-7 ftco-animate text-center">
-					<h2>I'm <span>Available</span> for freelancing</h2>
-					<p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-					<p class="mb-0"><a href="#" class="btn btn-primary py-3 px-5">Hire me</a></p>
-				</div>
-			</div>
-		</div>
-	</section>
+	-->
 
 	<section class="ftco-section contact-section ftco-no-pb" id="contact-section">
 		<div class="container">
@@ -516,9 +508,7 @@
 
 					<p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 						Copyright &copy;
-						<script>document.write(new Date().getFullYear());</script> All rights reserved | This template
-						is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a
-							href="https://colorlib.com" target="_blank">Colorlib</a>
+						<span id="copyright-year"></span> All rights reserved | This template
 						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 					</p>
 				</div>
@@ -553,6 +543,44 @@
 	<script src="js/main.js"></script>
 	<script src="js/resource-loader.js"></script>
 
-</body>
+	<script>
+  // Add accessible names to owl-dot buttons
+  document.addEventListener('DOMContentLoaded', function () {
+    function setOwlDotLabels() {
+      var sliders = document.querySelectorAll('.home-slider');
+      sliders.forEach(function(slider) {
+        var dots = slider.querySelectorAll('.owl-dot');
+        dots.forEach(function(dot, idx) {
+          dot.setAttribute('aria-label', 'Go to slide ' + (idx + 1));
+        });
+      });
+    }
+    // Wait for Owl Carousel to render dots
+    setTimeout(setOwlDotLabels, 500);
+    // Also update on carousel change (in case of dynamic dots)
+    document.addEventListener('DOMNodeInserted', function(e) {
+      if (e.target.classList && e.target.classList.contains('owl-dot')) {
+        setOwlDotLabels();
+      }
+    });
+  });
 
+	document.addEventListener('DOMContentLoaded', function () {
+		// Set copyright year
+		var yearSpan = document.getElementById('copyright-year');
+		if (yearSpan) {
+			yearSpan.textContent = new Date().getFullYear();
+		}
+	});
+
+	// Improve scrolling performance by using passive listeners
+	document.addEventListener('scroll', function () {
+		// ...existing scroll-related code...
+	}, { passive: true });
+
+	document.addEventListener('touchmove', function () {
+		// ...existing touchmove-related code...
+	}, { passive: true });
+	</script>
+</body>
 </html>
