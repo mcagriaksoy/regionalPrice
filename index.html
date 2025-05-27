@@ -43,18 +43,38 @@
 	<!--  Fonts and Styles -->
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
 
-
 	<!-- CSS Files -->
 	<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
 
 	<!-- Critical CSS -->
 	<style>
 		/* Essential styles for above-the-fold content */
-		.d-none { display: none !important; }
-		.navbar { position: fixed; width: 100%; z-index: 1030; }
-		.navbar-brand { font-size: 1.5rem; font-weight: bold; }
-		.hero { min-height: 100vh; position: relative; }
-		section h1, nav h1, article h1, aside h1 { font-size: 2.5rem; }
+		.d-none {
+			display: none !important;
+		}
+
+		.navbar {
+			position: fixed;
+			width: 100%;
+			z-index: 1030;
+		}
+
+		.navbar-brand {
+			font-size: 1.5rem;
+			font-weight: bold;
+		}
+
+		.hero {
+			min-height: 100vh;
+			position: relative;
+		}
+
+		section h1,
+		nav h1,
+		article h1,
+		aside h1 {
+			font-size: 2.5rem;
+		}
 	</style>
 
 	<!-- Defer non-critical CSS -->
@@ -66,19 +86,34 @@
 	<link rel="stylesheet" href="css/aos.css" media="print" onload="this.media='all'">
 	<link rel="stylesheet" href="css/ionicons.min.css" media="print" onload="this.media='all'">
 	<link rel="stylesheet" href="css/style.css" media="print" onload="this.media='all'">
-	
+
 	<!-- Remove unused CSS -->
 	<!-- <link rel="stylesheet" href="css/flaticon.css"> -->
 	<!-- <link rel="stylesheet" href="css/icomoon.css"> -->
+	
+	<style>
+		/* Make TermsFeed cookie consent window shorter horizontally */
+		#cookie-consent-banner, .cc-nb-main-container, .cc-nb-main-container * {
+			max-width: 350px !important;
+			width: 100% !important;
+			min-width: unset !important;
+		}
+		.cc-nb-main-container {
+			left: 20px !important;
+			right: auto !important;
+		}
+	</style>
 </head>
+
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
 
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light site-navbar-target" id="ftco-navbar">
 		<div class="container">
 			<a class="navbar-brand" href="index.html">R€gionalPrice</a>
-			<button class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle" type="button" data-toggle="collapse"
-				data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+			<button class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle" type="button" data-bs-toggle="collapse"
+				data-bs-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false"
+				aria-label="Toggle navigation">
 				<span class="oi oi-menu"></span> Menu
 			</button>
 
@@ -111,8 +146,10 @@
 								<span class="subheading">with the Regional Price Calculate</span>
 								<h1 class="mb-4 mt-3">Increase your <span> Premiumfit and number of user.</span></h1>
 								<h2 class="mb-4">A Freelance Web Designer</h2>
-								<p><a href="#" class="btn btn-primary py-3 px-4">Start Now</a> <a href="#"
-										class="btn btn-white btn-outline-white py-3 px-4">Why Us?</a></p>
+								<p><a href="#calculate-section" class="btn btn-primary py-3 px-4">Start Now</a>
+									<a href="#contact-section" class="btn btn-white btn-outline-white py-3 px-4">Why
+										Us?</a>
+								</p>
 							</div>
 						</div>
 					</div>
@@ -125,7 +162,7 @@
 					<div class="row d-flex no-gutters slider-text align-items-end justify-content-end"
 						data-scrollax-parent="true">
 						<div class="one-third js-fullheight order-md-last img"
-							style="background-image:url(images/dark_theme_map.webp);">
+							style="background-image:url(images/countrylist_1.webp);">
 							<div class="overlay"></div>
 						</div>
 						<div class="one-forth d-flex align-items-center ftco-animate"
@@ -133,8 +170,10 @@
 							<div class="text">
 								<span class="subheading">with the Regional Price Calculate</span>
 								<h1 class="mb-4 mt-3">Calculate and <span> get Advices for your Software</span></h1>
-								<p><a href="#" class="btn btn-primary py-3 px-4">Start Now</a> <a href="#"
-										class="btn btn-white btn-outline-white py-3 px-4">Why Us?</a></p>
+								<p><a href="#calculate-section" class="btn btn-primary py-3 px-4">Start Now</a>
+									<a href="#contact-section" class="btn btn-white btn-outline-white py-3 px-4">Why
+										Us?</a>
+								</p>
 							</div>
 						</div>
 					</div>
@@ -174,7 +213,7 @@
 								<span class="number" data-number="3400000">0</span>
 								<span>Apps using Regional Pricing </span>
 							</p>
-							<p><a href="#" class="btn btn-primary py-3 px-3">Our Premiumposal</a></p>
+							<p><a href="#" class="btn btn-primary py-3 px-3">Our Proposal</a></p>
 						</div>
 					</div>
 				</div>
@@ -188,7 +227,8 @@
 				<div class="col-md-10 heading-section text-center ftco-animate">
 					<h1 class="big big-2">Calculate</h1>
 					<h2 class="mb-4">Regional Price Calculator</h2>
-					<p>Enter your price and country to see recommended regional prices for your app, game, or software.</p>
+					<p>Enter your price and country to see recommended regional prices for your app, game, or software.
+					</p>
 				</div>
 			</div>
 			<div class="row justify-content-center">
@@ -431,32 +471,25 @@
 				</div>
 			</div>
 
-			<div class="row no-gutters block-9">
-				<div class="col-md-6 order-md-last d-flex">
-					<form action="#" class="bg-light p-4 p-md-5 contact-form">
-						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Your Name">
-						</div>
-						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Your Email">
-						</div>
-						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Subject">
-						</div>
-						<div class="form-group">
-							<textarea name="" id="" cols="30" rows="7" class="form-control"
-								placeholder="Message"></textarea>
-						</div>
-						<div class="form-group">
-							<input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
-						</div>
-					</form>
-
-				</div>
-
-				<div class="col-md-6 d-flex">
-					<div class="img" style="background-image: url(images/about.webp);"></div>
-				</div>
+			<div class="row no-gutters block-9 justify-content-center">
+				<form action="#" class="bg-light p-4 p-md-5 contact-form w-100" style="max-width:500px;">
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Your Name">
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Your Email">
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Subject">
+					</div>
+					<div class="form-group">
+						<textarea name="" id="" cols="30" rows="7" class="form-control"
+							placeholder="Message"></textarea>
+					</div>
+					<div class="form-group">
+						<input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
+					</div>
+				</form>
 			</div>
 		</div>
 	</section>
@@ -472,11 +505,6 @@
 							Take the guesswork out of pricing! Our regional price calculator helps app, game, and
 							software developers determine recommended prices for each country, ensuring fair and
 							competitive pricing across global markets.</p>
-						<ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-							<li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-							<li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-							<li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
-						</ul>
 					</div>
 				</div>
 				<div class="col-md">
@@ -486,7 +514,9 @@
 							<li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Home</a></li>
 							<li><a href="#"><span class="icon-long-arrow-right mr-2"></span>About Us</a></li>
 							<li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Cookies</a></li>
-							<li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Terms and Conditions</a></li>
+							<li><a href="https://regionalPriceconverter.com/terms_and_conditions.html"><span
+										class="icon-long-arrow-right mr-2"></span>Terms & Conditions</a>
+							</li>
 							<li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Contact</a></li>
 						</ul>
 					</div>
@@ -508,8 +538,9 @@
 				<div class="col-md-12 text-center">
 
 					<p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-						Copyright &copy;
-						<span id="copyright-year"></span> All rights reserved | This template
+						Copyright &copy;<span id="current-year"></span> All rights reserved | This template is made with
+						<i class="icon-heart color-danger" aria-hidden="true"></i> by
+						<a href="https://colorlib.com" target="_blank">Colorlib</a>
 						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 					</p>
 				</div>
@@ -544,44 +575,77 @@
 	<script src="js/main.js"></script>
 	<script src="js/resource-loader.js"></script>
 
+	<!-- Fallback for mobile navbar toggle if Bootstrap JS fails -->
 	<script>
-  // Add accessible names to owl-dot buttons
-  document.addEventListener('DOMContentLoaded', function () {
-    function setOwlDotLabels() {
-      var sliders = document.querySelectorAll('.home-slider');
-      sliders.forEach(function(slider) {
-        var dots = slider.querySelectorAll('.owl-dot');
-        dots.forEach(function(dot, idx) {
-          dot.setAttribute('aria-label', 'Go to slide ' + (idx + 1));
-        });
-      });
-    }
-    // Wait for Owl Carousel to render dots
-    setTimeout(setOwlDotLabels, 500);
-    // Also update on carousel change (in case of dynamic dots)
-    document.addEventListener('DOMNodeInserted', function(e) {
-      if (e.target.classList && e.target.classList.contains('owl-dot')) {
-        setOwlDotLabels();
-      }
-    });
-  });
-
-	document.addEventListener('DOMContentLoaded', function () {
-		// Set copyright year
-		var yearSpan = document.getElementById('copyright-year');
-		if (yearSpan) {
-			yearSpan.textContent = new Date().getFullYear();
-		}
-	});
-
-	// Improve scrolling performance by using passive listeners
-	document.addEventListener('scroll', function () {
-		// ...existing scroll-related code...
-	}, { passive: true });
-
-	document.addEventListener('touchmove', function () {
-		// ...existing touchmove-related code...
-	}, { passive: true });
+		document.addEventListener('DOMContentLoaded', function () {
+			var navToggle = document.querySelector('.navbar-toggler');
+			var navCollapse = document.getElementById('ftco-nav');
+			if (navToggle && navCollapse) {
+				navToggle.addEventListener('click', function () {
+					navCollapse.classList.toggle('show');
+				});
+			}
+		});
 	</script>
+
+	<script>
+		// Add accessible names to owl-dot buttons
+		document.addEventListener('DOMContentLoaded', function () {
+			function setOwlDotLabels() {
+				var sliders = document.querySelectorAll('.home-slider');
+				sliders.forEach(function (slider) {
+					var dots = slider.querySelectorAll('.owl-dot');
+					dots.forEach(function (dot, idx) {
+						dot.setAttribute('aria-label', 'Go to slide ' + (idx + 1));
+					});
+				});
+			}
+			// Wait for Owl Carousel to render dots
+			setTimeout(setOwlDotLabels, 500);
+			// Also update on carousel change (in case of dynamic dots)
+			document.addEventListener('DOMNodeInserted', function (e) {
+				if (e.target.classList && e.target.classList.contains('owl-dot')) {
+					setOwlDotLabels();
+				}
+			});
+		});
+
+		document.addEventListener('DOMContentLoaded', function () {
+			// Set copyright year
+			var yearSpan = document.getElementById('copyright-year');
+			if (yearSpan) {
+				yearSpan.textContent = new Date().getFullYear();
+			}
+		});
+
+		// Improve scrolling performance by using passive listeners
+		document.addEventListener('scroll', function () {
+			// ...existing scroll-related code...
+		}, { passive: true });
+
+		document.addEventListener('touchmove', function () {
+			// ...existing touchmove-related code...
+		}, { passive: true });
+	</script>
+
+	<!-- Cookie Consent by TermsFeed https://www.TermsFeed.com -->
+	<script type="text/javascript" src="https://www.termsfeed.com/public/cookie-consent/4.2.0/cookie-consent.js"
+		charset="UTF-8"></script>
+	<script type="text/javascript" charset="UTF-8">
+		document.addEventListener('DOMContentLoaded', function () {
+			cookieconsent.run({ "notice_banner_type": "simple", "consent_type": "express", "palette": "dark", "language": "en", "page_load_consent_levels": ["strictly-necessary"], "notice_banner_reject_button_hide": false, "preferences_center_close_button_hide": false, "page_refresh_confirmation_buttons": false, "website_name": "Regional Price Calculator", "website_privacy_policy_url": "https://regionalpricecalculator.com/terms-and-conditions.html" });
+		});
+	</script>
+	<!-- End Cookie Consent by TermsFeed https://www.TermsFeed.com -->
+
+
+
+
+
+	<!-- Below is the link that users can use to open Preferences Center to change their preferences. Do not modify the ID parameter. Place it where appropriate, style it as needed. -->
+
+	<a href="#" id="open_preferences_center">Update cookies preferences</a>
+
 </body>
+
 </html>
