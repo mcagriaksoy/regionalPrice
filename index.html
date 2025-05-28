@@ -41,10 +41,12 @@
 	<meta name="yandex-verification" content="39e8d4bd836c3cf3" />
 
 	<!--  Fonts and Styles -->
-	<link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+	<link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" onload="this.rel='stylesheet'" crossorigin="anonymous">
+	<noscript><link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet" crossorigin="anonymous"></noscript>
 
 	<!-- CSS Files -->
-	<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+	<link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" onload="this.rel='stylesheet'" crossorigin="anonymous">
+	<noscript><link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet" crossorigin="anonymous"></noscript>
 
 	<!-- Critical CSS -->
 	<style>
@@ -629,21 +631,26 @@
 	</script>
 
 	<!-- Cookie Consent by TermsFeed https://www.TermsFeed.com -->
-	<script type="text/javascript" src="https://www.termsfeed.com/public/cookie-consent/4.2.0/cookie-consent.js"
-		charset="UTF-8"></script>
+	<script type="text/javascript" src="https://www.termsfeed.com/public/cookie-consent/4.2.0/cookie-consent.js" charset="UTF-8" defer onload="window.runCookieConsent && window.runCookieConsent()"></script>
 	<script type="text/javascript" charset="UTF-8">
-		document.addEventListener('DOMContentLoaded', function () {
-			cookieconsent.run({ "notice_banner_type": "simple", "consent_type": "express", "palette": "dark", "language": "en", "page_load_consent_levels": ["strictly-necessary"], "notice_banner_reject_button_hide": false, "preferences_center_close_button_hide": false, "page_refresh_confirmation_buttons": false, "website_name": "Regional Price Calculator", "website_privacy_policy_url": "https://regionalpricecalculator.com/terms-and-conditions.html" });
-		});
+	window.runCookieConsent = function() {
+	  cookieconsent.run({
+	    "notice_banner_type": "simple",
+	    "consent_type": "express",
+	    "palette": "dark",
+	    "language": "en",
+	    "page_load_consent_levels": ["strictly-necessary"],
+	    "notice_banner_reject_button_hide": false,
+	    "preferences_center_close_button_hide": false,
+	    "page_refresh_confirmation_buttons": false,
+	    "website_name": "Regional Price Calculator",
+	    "website_privacy_policy_url": "https://regionalpricecalculator.com/terms-and-conditions.html"
+	  });
+	}
 	</script>
 	<!-- End Cookie Consent by TermsFeed https://www.TermsFeed.com -->
 
-
-
-
-
 	<!-- Below is the link that users can use to open Preferences Center to change their preferences. Do not modify the ID parameter. Place it where appropriate, style it as needed. -->
-
 	<a href="#" id="open_preferences_center">Update cookies preferences</a>
 
 </body>
