@@ -8,15 +8,22 @@ function getFlagImageUrl(country) {
 }
 
 // Calculate regional prices based on user input
-function calculateRelativePrices(userPrice, userCountry) {
+function calculateRelativePrices(userPrice, userCountry, limitPercent = 80) {
     const home = wageData.find(w => w.country === userCountry);
     if (!home) return [];
-    
-    return wageData.map(w => ({
-        country: w.country,
-        flagUrl: getFlagImageUrl(w.country),
-        price: parseFloat((userPrice / home.wage * w.wage).toFixed(2))
-    }));
+    const limit = Math.abs(Number(limitPercent)) || 80;
+    return wageData.map(w => {
+        let rawPrice = userPrice / home.wage * w.wage;
+        // Cap the price difference to ±limit%
+        let minPrice = userPrice * (1 - limit / 100);
+        let maxPrice = userPrice * (1 + limit / 100);
+        let cappedPrice = Math.max(minPrice, Math.min(maxPrice, rawPrice));
+        return {
+            country: w.country,
+            flagUrl: getFlagImageUrl(w.country),
+            price: parseFloat(cappedPrice.toFixed(2))
+        };
+    });
 }
 
 // Helper: country to currency code (expand as needed)
@@ -33,6 +40,36 @@ const countryCurrencyMap = {
     'Belgium': 'EUR',
     'Ireland': 'EUR',
 };
+
+// Add exchange rates (will be updated from remote API)
+let exchangeRates = {
+    USD: 1,
+    EUR: 0.92,
+    GBP: 0.79,
+    TRY: 32.5,
+    JPY: 157,
+    RUB: 91,
+    GYD: 209,
+    // ...add more as needed
+};
+
+// Fetch exchange rates from remote API
+function fetchExchangeRates() {
+    // Use exchangerate.host for free, no API key needed
+    fetch('https://api.exchangerate.host/latest?base=USD')
+        .then(res => res.json())
+        .then(data => {
+            if (data && data.rates) {
+                exchangeRates = { ...exchangeRates, ...data.rates };
+            }
+        })
+        .catch(() => {
+            // If fetch fails, keep hardcoded rates
+        });
+}
+
+// Fetch rates on page load
+fetchExchangeRates();
 
 // Sorting state
 let currentSort = { by: 'country', asc: true };
@@ -126,8 +163,15 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null, searchT
         const changePercent = userPrice ? ((price - userPrice) / userPrice) * 100 : 0;
         const changeColor = changePercent >= 0 ? '#16a34a' : '#dc2626';
         const localCurrency = countryCurrencyMap[country] || currency;
-        const localPrice = (price * (countryCurrencyMap[country] ? 1 : 1)).toFixed(2);
-        
+
+        // Convert USD price to local currency using exchangeRates
+        let localPrice = price;
+        if (exchangeRates['USD'] && exchangeRates[localCurrency]) {
+            localPrice = (price * (exchangeRates[localCurrency] / exchangeRates['USD']));
+        }
+        // Fallback: just show price if no rate
+        localPrice = localPrice.toFixed(2);
+
         html += `
             <tr style="border-bottom:1px solid #e2e8f0;">
                 <td style="padding:12px;">
@@ -233,9 +277,50 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Add form submission handler
+    // Insert Advanced Options button and area
     const form = document.getElementById('price-form');
     if (form) {
+        // Create a wrapper div for the buttons if not present
+        let btnWrapper = form.querySelector('.form-btn-wrapper');
+        if (!btnWrapper) {
+            btnWrapper = document.createElement('div');
+            btnWrapper.className = 'form-btn-wrapper';
+            // Move the submit button into the wrapper
+            const calcBtn = form.querySelector('[type="submit"]');
+            if (calcBtn) btnWrapper.appendChild(calcBtn);
+            form.appendChild(btnWrapper);
+        }
+
+        // Create advanced options button and area
+        const advBtn = document.createElement('button');
+        advBtn.type = 'button';
+        advBtn.id = 'advanced-options-btn';
+        advBtn.textContent = 'Advanced Options';
+        advBtn.style.marginRight = '10px';
+
+        const advArea = document.createElement('div');
+        advArea.id = 'advanced-options-area';
+        advArea.style.display = 'none';
+        advArea.style.margin = '10px 0';
+        advArea.innerHTML = `
+            <label style="font-weight:500;">
+                Price Difference Limit (%): 
+                <input type="number" id="limit-percent" min="1" max="99" value="80" style="width:60px;margin-left:8px;">
+            </label>
+        `;
+
+        // Insert Advanced Options button before the Calculate button in the wrapper
+        const calcBtn = btnWrapper.querySelector('[type="submit"]');
+        btnWrapper.insertBefore(advBtn, calcBtn);
+
+        // Insert Advanced Options area after the button wrapper, inside the form
+        form.insertBefore(advArea, btnWrapper.nextSibling);
+
+        advBtn.onclick = function() {
+            advArea.style.display = advArea.style.display === 'none' ? 'block' : 'none';
+        };
+
+        // Add form submission handler
         form.addEventListener('submit', handleRegionalPriceCalculation);
     }
 });
@@ -243,29 +328,31 @@ document.addEventListener('DOMContentLoaded', function() {
 // Update form handler
 function handleRegionalPriceCalculation(event) {
     event.preventDefault();
-    
+
     const form = event.target;
     const price = parseFloat(form.querySelector('#price').value);
     const currency = form.querySelector('#currency').value;
     const homeCountry = form.querySelector('#home-country').value;
-    
+    const limitInput = document.getElementById('limit-percent');
+    const limitPercent = limitInput ? parseFloat(limitInput.value) : 80;
+
     const spinner = document.getElementById('spinner');
     const resultContainer = document.getElementById('result-table-container');
-    
+
     // Input validation
     if (isNaN(price) || price <= 0 || !homeCountry) {
         resultContainer.innerHTML = '<div style="color:#dc2626;padding:1rem;">Please enter a valid price and select your country.</div>';
         resultContainer.classList.remove('d-none');
         return;
     }
-    
+
     // Show loading state
     resultContainer.classList.add('d-none');
     if (spinner) spinner.style.display = 'block';
-    
+
     // Calculate prices
     setTimeout(() => {
-        const prices = calculateRelativePrices(price, homeCountry);
+        const prices = calculateRelativePrices(price, homeCountry, limitPercent);
         if (spinner) spinner.style.display = 'none';
         renderTable(prices, currency, 10, price);
     }, 400);
