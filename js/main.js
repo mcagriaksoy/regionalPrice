@@ -51,14 +51,20 @@ AOS.init({
 
 			if ($('#ftco-nav').is(':visible')) {
 				$(this).removeClass('active');
+				$('#ftco-nav').removeClass('show');
 			} else {
 				$(this).addClass('active');
+				$('#ftco-nav').addClass('show');
 			}
-
-
-
 		});
 
+		// Close menu when a nav link is clicked (mobile)
+		$(document).on('click', '#ftco-nav a[href^="#"]', function () {
+			if ($('.js-fh5co-nav-toggle').is(':visible')) {
+				$('.js-fh5co-nav-toggle').removeClass('active');
+				$('#ftco-nav').removeClass('show');
+			}
+		});
 	};
 	burgerMenu();
 
