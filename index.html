@@ -529,45 +529,50 @@
 			</div>
 
 			<div class="row no-gutters block-9 justify-content-center">
-				<form id="contact-form" action="#" class="bg-light p-4 p-md-5 contact-form w-100" style="max-width:500px;">
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Your Name" required>
-					</div>
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Company Name (optional)">
-					</div>
-					<div class="form-group">
-						<input type="email" class="form-control" placeholder="Your Email" required>
-					</div>
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Subject" required>
-					</div>
-					<div class="form-group">
-						<textarea name="" id="" cols="30" rows="7" class="form-control"
-							placeholder="Message" required></textarea>
-					</div>
-					<div class="form-group">
-						<select class="form-control" id="contact-hear" style="margin-bottom:10px;">
-							<option value="">Where did you hear about us? (optional)</option>
-							<option value="Google">Google Search</option>
-							<option value="Social Media">Social Media</option>
-							<option value="Friend/Colleague">Friend/Colleague</option>
-							<option value="Blog/Article">Blog/Article</option>
-							<option value="Other">Other</option>
-						</select>
-					</div>
-					<div class="form-group" style="margin-bottom:10px;">
-						<label for="contact-captcha" style="font-weight:500;display:block;margin-bottom:4px;">Security Check</label>
-						<div style="display:flex;align-items:center;">
-							<span id="captcha-question" style="font-weight:600;margin-right:10px;"></span>
-							<input type="text" id="contact-captcha" class="form-control" style="width:100px;display:inline-block;" placeholder="Answer" required>
-						</div>
-						<small id="captcha-error" style="color:#dc2626;display:none;">Incorrect answer. Please try again.</small>
-					</div>
-					<div class="form-group">
-						<input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
-					</div>
-				</form>
+			   <form id="contact-form" action="https://formspree.io/f/xvganlll" method="POST" class="bg-light p-4 p-md-5 contact-form w-100" style="max-width:500px;">
+				   <div class="form-group">
+					   <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+				   </div>
+				   <div class="form-group">
+					   <input type="text" name="company" class="form-control" placeholder="Company Name (optional)">
+				   </div>
+				   <div class="form-group">
+					   <input type="email" name="email" class="form-control" placeholder="Your Email" required>
+				   </div>
+				   <div class="form-group">
+					   <input type="text" name="subject" class="form-control" placeholder="Subject" required>
+				   </div>
+				   <div class="form-group">
+					   <textarea name="message" id="" cols="30" rows="7" class="form-control"
+						   placeholder="Message" required></textarea>
+				   </div>
+				   <div class="form-group">
+					   <select class="form-control" id="contact-hear" name="hear_about" style="margin-bottom:10px;">
+						   <option value="">Where did you hear about us? (optional)</option>
+						   <option value="Google">Google Search</option>
+						   <option value="Social Media">Social Media</option>
+						   <option value="Friend/Colleague">Friend/Colleague</option>
+						   <option value="Blog/Article">Blog/Article</option>
+						   <option value="Other">Other</option>
+					   </select>
+				   </div>
+				   <div class="form-group" style="margin-bottom:10px;">
+					   <label for="contact-captcha" style="font-weight:500;display:block;margin-bottom:4px;">Security Check</label>
+					   <div style="display:flex;align-items:center;">
+						   <span id="captcha-question" style="font-weight:600;margin-right:10px;"></span>
+						   <input type="text" id="contact-captcha" name="captcha" class="form-control" style="width:100px;display:inline-block;" placeholder="Answer" required>
+					   </div>
+					   <small id="captcha-error" style="color:#dc2626;display:none;">Incorrect answer. Please try again.</small>
+				   </div>
+				   <input type="hidden" name="_subject" value="New Contact Submission from Regional Price Calculator">
+				   <input type="hidden" name="_next" value="https://regionalpriceconverter.com/regionalPrice/?contact=success">
+				   <div class="form-group">
+					   <input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
+				   </div>
+			   </form>
+			   <div style="font-size:0.95em;color:#666;margin-top:10px;text-align:center;">
+				   This form is protected by <a href="https://formspree.io/" target="_blank" rel="noopener">Formspree</a>.
+			   </div>
 			</div>
 			<!-- Contact Success Popup -->
 			<div id="contact-success-popup" style="display:none;position:fixed;z-index:9999;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;">
@@ -783,26 +788,24 @@ document.addEventListener('DOMContentLoaded', function () {
 				captchaInput.classList.add('is-invalid');
 				return;
 			}
-			// Success: prevent reload, show popup, reset form
-			e.preventDefault();
-			if (captchaError) captchaError.style.display = 'none';
-			captchaInput.classList.remove('is-invalid');
-			if (contactSuccessPopup) contactSuccessPopup.style.display = 'flex';
-			contactForm.reset();
-			// Regenerate captcha for next submit
-			captchaA = Math.floor(Math.random() * 10) + 1;
-			captchaB = Math.floor(Math.random() * 10) + 1;
-			captchaAnswer = captchaA + captchaB;
-			var captchaQuestion = document.getElementById('captcha-question');
-			if (captchaQuestion) {
-				captchaQuestion.textContent = `What is ${captchaA} + ${captchaB}?`;
-			}
+			// For mailto: let the browser handle sending the email, but show popup after short delay
+			setTimeout(function() {
+				if (contactSuccessPopup) contactSuccessPopup.style.display = 'flex';
+				contactForm.reset();
+				// Regenerate captcha for next submit
+				captchaA = Math.floor(Math.random() * 10) + 1;
+				captchaB = Math.floor(Math.random() * 10) + 1;
+				captchaAnswer = captchaA + captchaB;
+				var captchaQuestion = document.getElementById('captcha-question');
+				if (captchaQuestion) {
+					captchaQuestion.textContent = `What is ${captchaA} + ${captchaB}?`;
+				}
+			}, 500);
 		});
 	}
 	if (contactSuccessClose && contactSuccessPopup) {
 		contactSuccessClose.addEventListener('click', function () {
 			contactSuccessPopup.style.display = 'none';
-			// Scroll to contact section
 			var contactSection = document.getElementById('contact-section');
 			if (contactSection) {
 				contactSection.scrollIntoView({ behavior: 'smooth' });
