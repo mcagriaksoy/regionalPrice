@@ -529,7 +529,7 @@
 			</div>
 
 			<div class="row no-gutters block-9 justify-content-center">
-			   <form id="contact-form" action="https://formspree.io/f/xvganlll" method="POST" class="bg-light p-4 p-md-5 contact-form w-100" style="max-width:500px;">
+<form id="contact-form" action="https://formspree.io/f/xvganlll" method="POST" class="bg-light p-4 p-md-5 contact-form w-100" style="max-width:500px;">
 				   <div class="form-group">
 					   <input type="text" name="name" class="form-control" placeholder="Your Name" required>
 				   </div>
@@ -564,23 +564,12 @@
 					   </div>
 					   <small id="captcha-error" style="color:#dc2626;display:none;">Incorrect answer. Please try again.</small>
 				   </div>
-				   <input type="hidden" name="_subject" value="New Contact Submission from Regional Price Calculator">
-				   <input type="hidden" name="_next" value="https://regionalpriceconverter.com/regionalPrice/?contact=success">
-				   <div class="form-group">
-					   <input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
-				   </div>
-			   </form>
-			   <div style="font-size:0.95em;color:#666;margin-top:10px;text-align:center;">
-				   This form is protected by <a href="https://formspree.io/" target="_blank" rel="noopener">Formspree</a>.
-			   </div>
-			</div>
-			<!-- Contact Success Popup -->
-			<div id="contact-success-popup" style="display:none;position:fixed;z-index:9999;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;">
-				<div style="background:#fff;border-radius:12px;max-width:350px;width:90%;margin:auto;box-shadow:0 4px 32px rgba(0,0,0,0.18);padding:28px 18px 18px 18px;position:relative;top:15vh;text-align:center;">
-					<h5 style="color:#16a34a;margin-bottom:12px;">Message Sent!</h5>
-					<p style="color:#333;">Thank you for contacting us.<br>We will get back to you soon.</p>
-					<button id="contact-success-close" style="margin-top:18px;background:#e53935;color:#fff;padding:8px 24px;border:none;border-radius:6px;font-weight:600;cursor:pointer;">Close</button>
-				</div>
+   <input type="hidden" name="_subject" value="New Contact Submission from Regional Price Calculator">
+   <input type="hidden" name="_next" value="?contact=success">
+   <div class="form-group">
+	   <input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
+   </div>
+   </form>
 			</div>
 		</div>
 	</section>
@@ -740,9 +729,8 @@
 	</script>
 	<!-- End Cookie Consent by TermsFeed https://www.TermsFeed.com -->
 <script>
-// filepath: c:\Users\mcagr\Desktop\regionalPrice\index.html
+// Contact form captcha logic and Formspree success popup
 document.addEventListener('DOMContentLoaded', function () {
-	// Contact form captcha logic
 	var captchaA = Math.floor(Math.random() * 10) + 1;
 	var captchaB = Math.floor(Math.random() * 10) + 1;
 	var captchaAnswer = captchaA + captchaB;
@@ -750,9 +738,24 @@ document.addEventListener('DOMContentLoaded', function () {
 	var contactForm = document.getElementById('contact-form');
 	var captchaInput = document.getElementById('contact-captcha');
 	var captchaError = document.getElementById('captcha-error');
+	var contactSuccessPopup = document.getElementById('contact-success-popup');
+	var contactSuccessClose = document.getElementById('contact-success-close');
 
 	if (captchaQuestion) {
 		captchaQuestion.textContent = `What is ${captchaA} + ${captchaB}?`;
+	}
+
+	// Show popup if redirected with ?contact=success
+	if (window.location.search.indexOf('contact=success') !== -1) {
+		if (contactSuccessPopup) contactSuccessPopup.style.display = 'flex';
+		// Remove the query param from the URL for a cleaner look
+		if (window.history.replaceState) {
+			var url = window.location.href.replace(/([?&])contact=success(&|$)/, function(match, p1, p2) {
+				if (p2 === '&') return p1;
+				return '';
+			}).replace(/[?&]$/, '');
+			window.history.replaceState({}, document.title, url);
+		}
 	}
 
 	if (contactForm) {
@@ -765,42 +768,6 @@ document.addEventListener('DOMContentLoaded', function () {
 				if (captchaError) captchaError.style.display = 'none';
 				captchaInput.classList.remove('is-invalid');
 			}
-		});
-	}
-});
-</script>
-<script>
-// filepath: c:\Users\mcagr\Desktop\regionalPrice\index.html
-document.addEventListener('DOMContentLoaded', function () {
-	// Contact form submit: prevent reload, show popup
-	var contactForm = document.getElementById('contact-form');
-	var captchaInput = document.getElementById('contact-captcha');
-	var captchaError = document.getElementById('captcha-error');
-	var contactSuccessPopup = document.getElementById('contact-success-popup');
-	var contactSuccessClose = document.getElementById('contact-success-close');
-
-	if (contactForm) {
-		contactForm.addEventListener('submit', function (e) {
-			// ...existing captcha validation...
-			if (captchaInput && Number(captchaInput.value) !== captchaAnswer) {
-				e.preventDefault();
-				if (captchaError) captchaError.style.display = 'block';
-				captchaInput.classList.add('is-invalid');
-				return;
-			}
-			// For mailto: let the browser handle sending the email, but show popup after short delay
-			setTimeout(function() {
-				if (contactSuccessPopup) contactSuccessPopup.style.display = 'flex';
-				contactForm.reset();
-				// Regenerate captcha for next submit
-				captchaA = Math.floor(Math.random() * 10) + 1;
-				captchaB = Math.floor(Math.random() * 10) + 1;
-				captchaAnswer = captchaA + captchaB;
-				var captchaQuestion = document.getElementById('captcha-question');
-				if (captchaQuestion) {
-					captchaQuestion.textContent = `What is ${captchaA} + ${captchaB}?`;
-				}
-			}, 500);
 		});
 	}
 	if (contactSuccessClose && contactSuccessPopup) {
