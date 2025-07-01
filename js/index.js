@@ -7,17 +7,38 @@ function getFlagImageUrl(country) {
     return `https://flagcdn.com/48x36/${code}.png`;
 }
 
-// Calculate regional prices based on user input
-function calculateRelativePrices(userPrice, userCountry, limitPercent = 80) {
+// Calculate regional prices based on user input and advanced settings
+function calculateRelativePrices(userPrice, userCountry, limitPercent = 80, options = {}) {
     const home = wageData.find(w => w.country === userCountry);
     if (!home) return [];
     const limit = Math.abs(Number(limitPercent)) || 80;
+    const {
+        minPrice = '', // absolute min price (in user's currency)
+        maxPrice = '', // absolute max price (in user's currency)
+        rounding = 'none', // 'none', 'nearest', 'down', 'up'
+        enableCapping = true
+    } = options;
+
     return wageData.map(w => {
         let rawPrice = userPrice / home.wage * w.wage;
-        // Cap the price difference to ±limit%
-        let minPrice = userPrice * (1 - limit / 100);
-        let maxPrice = userPrice * (1 + limit / 100);
-        let cappedPrice = Math.max(minPrice, Math.min(maxPrice, rawPrice));
+
+        // Cap the price difference to ±limit% if enabled
+        let cappedPrice = rawPrice;
+        if (enableCapping) {
+            let minLimit = userPrice * (1 - limit / 100);
+            let maxLimit = userPrice * (1 + limit / 100);
+            cappedPrice = Math.max(minLimit, Math.min(maxLimit, cappedPrice));
+        }
+
+        // Apply absolute min/max if set
+        if (minPrice !== '' && !isNaN(minPrice)) cappedPrice = Math.max(Number(minPrice), cappedPrice);
+        if (maxPrice !== '' && !isNaN(maxPrice)) cappedPrice = Math.min(Number(maxPrice), cappedPrice);
+
+        // Rounding
+        if (rounding === 'nearest') cappedPrice = Math.round(cappedPrice);
+        else if (rounding === 'down') cappedPrice = Math.floor(cappedPrice);
+        else if (rounding === 'up') cappedPrice = Math.ceil(cappedPrice);
+
         return {
             country: w.country,
             flagUrl: getFlagImageUrl(w.country),
@@ -291,7 +312,7 @@ document.addEventListener('DOMContentLoaded', function() {
             form.appendChild(btnWrapper);
         }
 
-        // Create advanced options button and area
+        // Advanced options UI
         const advBtn = document.createElement('button');
         advBtn.type = 'button';
         advBtn.id = 'advanced-options-btn';
@@ -303,10 +324,41 @@ document.addEventListener('DOMContentLoaded', function() {
         advArea.style.display = 'none';
         advArea.style.margin = '10px 0';
         advArea.innerHTML = `
-            <label style="font-weight:500;">
-                Price Difference Limit (%): 
-                <input type="number" id="limit-percent" min="1" max="99" value="80" style="width:60px;margin-left:8px;">
-            </label>
+            <div style="margin-bottom:10px;">
+                <label style="font-weight:500;">
+                    Price Difference Limit (%): 
+                    <input type="number" id="limit-percent" min="1" max="99" value="80" style="width:60px;margin-left:8px;">
+                </label>
+            </div>
+            <div style="margin-bottom:10px;">
+                <label style="font-weight:500;">
+                    Minimum Price (your currency): 
+                    <input type="number" id="min-price" min="0" step="0.01" style="width:80px;margin-left:8px;">
+                </label>
+            </div>
+            <div style="margin-bottom:10px;">
+                <label style="font-weight:500;">
+                    Maximum Price (your currency): 
+                    <input type="number" id="max-price" min="0" step="0.01" style="width:80px;margin-left:8px;">
+                </label>
+            </div>
+            <div style="margin-bottom:10px;">
+                <label style="font-weight:500;">
+                    Rounding: 
+                    <select id="rounding" style="margin-left:8px;">
+                        <option value="none">No rounding</option>
+                        <option value="nearest">Nearest integer</option>
+                        <option value="down">Round down</option>
+                        <option value="up">Round up</option>
+                    </select>
+                </label>
+            </div>
+            <div>
+                <label style="font-weight:500;">
+                    <input type="checkbox" id="enable-capping" checked style="margin-right:6px;">
+                    Enable price difference capping
+                </label>
+            </div>
         `;
 
         // Insert Advanced Options button before the Calculate button in the wrapper
@@ -334,7 +386,16 @@ function handleRegionalPriceCalculation(event) {
     const currency = form.querySelector('#currency').value;
     const homeCountry = form.querySelector('#home-country').value;
     const limitInput = document.getElementById('limit-percent');
+    const minPriceInput = document.getElementById('min-price');
+    const maxPriceInput = document.getElementById('max-price');
+    const roundingInput = document.getElementById('rounding');
+    const enableCappingInput = document.getElementById('enable-capping');
+
     const limitPercent = limitInput ? parseFloat(limitInput.value) : 80;
+    const minPrice = minPriceInput && minPriceInput.value !== '' ? parseFloat(minPriceInput.value) : '';
+    const maxPrice = maxPriceInput && maxPriceInput.value !== '' ? parseFloat(maxPriceInput.value) : '';
+    const rounding = roundingInput ? roundingInput.value : 'none';
+    const enableCapping = enableCappingInput ? enableCappingInput.checked : true;
 
     const spinner = document.getElementById('spinner');
     const resultContainer = document.getElementById('result-table-container');
@@ -352,7 +413,12 @@ function handleRegionalPriceCalculation(event) {
 
     // Calculate prices
     setTimeout(() => {
-        const prices = calculateRelativePrices(price, homeCountry, limitPercent);
+        const prices = calculateRelativePrices(price, homeCountry, limitPercent, {
+            minPrice,
+            maxPrice,
+            rounding,
+            enableCapping
+        });
         if (spinner) spinner.style.display = 'none';
         renderTable(prices, currency, 10, price);
     }, 400);
