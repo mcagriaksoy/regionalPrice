@@ -357,3 +357,32 @@ function handleRegionalPriceCalculation(event) {
         renderTable(prices, currency, 10, price);
     }, 400);
 }
+
+// Intercept Calculate button to show ad popup before calculation
+document.addEventListener('DOMContentLoaded', function () {
+    // Ad popup logic
+    var calcBtn = document.getElementById('calculate-btn');
+    var form = document.getElementById('price-form');
+    var adPopup = document.getElementById('ad-popup-modal');
+    var adClose = document.getElementById('ad-popup-close');
+    let allowSubmit = false;
+
+    if (calcBtn && form && adPopup && adClose) {
+        // Intercept form submit
+        form.addEventListener('submit', function (e) {
+            if (!allowSubmit) {
+                e.preventDefault();
+                adPopup.style.display = 'flex';
+            } else {
+                allowSubmit = false; // reset for next submit
+            }
+        });
+
+        adClose.addEventListener('click', function () {
+            adPopup.style.display = 'none';
+            allowSubmit = true;
+            // Trigger form submit programmatically
+            form.requestSubmit ? form.requestSubmit() : form.submit();
+        });
+    }
+});
