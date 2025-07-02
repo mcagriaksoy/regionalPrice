@@ -49,6 +49,13 @@
 	<link rel="preload" href="https://fonts.gstatic.com/s/poppins/v20/pxiEyp8kv8JHgFVrJJfecg.woff2" as="font" type="font/woff2" crossorigin>
 	<link rel="preload" href="https://fonts.gstatic.com/s/poppins/v20/pxiByp8kv8JHgFVrLGT9Z1xlFd2JQEk.woff2" as="font" type="font/woff2" crossorigin>
 	
+	<!-- Preload critical hero images for LCP optimization -->
+	<link rel="preload" href="images/animation_2.webp" as="image" type="image/webp">
+	<link rel="preload" href="images/countrylist_1.webp" as="image" type="image/webp">
+	
+	<!-- Prefetch other hero images -->
+	<link rel="prefetch" href="images/dark_theme_map.webp" as="image" type="image/webp">
+	
 	<!--  Fonts and Styles with optimized loading -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" crossorigin="anonymous">
@@ -83,6 +90,8 @@
 		.hero {
 			min-height: 100vh;
 			position: relative;
+			/* Ensure hero loads first */
+			contain: layout style paint;
 		}
 
 		section h1,
@@ -108,6 +117,39 @@
 		/* Reserve space for text content */
 		.slider-text .text {
 			min-height: 200px;
+		}
+
+		/* Optimize hero images for LCP */
+		.hero .slider-item .img {
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
+			/* Ensure images are loaded immediately */
+			will-change: transform;
+		}
+
+		/* Preload first slide image */
+		.hero .slider-item:first-child .img {
+			background-image: url('images/animation_2.webp');
+		}
+
+		/* Optimize slider for faster rendering */
+		.home-slider {
+			/* Prevent layout shifts during initialization */
+			min-height: 100vh;
+		}
+
+		/* Reserve space for images to prevent layout shift */
+		.one-third.img {
+			min-height: 400px;
+			/* Ensure consistent sizing */
+			aspect-ratio: 16/9;
+		}
+
+		@media (min-width: 768px) {
+			.one-third.img {
+				min-height: 500px;
+			}
 		}
 	</style>
 
@@ -167,17 +209,16 @@
 		</div>
 	</nav>
 	<section id="home-section" class="hero">
-		<div class="home-slider  owl-carousel">
-			<div class="slider-item ">
+		<div class="home-slider owl-carousel">
+			<div class="slider-item">
 				<div class="overlay"></div>
 				<div class="container">
 					<div class="row d-md-flex no-gutters slider-text align-items-end justify-content-end"
 						data-scrollax-parent="true">
-						<div class="one-third js-fullheight order-md-last img"
-							style="background-image:url(images/animation_2.webp);">
+						<div class="one-third js-fullheight order-md-last img">
 							<div class="overlay"></div>
 						</div>
-						<div class="one-forth d-flex  align-items-center ftco-animate"
+						<div class="one-forth d-flex align-items-center ftco-animate"
 							data-scrollax=" properties: { translateY: '70%' }">
 							<div class="text">
 								<span class="subheading">With the Regional Price Calculate</span>
