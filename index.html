@@ -43,25 +43,27 @@
 	<meta name="yandex-verification" content="39e8d4bd836c3cf3" />
 	<meta name="google-adsense-account" content="ca-pub-3456164589806161">
 	
-	<!--  Fonts and Styles -->
-	<link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap"
-		onload="this.rel='stylesheet'" crossorigin="anonymous">
-	<noscript>
-		<link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet"
-			crossorigin="anonymous">
-	</noscript>
+	<!-- Preload critical fonts to prevent layout shift -->
+	<link rel="preload" href="https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu4mxK.woff2" as="font" type="font/woff2" crossorigin>
+	<link rel="preload" href="https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmWUlfBBc4.woff2" as="font" type="font/woff2" crossorigin>
+	<link rel="preload" href="https://fonts.gstatic.com/s/poppins/v20/pxiEyp8kv8JHgFVrJJfecg.woff2" as="font" type="font/woff2" crossorigin>
+	<link rel="preload" href="https://fonts.gstatic.com/s/poppins/v20/pxiByp8kv8JHgFVrLGT9Z1xlFd2JQEk.woff2" as="font" type="font/woff2" crossorigin>
+	
+	<!--  Fonts and Styles with optimized loading -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" crossorigin="anonymous">
 
-	<!-- CSS Files -->
-	<link rel="preload" as="style"
-		href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900"
-		onload="this.rel='stylesheet'" crossorigin="anonymous">
-	<noscript>
-		<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900"
-			rel="stylesheet" crossorigin="anonymous">
-	</noscript>
-
-	<!-- Critical CSS -->
+	<!-- Critical CSS with font fallbacks -->
 	<style>
+		/* Font fallback system to prevent layout shift */
+		body {
+			font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+		}
+		
+		.navbar-brand, h1, h2, h3, h4, h5, h6 {
+			font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+		}
+
 		/* Essential styles for above-the-fold content */
 		.d-none {
 			display: none !important;
@@ -88,6 +90,24 @@
 		article h1,
 		aside h1 {
 			font-size: 2.5rem;
+			line-height: 1.2;
+		}
+
+		/* Prevent font swap layout shift */
+		.text h1 {
+			font-size: 2.5rem;
+			line-height: 1.2;
+			margin-bottom: 1rem;
+		}
+
+		.subheading {
+			font-size: 1rem;
+			line-height: 1.4;
+		}
+
+		/* Reserve space for text content */
+		.slider-text .text {
+			min-height: 200px;
 		}
 	</style>
 
@@ -105,8 +125,8 @@
 	<!-- <link rel="stylesheet" href="css/flaticon.css"> -->
 	<!-- <link rel="stylesheet" href="css/icomoon.css"> -->
 
+	<!-- Make TermsFeed cookie consent window shorter horizontally -->
 	<style>
-		/* Make TermsFeed cookie consent window shorter horizontally */
 		#cookie-consent-banner,
 		.cc-nb-main-container,
 		.cc-nb-main-container * {
@@ -124,7 +144,7 @@
 <script src="https://couphaithuph.net/act/files/tag.min.js?z=9513623" data-cfasync="false" async></script>
 </head>
 
-<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300" class="font-loading">
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light site-navbar-target" id="ftco-navbar">
 		<div class="container">
 			<a class="navbar-brand" href="index.html">R€gionalPrice</a>
