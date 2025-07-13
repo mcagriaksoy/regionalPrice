@@ -255,7 +255,7 @@ function updateSortButtonStyles() {
 // Render the results table
 function renderTable(prices, currency, shownCount = 5, userPrice = null, searchTerm = '') {
     const container = document.getElementById('result-table-container');
-    
+
     let html = `
     <div style="margin-bottom:1rem;">
         <input id="country-search-box" type="text" placeholder="Search country..." 
@@ -285,14 +285,14 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null, searchT
     // Filter and sort prices
     let displayPrices = prices;
     if (searchTerm) {
-        displayPrices = prices.filter(p => 
+        displayPrices = prices.filter(p =>
             p.country.toLowerCase().includes(searchTerm.toLowerCase())
         );
     }
-    
+
     // Apply current sort
     displayPrices = sortPrices(displayPrices, currentSort.by, currentSort.asc);
-    
+
     displayPrices.slice(0, shownCount).forEach(({ country, flagUrl, price }) => {
         const changePercent = userPrice ? ((price - userPrice) / userPrice) * 100 : 0;
         const changeColor = changePercent >= 0 ? '#16a34a' : '#dc2626';
@@ -324,9 +324,9 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null, searchT
                 </td>
             </tr>`;
     });
-    
+
     html += `</tbody></table></div>`;
-    
+
     if (displayPrices.length > shownCount) {
         html += `
         <div style="text-align:center;margin-top:1rem;">
@@ -336,7 +336,7 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null, searchT
             </button>
         </div>`;
     }
-    
+
     container.innerHTML = html;
     container.classList.remove('d-none');
 
@@ -359,7 +359,7 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null, searchT
     // Add sorting button event listeners
     const sortCountryBtn = document.getElementById('sort-by-country');
     const sortPriceBtn = document.getElementById('sort-by-price');
-    
+
     if (sortCountryBtn) {
         sortCountryBtn.onclick = () => {
             if (currentSort.by === 'country') {
@@ -371,7 +371,7 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null, searchT
             renderTable(prices, currency, shownCount, userPrice, searchTerm);
         };
     }
-    
+
     if (sortPriceBtn) {
         sortPriceBtn.onclick = () => {
             if (currentSort.by === 'price') {
@@ -386,7 +386,7 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null, searchT
 }
 
 // Populate country dropdown and marketplace when page loads
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const homeCountrySelect = document.getElementById('home-country');
     const currencySelect = document.getElementById('currency');
     const form = document.getElementById('price-form');
@@ -432,7 +432,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
         // Auto-select user's country using geolocation, fallback to USA
-        detectUserCountry(function(userCountry) {
+        detectUserCountry(function (userCountry) {
             let found = false;
             if (userCountry) {
                 for (let i = 0; i < homeCountrySelect.options.length; i++) {
@@ -536,7 +536,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Insert Advanced Options area after the button wrapper, inside the form
             form.insertBefore(advArea, btnWrapper.nextSibling);
 
-            advBtn.onclick = function() {
+            advBtn.onclick = function () {
                 advArea.style.display = advArea.style.display === 'none' ? 'block' : 'none';
             };
         }
@@ -562,7 +562,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </label>
         `;
         form.insertBefore(modeDiv, form.firstChild.nextSibling);
-        document.getElementById('calculation-mode').onchange = function(e) {
+        document.getElementById('calculation-mode').onchange = function (e) {
             calculationMode = e.target.value;
         };
     }

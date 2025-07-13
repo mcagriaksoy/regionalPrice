@@ -23,9 +23,6 @@ This tool helps you maximize revenue, maintain fair pricing, and streamline loca
 - Open `index.html` in your browser or deploy via GitHub Pages. `https://mcagriaksoy.github.io/regionalPrice/`
 - All calculations are performed client-side; no data is sent to a server.
 
-## Data Source
-- Wage data is hardcoded from public sources (see `Wage.txt`).
-
 ## Support
 If you find this tool useful, consider supporting via [PayPal](https://www.paypal.com/donate/?hosted_button_id=QD5J7HPVUXW5G) or [BuyMeACoffee](https://www.buymeacoffee.com/mcagriaksoy).
 
