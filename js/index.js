@@ -385,6 +385,108 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null, searchT
     }
 }
 
+// Add world map container below results table
+function ensureWorldMapContainer() {
+    let mapContainer = document.getElementById('worldmap-container');
+    if (!mapContainer) {
+        mapContainer = document.createElement('div');
+        mapContainer.id = 'worldmap-container';
+        mapContainer.style = 'width:100%;height:500px;margin:2rem 0;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.1);';
+        const resultTableContainer = document.getElementById('result-table-container');
+        if (resultTableContainer) {
+            resultTableContainer.parentNode.insertBefore(mapContainer, resultTableContainer.nextSibling);
+        }
+    }
+    return mapContainer;
+}
+
+// Load leaflet.js and world geojson if not already loaded
+function loadLeafletAndGeoJSON(callback) {
+    if (window.L && window.worldGeoJSON) return callback();
+    if (!document.getElementById('leaflet-css')) {
+        const link = document.createElement('link');
+        link.id = 'leaflet-css';
+        link.rel = 'stylesheet';
+        link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+        document.head.appendChild(link);
+    }
+    if (!window.L) {
+        const script = document.createElement('script');
+        script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+        script.onload = () => {
+            loadWorldGeoJSON(callback);
+        };
+        document.body.appendChild(script);
+    } else {
+        loadWorldGeoJSON(callback);
+    }
+}
+function loadWorldGeoJSON(callback) {
+    if (window.worldGeoJSON) return callback();
+    fetch('https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json')
+        .then(res => res.json())
+        .then(geojson => {
+            window.worldGeoJSON = geojson;
+            callback();
+        });
+}
+
+// Helper: get country ISO2 code from name (use isoMap)
+function getCountryISO2(name) {
+    return isoMap[name] || null;
+}
+
+// Render world map heatmap using getHeatColor
+function renderWorldMap(prices) {
+    ensureWorldMapContainer();
+    loadLeafletAndGeoJSON(() => {
+        if (window._leafletMap) {
+            window._leafletMap.remove();
+        }
+        const map = L.map('worldmap-container', {
+            zoomControl: false,
+            attributionControl: false,
+        }).setView([20, 0], 2);
+        window._leafletMap = map;
+        const priceVals = prices.map(p => p.price);
+        const minPrice = Math.min(...priceVals);
+        const maxPrice = Math.max(...priceVals);
+        const priceByISO = {};
+        prices.forEach(p => {
+            const iso2 = getCountryISO2(p.country);
+            if (iso2) priceByISO[iso2.toUpperCase()] = p.price;
+        });
+        L.geoJSON(window.worldGeoJSON, {
+            style: feature => {
+                const iso2 = feature.id;
+                const price = priceByISO[iso2];
+                return {
+                    fillColor: price ? getHeatColor(price, minPrice, maxPrice) : '#eee',
+                    weight: 0.5,
+                    color: '#888',
+                    fillOpacity: price ? 0.8 : 0.2,
+                };
+            },
+            onEachFeature: (feature, layer) => {
+                const iso2 = feature.id;
+                const price = priceByISO[iso2];
+                if (price) {
+                    layer.bindTooltip(`${feature.properties.name}: ${price.toFixed(2)}`);
+                } else {
+                    layer.bindTooltip(feature.properties.name);
+                }
+            }
+        }).addTo(map);
+    });
+}
+
+// After rendering table, also render world map
+const originalRenderTable = renderTable;
+renderTable = function(prices, currency, shownCount = 5, userPrice = null, searchTerm = '') {
+    originalRenderTable(prices, currency, shownCount, userPrice, searchTerm);
+    renderWorldMap(prices);
+}
+
 // Populate country dropdown and marketplace when page loads
 document.addEventListener('DOMContentLoaded', function () {
     const homeCountrySelect = document.getElementById('home-country');
@@ -655,3 +757,12 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
+function getHeatColor(price, min, max) {
+    // Normalize price between min and max
+    var t = (max === min) ? 0 : Math.max(0, Math.min(1, (price - min) / (max - min)));
+    // Interpolate from green (low) to red (high)
+    var r = Math.round(255 * t);
+    var g = Math.round(200 * (1 - t));
+    return 'rgb(' + r + ',' + g + ',64)';
+}
