@@ -1,1 +1,1 @@
-Redirect 301 /ads.txt https://srv.adstxtmanager.com/19390/regionalpricecalculator.com
+google.com, pub-3456164589806161, DIRECT, f08c47fec0942fa0
