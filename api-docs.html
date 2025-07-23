@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>[WORK IN PROGRESS] Regional Price Calculator API Documentation</title>
+	<meta name="description" content="API documentation for accessing regional price calculation and country data.">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+	<header>
+		<h1>Regional Price Calculator API Documentation</h1>
+		<p>Integrate regional price recommendations into your own app, website, or workflow.</p>
+	</header>
+	<main>
+		<section>
+			<h2>Overview</h2>
+			<p>
+				The Regional Price Calculator API allows you to retrieve recommended prices for software, apps, or games in different countries based on purchasing power, wage, and other economic factors.
+			</p>
+		</section>
+		<section>
+			<h2>Endpoints</h2>
+			<h3>1. Get Country List</h3>
+			<pre>
+GET /api/countries
+			</pre>
+			<p>Returns a list of supported countries and their ISO codes.</p>
+			<h3>2. Calculate Regional Prices</h3>
+			<pre>
+POST /api/calculate
+Content-Type: application/json
+
+{
+  "price": 19.99,
+  "currency": "USD",
+  "country": "USA",
+  "mode": "hybrid"
+}
+			</pre>
+			<p>
+				Returns recommended prices for all countries. <br>
+				Parameters:
+				<ul>
+					<li><strong>price</strong>: Base price in your currency</li>
+					<li><strong>currency</strong>: Currency code (e.g. USD, EUR)</li>
+					<li><strong>country</strong>: Your home country</li>
+					<li><strong>mode</strong>: Calculation mode ("hybrid", "wage", "ppp", "gdp")</li>
+				</ul>
+			</p>
+		</section>
+		<section>
+			<h2>Sample Response</h2>
+			<pre>
+{
+  "results": [
+    { "country": "USA", "price": 19.99, "currency": "USD" },
+    { "country": "Turkey", "price": 5.99, "currency": "TRY" },
+    { "country": "Germany", "price": 17.99, "currency": "EUR" }
+    // ...more countries
+  ]
+}
+			</pre>
+		</section>
+		<section>
+			<h2>Authentication</h2>
+			<p>
+				Currently, the API is open for public testing. For production use, you will need an API key. Contact us at <a href="mailto:info@regionalpriceconverter.com">info@regionalpriceconverter.com</a> for access.
+			</p>
+		</section>
+		<section>
+			<h2>Support</h2>
+			<p>
+				For questions, feature requests, or bug reports, please <a href="contact.html">contact us</a>.
+			</p>
+		</section>
+	</main>
+	<footer>
+		<p>&copy; <span id="year"></span> Regional Price Calculator. All rights reserved.</p>
+	</footer>
+	<script>
+		document.getElementById('year').textContent = new Date().getFullYear();
+	</script>
+</body>
+</html>
