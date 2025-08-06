@@ -7,10 +7,6 @@
 	<!-- Mobile viewport - correct complete version -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-
-	<!-- AD Tags -->
-	<script type="text/javascript"> aclib.runAutoTag({ zoneId: 'txpwt5afxj', }); </script>
-
 	<!-- Security Headers -->
 	<meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains; preload">
 	<meta http-equiv="X-Content-Type-Options" content="nosniff">
@@ -69,9 +65,7 @@
 	<link rel="apple-touch-icon" href="favicon.ico" sizes="180x180">
 
 	<!-- Ad Network Meta Tags -->
-	<!--<meta name="monetag" content="ab52c22e342162856fb11fc0d0e2dce2"> -->
 	<meta name="yandex-verification" content="39e8d4bd836c3cf3" />
-	<meta name="google-adsense-account" content="ca-pub-3456164589806161">
 
 	<!-- Preload critical fonts to prevent layout shift -->
 	<link rel="preload" href="https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu4mxK.woff2" as="font"
@@ -207,10 +201,6 @@
 	<link rel="stylesheet" href="css/ionicons.min.css" media="print" onload="this.media='all'">
 	<link rel="stylesheet" href="css/style.css" media="print" onload="this.media='all'">
 
-	<!-- Remove unused CSS -->
-	<!-- <link rel="stylesheet" href="css/flaticon.css"> -->
-	<!-- <link rel="stylesheet" href="css/icomoon.css"> -->
-
 	<!-- Make TermsFeed cookie consent window shorter horizontally -->
 	<style>
 		#cookie-consent-banner,
@@ -226,6 +216,15 @@
 			right: auto !important;
 		}
 	</style>
+
+	<!-- Ad library -->
+	<script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
+	<script type="text/javascript">
+		aclib.runAutoTag({
+			zoneId: 'txpwt5afxj',
+		});
+	</script>
+
 </head>
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300" class="font-loading">
@@ -620,8 +619,13 @@
 										</p>
 										<!-- Banner Ad Start -->
 										<div id="popup-banner-ad" style="margin:10px 0;">
-
-
+											<div>
+												<script type="text/javascript">
+													aclib.runBanner({
+														zoneId: '10254710',
+													});
+												</script>
+											</div>
 										</div>
 										<!-- Banner Ad End -->
 										<p style="color:#666;font-size:0.98rem;margin-top:8px;">
@@ -1249,7 +1253,8 @@
 									Questions</a></li>
 							<li><a href="https://regionalpricecalculator.com/terms-and-conditions"><span
 										class="icon-long-arrow-right mr-2"></span>Terms & Conditions</a></li>
-							<li><a href="terms-and-conditions.html"><span class="icon-long-arrow-right mr-2"></span>Privacy
+							<li><a href="terms-and-conditions.html"><span
+										class="icon-long-arrow-right mr-2"></span>Privacy
 									Policy</a></li>
 							<li><a href="api-docs.html"><span class="icon-long-arrow-right mr-2"></span>API
 									Documentation</a></li>
@@ -1263,16 +1268,21 @@
 						<h4 class="ftco-heading-2">Blog Posts</h4>
 						<ul class="list-unstyled">
 							<li><a href="blog/pros-cons-regional-pricing.html"><span
-										class="icon-long-arrow-right mr-2"></span>Pros and Cons of Regional Pricing</a></li>
+										class="icon-long-arrow-right mr-2"></span>Pros and Cons of Regional Pricing</a>
+							</li>
 							<li><a href="blog/importance-of-regional-pricing.html"><span
-										class="icon-long-arrow-right mr-2"></span>Importance of Regional Pricing</a></li>
+										class="icon-long-arrow-right mr-2"></span>Importance of Regional Pricing</a>
+							</li>
 
 							<li><a href="blog/how-to-implement-regional-pricing.html"><span
-										class="icon-long-arrow-right mr-2"></span>How to Implement Regional Pricing</a></li>
+										class="icon-long-arrow-right mr-2"></span>How to Implement Regional Pricing</a>
+							</li>
 							<li><a href="blog/case-studies-regional-pricing-success.html"><span
-										class="icon-long-arrow-right mr-2"></span>Case Studies: Regional Pricing Success</a></li>
+										class="icon-long-arrow-right mr-2"></span>Case Studies: Regional Pricing
+									Success</a></li>
 							<li><a href="blog/understanding-purchasing-power-parity.html"><span
-										class="icon-long-arrow-right mr-2"></span>Understanding Purchasing Power Parity</a></li>
+										class="icon-long-arrow-right mr-2"></span>Understanding Purchasing Power
+									Parity</a></li>
 						</ul>
 					</div>
 				</div>
@@ -1367,7 +1377,8 @@
 	</script>
 
 	<!-- Cookie Consent by TermsFeed https://www.TermsFeed.com -->
-	<script src="https://www.termsfeed.com/public/cookie-consent/4.2.0/cookie-consent.js" defer onload="window.runCookieConsent && window.runCookieConsent()"></script>
+	<script src="https://www.termsfeed.com/public/cookie-consent/4.2.0/cookie-consent.js" defer
+		onload="window.runCookieConsent && window.runCookieConsent()"></script>
 	<script>
 		window.runCookieConsent = function () {
 			cookieconsent.run({
