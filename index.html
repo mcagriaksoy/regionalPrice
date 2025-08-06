@@ -616,8 +616,18 @@
 										<div id="popup-banner-ad" style="margin:10px 0;">
 											<div>
 												<script type="text/javascript">
-													aclib.runBanner({
-														zoneId: '10254710',
+													document.addEventListener('DOMContentLoaded', function () {
+														function tryRunBanner() {
+															if (window.aclib && typeof aclib.runBanner === 'function') {
+																aclib.runBanner({
+																	zoneId: '10254710',
+																});
+															} else {
+																// Try again after a short delay if aclib is not loaded yet
+																setTimeout(tryRunBanner, 200);
+															}
+														}
+														tryRunBanner();
 													});
 												</script>
 											</div>
