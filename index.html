@@ -217,7 +217,16 @@
 			right: auto !important;
 		}
 	</style>
+	<!-- Adcash start -->
 	<script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
+
+	<script type="text/javascript">
+		aclib.runInPagePush({
+			zoneId: '10267302',
+			maxAds: 2,
+		});
+	</script>
+	<!-- Adcash end -->
 </head>
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300" class="font-loading">
@@ -623,6 +632,14 @@
 											</script>
 											<script type="text/javascript"
 												src="//www.highperformanceformat.com/2f623b3096148ef1076eed71434c9891/invoke.js"></script>
+											<div>
+												<script type="text/javascript">
+													aclib.runBanner({
+														zoneId: '10254710',
+													});
+												</script>
+											</div>
+
 										</div>
 										<!-- Banner Ad End -->
 										<p style="color:#666;font-size:0.98rem;margin-top:8px;">
@@ -1511,17 +1528,6 @@
 				console.log('Regional Price Calculator loaded successfully');
 			} else {
 				console.warn('Regional Price Calculator not loaded - check index.js');
-			}
-		});
-	</script>
-	<script>
-		document.addEventListener('DOMContentLoaded', function () {
-			if (window.aclib && typeof aclib.runAutoTag === 'function') {
-				aclib.runAutoTag({
-					zoneId: 'txpwt5afxj',
-				});
-			} else {
-				console.warn('aclib not loaded or runAutoTag not available');
 			}
 		});
 	</script>
