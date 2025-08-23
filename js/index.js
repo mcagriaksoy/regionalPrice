@@ -473,7 +473,12 @@ function renderWorldMap(prices) {
         const priceByISO = {};
         prices.forEach(p => {
             const iso2 = getCountryISO2(p.country);
-            if (iso2) priceByISO[iso2.toUpperCase()] = p.price;
+            if (iso2) {
+                priceByISO[iso2.toUpperCase()] = p.price;
+            } else {
+                // Log missing ISO2 codes for debugging
+                console.warn('Missing ISO2 code for country:', p.country);
+            }
         });
         L.geoJSON(window.worldGeoJSON, {
             style: feature => {
