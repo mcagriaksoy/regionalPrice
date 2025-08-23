@@ -86,6 +86,8 @@
 	<link rel="prefetch" href="images/dark_theme_map.webp" as="image" type="image/webp">
 
 	<!--  Fonts and Styles with optimized loading -->
+	<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap"
 		crossorigin="anonymous">
 	<link rel="stylesheet"
@@ -224,9 +226,8 @@
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light site-navbar-target" id="ftco-navbar">
 		<div class="container">
 			<a class="navbar-brand" href="index.html">R€gionalPrice</a>
-			<button class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle" type="button" data-bs-toggle="collapse"
-				data-bs-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false"
-				aria-label="Toggle navigation">
+			<button class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle" type="button" data-toggle="collapse"
+				data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="oi oi-menu"></span> Menu
 			</button>
 
@@ -556,6 +557,11 @@
 					</p>
 				</div>
 			</div>
+			<!-- Ad Banner Start -->
+			<script async="async" data-cfasync="false"
+				src="//pl27184481.profitableratecpm.com/9434bb2c6dace0555a5765f397e7e544/invoke.js"></script>
+			<div id="container-9434bb2c6dace0555a5765f397e7e544"></div>
+			<!-- Ad Banner End -->
 			<div class="row justify-content-center">
 				<div class="col-md-10">
 					<div class="card shadow-sm" style="border-radius:18px;">
@@ -1361,7 +1367,7 @@
 
 		document.addEventListener('DOMContentLoaded', function () {
 			// Set copyright year
-			var yearSpan = document.getElementById('copyright-year');
+			var yearSpan = document.getElementById('current-year');
 			if (yearSpan) {
 				yearSpan.textContent = new Date().getFullYear();
 			}
@@ -1392,7 +1398,7 @@
 				"preferences_center_close_button_hide": false,
 				"page_refresh_confirmation_buttons": false,
 				"website_name": "Regional Price Calculator",
-				"website_privacy_policy_url": "https://regionalpricecalculator.com/terms-and-conditions"
+				"website_privacy_policy_url": "terms-and-conditions.html"
 			});
 		}
 	</script>
@@ -1475,8 +1481,7 @@
 					form.dispatchEvent(event);
 				}
 			}
-		}
-});
+		});
 	</script>
 
 	<script>

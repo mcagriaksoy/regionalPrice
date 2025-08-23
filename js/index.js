@@ -293,18 +293,26 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null, searchT
     // Apply current sort
     displayPrices = sortPrices(displayPrices, currentSort.by, currentSort.asc);
 
+    // Helper to fetch live exchange rate and update localPrice cell
+    async function getLiveLocalPrice(price, localCurrency, cell, baseCurrency) {
+        try {
+            // Use exchangerate.host API for conversion, with selected base currency
+            const res = await fetch(`https://api.exchangerate.host/convert?from=${baseCurrency}&to=${localCurrency}&amount=${price}`);
+            const data = await res.json();
+            if (data && data.result) {
+                cell.textContent = `${data.result.toFixed(2)} ${localCurrency}`;
+            } else {
+                cell.textContent = `${price.toFixed(2)} ${localCurrency}`;
+            }
+        } catch {
+            cell.textContent = `${price.toFixed(2)} ${localCurrency}`;
+        }
+    }
+
     displayPrices.slice(0, shownCount).forEach(({ country, flagUrl, price }) => {
         const changePercent = userPrice ? ((price - userPrice) / userPrice) * 100 : 0;
         const changeColor = changePercent >= 0 ? '#16a34a' : '#dc2626';
         const localCurrency = countryCurrencyMap[country] || currency;
-
-        // Convert USD price to local currency using exchangeRates
-        let localPrice = price;
-        if (exchangeRates['USD'] && exchangeRates[localCurrency]) {
-            localPrice = (price * (exchangeRates[localCurrency] / exchangeRates['USD']));
-        }
-        // Fallback: just show price if no rate
-        localPrice = localPrice.toFixed(2);
 
         html += `
             <tr style="border-bottom:1px solid #e2e8f0;">
@@ -316,8 +324,8 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null, searchT
                 <td style="padding:12px;text-align:right;font-weight:500;">
                     ${price.toFixed(2)} ${currency}
                 </td>
-                <td style="padding:12px;text-align:right;font-weight:500;">
-                    ${localPrice} ${localCurrency}
+                <td style="padding:12px;text-align:right;font-weight:500;" class="local-price-cell" data-price="${price}" data-currency="${localCurrency}">
+                    Loading...
                 </td>
                 <td style="padding:12px;text-align:right;color:${changeColor};font-weight:500;">
                     ${changePercent > 0 ? '+' : ''}${changePercent.toFixed(1)}%
@@ -339,6 +347,17 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null, searchT
 
     container.innerHTML = html;
     container.classList.remove('d-none');
+
+    // Update local price cells with live data
+    const localPriceCells = container.querySelectorAll('.local-price-cell');
+    localPriceCells.forEach(cell => {
+        const price = parseFloat(cell.getAttribute('data-price'));
+        const localCurrency = cell.getAttribute('data-currency');
+        // Fetch and update asynchronously, using selected currency as base
+        (async () => {
+            await getLiveLocalPrice(price, localCurrency, cell, currency);
+        })();
+    });
 
     // Add event listeners
     const searchBox = document.getElementById('country-search-box');
@@ -761,8 +780,16 @@ document.addEventListener('DOMContentLoaded', function () {
 function getHeatColor(price, min, max) {
     // Normalize price between min and max
     var t = (max === min) ? 0 : Math.max(0, Math.min(1, (price - min) / (max - min)));
-    // Interpolate from green (low) to red (high)
-    var r = Math.round(255 * t);
-    var g = Math.round(200 * (1 - t));
+    // Interpolate from green (low) to yellow (mid) to red (high)
+    var r, g;
+    if (t < 0.5) {
+        // Green to yellow
+        r = Math.round(2 * t * 255);
+        g = 200;
+    } else {
+        // Yellow to red
+        r = 255;
+        g = Math.round(200 - 2 * (t - 0.5) * 200);
+    }
     return 'rgb(' + r + ',' + g + ',64)';
 }
