@@ -162,17 +162,36 @@ function calculateRelativePrices(userPrice, userCountry, limitPercent = 80, opti
 
 // Helper: country to currency code (expand as needed)
 const countryCurrencyMap = {
-    'Turkey': 'TRY',
-    'USA': 'USD',
-    'UK': 'GBP',
-    'Germany': 'EUR',
-    'France': 'EUR',
-    'Russia': 'RUB',
-    'Japan': 'JPY',
-    'Guyana': 'GYD',
-    'Luxembourg': 'EUR',
-    'Belgium': 'EUR',
-    'Ireland': 'EUR',
+    "Australia": "AUD",
+    "Bulgaria": "BGN",
+    "Brazil": "BRL",
+    "Canada": "CAD",
+    "Switzerland": "CHF",
+    "China": "CNY",
+    "Czech Republic": "CZK",
+    "Denmark": "DKK",
+    "United Kingdom": "GBP",
+    "Hong Kong": "HKD",
+    "Hungary": "HUF",
+    "Indonesia": "IDR",
+    "Israel": "ILS",
+    "India": "INR",
+    "Iceland": "ISK",
+    "Japan": "JPY",
+    "South Korea": "KRW",
+    "Mexico": "MXN",
+    "Malaysia": "MYR",
+    "Norway": "NOK",
+    "New Zealand": "NZD",
+    "Philippines": "PHP",
+    "Poland": "PLN",
+    "Romania": "RON",
+    "Sweden": "SEK",
+    "Singapore": "SGD",
+    "Thailand": "THB",
+    "Turkey": "TRY",
+    "United States": "USD",
+    "South Africa": "ZAR"
 };
 
 // Add exchange rates (will be updated from remote API)
@@ -206,28 +225,47 @@ function fetchExchangeRates() {
 fetchExchangeRates();
 
 // Sorting state
-let currentSort = { by: 'country', asc: true };
+let currentSort = { by: 'popularity', asc: true };
 
 // Sort prices array
 function sortPrices(prices, by, asc = true) {
     const sorted = [...prices];
-    sorted.sort((a, b) => {
-        if (by === 'country') {
+    if (by === 'popularity') {
+        // Countries in countryCurrencyMap first, then others, both alphabetically
+        sorted.sort((a, b) => {
+            const aPopular = countryCurrencyMap.hasOwnProperty(a.country) ? 0 : 1;
+            const bPopular = countryCurrencyMap.hasOwnProperty(b.country) ? 0 : 1;
+            if (aPopular !== bPopular) return aPopular - bPopular;
             return asc
                 ? a.country.localeCompare(b.country)
                 : b.country.localeCompare(a.country);
-        } else if (by === 'price') {
-            return asc ? a.price - b.price : b.price - a.price;
-        }
-        return 0;
-    });
+        });
+    } else if (by === 'country') {
+        sorted.sort((a, b) =>
+            asc ? a.country.localeCompare(b.country) : b.country.localeCompare(a.country)
+        );
+    } else if (by === 'price') {
+        sorted.sort((a, b) => asc ? a.price - b.price : b.price - a.price);
+    }
     return sorted;
 }
 
 // Update sort button styles
 function updateSortButtonStyles() {
+    const sortPopularityBtn = document.getElementById('sort-popularity-btn');
     const sortCountryBtn = document.getElementById('sort-country-btn');
     const sortPriceBtn = document.getElementById('sort-price-btn');
+    if (sortPopularityBtn) {
+        if (currentSort.by === 'popularity') {
+            sortPopularityBtn.style.background = '#e53935';
+            sortPopularityBtn.style.color = '#fff';
+            sortPopularityBtn.innerHTML = `Popularity ${currentSort.asc ? '▲' : '▼'}`;
+        } else {
+            sortPopularityBtn.style.background = '#fff';
+            sortPopularityBtn.style.color = '#333';
+            sortPopularityBtn.innerHTML = 'Popularity';
+        }
+    }
     if (sortCountryBtn) {
         if (currentSort.by === 'country') {
             sortCountryBtn.style.background = '#e53935';
@@ -271,6 +309,9 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null, searchT
                style="width:100%;padding:0.5rem;border-radius:6px;border:1px solid #e2e8f0;">
     </div>
     <div style="margin-bottom:1rem;">
+        <button id="sort-popularity-btn" class="sort-btn" style="margin-right:10px;padding:8px 16px;border:1px solid #e2e8f0;border-radius:6px;cursor:pointer;">
+            Sort by Popularity ↕
+        </button>
         <button id="sort-by-country" class="sort-btn" style="margin-right:10px;padding:8px 16px;border:1px solid #e2e8f0;border-radius:6px;cursor:pointer;">
             Sort by Country ↕
         </button>
@@ -400,9 +441,21 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null, searchT
     }
 
     // Add sorting button event listeners
+    const sortPopularityBtn = document.getElementById('sort-popularity-btn');
     const sortCountryBtn = document.getElementById('sort-by-country');
     const sortPriceBtn = document.getElementById('sort-by-price');
 
+    if (sortPopularityBtn) {
+        sortPopularityBtn.onclick = () => {
+            if (currentSort.by === 'popularity') {
+                currentSort.asc = !currentSort.asc;
+            } else {
+                currentSort.by = 'popularity';
+                currentSort.asc = true;
+            }
+            renderTable(prices, currency, shownCount, userPrice, searchTerm);
+        };
+    }
     if (sortCountryBtn) {
         sortCountryBtn.onclick = () => {
             if (currentSort.by === 'country') {
@@ -414,7 +467,6 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null, searchT
             renderTable(prices, currency, shownCount, userPrice, searchTerm);
         };
     }
-
     if (sortPriceBtn) {
         sortPriceBtn.onclick = () => {
             if (currentSort.by === 'price') {
@@ -426,6 +478,9 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null, searchT
             renderTable(prices, currency, shownCount, userPrice, searchTerm);
         };
     }
+
+    // Update sort button styles
+    updateSortButtonStyles();
 }
 
 // Add world map container below results table
@@ -574,15 +629,21 @@ document.addEventListener('DOMContentLoaded', function () {
     if (homeCountrySelect) {
         // Remove all options first
         homeCountrySelect.innerHTML = '';
-        wageData
-            .filter(country => !hiddenCountries.includes(country.country)) // Remove hidden countries from dropdown
-            .sort((a, b) => displayCountryName(a.country).localeCompare(displayCountryName(b.country)))
-            .forEach(country => {
-                const option = document.createElement('option');
-                option.value = country.country;
-                option.textContent = displayCountryName(country.country);
-                homeCountrySelect.appendChild(option);
-            });
+
+        // Countries in countryCurrencyMap first, then others, both alphabetically
+        const localPriceCountries = wageData.filter(country => !hiddenCountries.includes(country.country));
+        const popularCountries = localPriceCountries.filter(c => countryCurrencyMap.hasOwnProperty(c.country));
+        const otherCountries = localPriceCountries.filter(c => !countryCurrencyMap.hasOwnProperty(c.country));
+
+        popularCountries.sort((a, b) => displayCountryName(a.country).localeCompare(displayCountryName(b.country)));
+        otherCountries.sort((a, b) => displayCountryName(a.country).localeCompare(displayCountryName(b.country)));
+
+        [...popularCountries, ...otherCountries].forEach(country => {
+            const option = document.createElement('option');
+            option.value = country.country;
+            option.textContent = displayCountryName(country.country);
+            homeCountrySelect.appendChild(option);
+        });
 
         // Auto-select user's country using geolocation, fallback to USA
         detectUserCountry(function (userCountry) {
