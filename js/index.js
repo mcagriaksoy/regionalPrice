@@ -252,6 +252,15 @@ function updateSortButtonStyles() {
     }
 }
 
+// List of countries to hide from results table
+const hiddenCountries = ["Israel"];
+
+// Helper to display country name (rename Cyprus)
+function displayCountryName(name) {
+    if (name === "Cyprus") return "South Cyprus";
+    return name;
+}
+
 // Render the results table
 function renderTable(prices, currency, shownCount = 5, userPrice = null, searchTerm = '') {
     const container = document.getElementById('result-table-container');
@@ -283,29 +292,39 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null, searchT
             <tbody>`;
 
     // Filter and sort prices
-    let displayPrices = prices;
+    let displayPrices = prices
+        .filter(p => !hiddenCountries.includes(p.country)); // Remove hidden countries
+
     if (searchTerm) {
-        displayPrices = prices.filter(p =>
-            p.country.toLowerCase().includes(searchTerm.toLowerCase())
+        displayPrices = displayPrices.filter(p =>
+            displayCountryName(p.country).toLowerCase().includes(searchTerm.toLowerCase())
         );
     }
 
     // Apply current sort
     displayPrices = sortPrices(displayPrices, currentSort.by, currentSort.asc);
 
-    // Helper to fetch live exchange rate and update localPrice cell
+    // Helper to fetch live exchange rate and update localPrice cell using Frankfurter API
     async function getLiveLocalPrice(price, localCurrency, cell, baseCurrency) {
         try {
-            // Use exchangerate.host API for conversion, with selected base currency
-            const res = await fetch(`https://api.exchangerate.host/convert?from=${baseCurrency}&to=${localCurrency}&amount=${price}`);
+            // Remove any $ from currency codes and amount
+            const base = baseCurrency.replace(/^\$/, '');
+            const local = localCurrency.replace(/^\$/, '');
+            const amount = String(price).replace(/^\$/, '');
+            if (base === local) {
+                cell.textContent = `${parseFloat(amount).toFixed(2)} ${local}`;
+                return;
+            }
+            const url = `https://api.frankfurter.app/latest?amount=${amount}&from=${base}&to=${local}`;
+            const res = await fetch(url);
             const data = await res.json();
-            if (data && data.result) {
-                cell.textContent = `${data.result.toFixed(2)} ${localCurrency}`;
+            if (data && data.rates && typeof data.rates[local] === 'number') {
+                cell.textContent = `${data.rates[local].toFixed(2)} ${local}`;
             } else {
-                cell.textContent = `${price.toFixed(2)} ${localCurrency}`;
+                cell.textContent = '-';
             }
         } catch {
-            cell.textContent = `${price.toFixed(2)} ${localCurrency}`;
+            cell.textContent = '-';
         }
     }
 
@@ -313,24 +332,24 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null, searchT
         const changePercent = userPrice ? ((price - userPrice) / userPrice) * 100 : 0;
         const changeColor = changePercent >= 0 ? '#16a34a' : '#dc2626';
         const localCurrency = countryCurrencyMap[country] || currency;
-
+        // Make sure currency is user's selected currency (from form)
         html += `
-            <tr style="border-bottom:1px solid #e2e8f0;">
-                <td style="padding:12px;">
-                    ${flagUrl ? `<img src="${flagUrl}" alt="${country} flag" 
-                     style="width:32px;height:24px;border-radius:4px;">` : ''}
-                </td>
-                <td style="padding:12px;">${country}</td>
-                <td style="padding:12px;text-align:right;font-weight:500;">
-                    ${price.toFixed(2)} ${currency}
-                </td>
-                <td style="padding:12px;text-align:right;font-weight:500;" class="local-price-cell" data-price="${price}" data-currency="${localCurrency}">
-                    Loading...
-                </td>
-                <td style="padding:12px;text-align:right;color:${changeColor};font-weight:500;">
-                    ${changePercent > 0 ? '+' : ''}${changePercent.toFixed(1)}%
-                </td>
-            </tr>`;
+        <tr style="border-bottom:1px solid #e2e8f0;">
+            <td style="padding:12px;">
+                ${flagUrl ? `<img src="${flagUrl}" alt="${displayCountryName(country)} flag" 
+                 style="width:32px;height:24px;border-radius:4px;">` : ''}
+            </td>
+            <td style="padding:12px;">${displayCountryName(country)}</td>
+            <td style="padding:12px;text-align:right;font-weight:500;">
+                ${price.toFixed(2)} ${currency}
+            </td>
+            <td style="padding:12px;text-align:right;font-weight:500;" class="local-price-cell" data-price="${price}" data-currency="${localCurrency}" data-base="${currency}">
+                Loading...
+            </td>
+            <td style="padding:12px;text-align:right;color:${changeColor};font-weight:500;">
+                ${changePercent > 0 ? '+' : ''}${changePercent.toFixed(1)}%
+            </td>
+        </tr>`;
     });
 
     html += `</tbody></table></div>`;
@@ -353,10 +372,15 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null, searchT
     localPriceCells.forEach(cell => {
         const price = parseFloat(cell.getAttribute('data-price'));
         const localCurrency = cell.getAttribute('data-currency');
-        // Fetch and update asynchronously, using selected currency as base
-        (async () => {
-            await getLiveLocalPrice(price, localCurrency, cell, currency);
-        })();
+        const baseCurrency = cell.getAttribute('data-base');
+        // Only call API if both currencies are valid and not the same
+        if (localCurrency && baseCurrency) {
+            (async () => {
+                await getLiveLocalPrice(price, localCurrency, cell, baseCurrency);
+            })();
+        } else {
+            cell.textContent = '-';
+        }
     });
 
     // Add event listeners
@@ -472,6 +496,7 @@ function renderWorldMap(prices) {
         const maxPrice = Math.max(...priceVals);
         const priceByISO = {};
         prices.forEach(p => {
+            if (hiddenCountries.includes(p.country)) return; // Skip hidden countries on map
             const iso2 = getCountryISO2(p.country);
             if (iso2) {
                 priceByISO[iso2.toUpperCase()] = p.price;
@@ -549,11 +574,13 @@ document.addEventListener('DOMContentLoaded', function () {
     if (homeCountrySelect) {
         // Remove all options first
         homeCountrySelect.innerHTML = '';
-        wageData.sort((a, b) => a.country.localeCompare(b.country))
+        wageData
+            .filter(country => !hiddenCountries.includes(country.country)) // Remove hidden countries from dropdown
+            .sort((a, b) => displayCountryName(a.country).localeCompare(displayCountryName(b.country)))
             .forEach(country => {
                 const option = document.createElement('option');
                 option.value = country.country;
-                option.textContent = country.country;
+                option.textContent = displayCountryName(country.country);
                 homeCountrySelect.appendChild(option);
             });
 
