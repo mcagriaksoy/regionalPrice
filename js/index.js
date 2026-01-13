@@ -499,12 +499,12 @@ document.addEventListener('DOMContentLoaded', function () {
             marketplaceWrapper.innerHTML = `
                 <label style="font-weight:500;">
                     Marketplace:
-                    <select id="marketplace" style="margin-left:8px;">
+                    <select id="marketplace" style="margin-left:47px;">
+                        <option value="Roblox Marketplace">Roblox Marketplace</option>
                         <option value="Google Play Store">Google Play Store</option>
                         <option value="Steam">Steam</option>
                         <option value="App Store">App Store</option>
                         <option value="Huawei Store">Huawei Store</option>
-                        <option value="Roblox Marketplace">Roblox Marketplace</option>
                         <option value="Epic Games Store">Epic Games Store</option>
                         <option value="Amazon Appstore">Amazon Appstore</option>
                         <option value="Microsoft Store">Microsoft Store</option>
