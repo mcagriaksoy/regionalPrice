@@ -25,16 +25,23 @@
     }
   }
 
-  // Load footer (scripts)
+  // Load footer (content and scripts)
   function loadFooter() {
     const footerPlaceholder = document.getElementById('footer-placeholder');
     if (footerPlaceholder) {
       fetch('/includes/footer.html')
         .then(response => response.text())
         .then(html => {
-          // Extract script tags and append them to body
           const parser = new DOMParser();
           const doc = parser.parseFromString(html, 'text/html');
+          
+          // Insert the footer content into the placeholder
+          const footer = doc.querySelector('footer');
+          if (footer) {
+            footerPlaceholder.appendChild(footer);
+          }
+          
+          // Extract script tags and append them to body
           const scripts = doc.querySelectorAll('script');
           scripts.forEach(script => {
             const newScript = document.createElement('script');

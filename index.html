@@ -10,7 +10,6 @@
 	<!-- Security Headers -->
 	<meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains; preload">
 	<meta http-equiv="X-Content-Type-Options" content="nosniff">
-	<meta http-equiv="X-Frame-Options" content="DENY">
 	<meta http-equiv="X-XSS-Protection" content="1; mode=block">
 	<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
 	<meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin">
@@ -49,7 +48,7 @@
 	<meta property="og:title" content="Regional Price Advisor – Your Regional Pricing Assistant">
 	<meta property="og:description"
 		content="See recommended prices for your app worldwide. Position your product right in the global market with RegionalPrice.">
-	<meta property="og:image" content="https://regionalpriceconverter.com/regionalPrice/countrylist_1.webp">
+	<meta property="og:image" content="https://regionalpriceconverter.com/regionalPrice/countrylist_1.avif">
 
 	<!-- Twitter -->
 	<meta name="twitter:card" content="summary_large_image">
@@ -79,11 +78,11 @@
 		type="font/woff2" crossorigin>
 
 	<!-- Preload critical hero images for LCP optimization -->
-	<link rel="preload" href="images/animation_2.webp" as="image" type="image/webp">
-	<link rel="preload" href="images/countrylist_1.webp" as="image" type="image/webp">
+	<link rel="preload" href="images/animation_2.avif" as="image" type="image/webp">
+	<link rel="preload" href="images/countrylist_1.avif" as="image" type="image/webp">
 
 	<!-- Prefetch other hero images -->
-	<link rel="prefetch" href="images/dark_theme_map.webp" as="image" type="image/webp">
+	<link rel="prefetch" href="images/dark_theme_map.avif" as="image" type="image/webp">
 
 	<!--  Fonts and Styles with optimized loading -->
 	<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
@@ -180,7 +179,7 @@
 
 		/* Preload first slide image */
 		.hero .slider-item:first-child .img {
-			background-image: url('images/animation_2.webp');
+			background-image: url('images/animation_2.avif');
 		}
 
 		/* Optimize slider for faster rendering */
@@ -285,7 +284,7 @@
 					<div class="row d-flex no-gutters slider-text align-items-end justify-content-end"
 						data-scrollax-parent="true">
 						<div class="one-third js-fullheight order-md-last img"
-							style="background-image:url(images/countrylist_1.webp);">
+							style="background-image:url(images/countrylist_1.avif);">
 							<div class="overlay"></div>
 						</div>
 						<div class="one-forth d-flex align-items-center ftco-animate"
@@ -312,7 +311,7 @@
 					<div class="img-about img d-flex align-items-stretch">
 						<div class="overlay"></div>
 						<div class="img d-flex align-self-stretch align-items-center"
-							style="background-image:url(images/dark_theme_map.webp);">
+							style="background-image:url(images/dark_theme_map.avif);">
 						</div>
 					</div>
 				</div>
@@ -827,7 +826,7 @@
 				<div class="col-md-4 d-flex ftco-animate">
 					<div class="blog-entry justify-content-end">
 						<a href="blog/steam-regional-pricing-guide.html" class="block-20"
-							style="background-image: url('images/countrylist_1.webp');">
+							style="background-image: url('images/countrylist_1.avif');">
 						</a>
 						<div class="text mt-3 float-right d-block">
 							<div class="d-flex align-items-center mb-3 meta">
@@ -847,7 +846,7 @@
 				<div class="col-md-4 d-flex ftco-animate">
 					<div class="blog-entry justify-content-end">
 						<a href="blog/google-play-pricing-strategy.html" class="block-20"
-							style="background-image: url('images/animation_2.webp');">
+							style="background-image: url('images/animation_2.avif');">
 						</a>
 						<div class="text mt-3 float-right d-block">
 							<div class="d-flex align-items-center mb-3 meta">
@@ -867,7 +866,7 @@
 				<div class="col-md-4 d-flex ftco-animate">
 					<div class="blog-entry justify-content-end">
 						<a href="blog/roblox-regional-pricing.html" class="block-20"
-							style="background-image: url('images/animation_2.webp');">
+							style="background-image: url('images/animation_2.avif');">
 						</a>
 						<div class="text mt-3 float-right d-block">
 							<div class="d-flex align-items-center mb-3 meta">
@@ -887,7 +886,7 @@
 				<div class="col-md-4 d-flex ftco-animate">
 					<div class="blog-entry justify-content-end">
 						<a href="blog.html" class="block-20"
-							style="background-image: url('images/countrylist_1.webp');">
+							style="background-image: url('images/countrylist_1.avif');">
 						</a>
 						<div class="text mt-3 float-right d-block">
 							<div class="d-flex align-items-center mb-3 meta">
@@ -907,7 +906,7 @@
 				<div class="col-md-4 d-flex ftco-animate">
 					<div class="blog-entry">
 						<a href="blog.html" class="block-20"
-							style="background-image: url('images/dark_theme_map.webp');">
+							style="background-image: url('images/dark_theme_map.avif');">
 						</a>
 						<div class="text mt-3 float-right d-block">
 							<div class="d-flex align-items-center mb-3 meta">
@@ -1488,11 +1487,18 @@
 			// Wait for Owl Carousel to render dots
 			setTimeout(setOwlDotLabels, 500);
 			// Also update on carousel change (in case of dynamic dots)
-			document.addEventListener('DOMNodeInserted', function (e) {
-				if (e.target.classList && e.target.classList.contains('owl-dot')) {
-					setOwlDotLabels();
-				}
+			var observer = new MutationObserver(function(mutations) {
+				mutations.forEach(function(mutation) {
+					if (mutation.type === 'childList') {
+						mutation.addedNodes.forEach(function(node) {
+							if (node.nodeType === 1 && node.classList && node.classList.contains('owl-dot')) {
+								setOwlDotLabels();
+							}
+						});
+					}
+				});
 			});
+			observer.observe(document.body, { childList: true, subtree: true });
 		});
 
 		document.addEventListener('DOMContentLoaded', function () {
