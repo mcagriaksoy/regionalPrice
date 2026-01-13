@@ -72,4 +72,16 @@
       <changefreq>monthly</changefreq>
       <priority>0.7</priority>
    </url>
+   <url>
+      <loc>https://regionalpricecalculator.com/404.html</loc>
+      <lastmod>2026-01-13</lastmod>
+      <changefreq>yearly</changefreq>
+      <priority>0.1</priority>
+   </url>
+   <url>
+      <loc>https://regionalpricecalculator.com/400.html</loc>
+      <lastmod>2026-01-13</lastmod>
+      <changefreq>yearly</changefreq>
+      <priority>0.1</priority>
+   </url>
 </urlset>
