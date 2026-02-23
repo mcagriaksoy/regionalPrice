@@ -4,12 +4,25 @@ function detectUserCountry(callback) {
         .then(res => res.json())
         .then(data => {
             if (data && data.country_name) {
-                callback(data.country_name);
+                callback(normalizeCountryNameForDataset(data.country_name));
             } else {
                 callback(null);
             }
         })
         .catch(() => callback(null));
+}
+
+const DEFAULT_CALCULATION_MODE = 'hybrid';
+
+const countryNameAliases = {
+    'United States': 'USA',
+    'United States of America': 'USA',
+    'United Kingdom': 'UK',
+    'Korea, Republic of': 'South Korea'
+};
+
+function normalizeCountryNameForDataset(countryName) {
+    return countryNameAliases[countryName] || countryName;
 }
 
 // --- Only keep the necessary code for the calculator ---
@@ -26,70 +39,34 @@ function getFlagImageUrl(country) {
 let pppData = {}; // { country: PPP value }
 let gdpData = {}; // { country: GDP per capita value }
 
+const defaultPppData = {
+    "USA": 1,
+    "Turkey": 3.5,
+    "Germany": 0.9,
+    "France": 0.95,
+    "Russia": 2.5,
+    "Japan": 0.8,
+    "UK": 0.85
+};
+
+const defaultGdpData = {
+    "USA": 70000,
+    "Turkey": 11000,
+    "Germany": 50000,
+    "France": 45000,
+    "Russia": 13000,
+    "Japan": 40000,
+    "UK": 47000
+};
+
 // Fetch PPP data (World Bank API, latest available year)
 function fetchPPPData() {
-    fetch('https://api.worldbank.org/v2/en/indicator/PA.NUS.PPP?downloadformat=json')
-        .then(res => res.json())
-        .then(data => {
-            // The API returns a zipped file for download, so let's use a static fallback for now
-            // You can replace this with a direct API or static JSON for production
-            // Example fallback:
-            pppData = {
-                "USA": 1,
-                "Turkey": 3.5,
-                "Germany": 0.9,
-                "France": 0.95,
-                "Russia": 2.5,
-                "Japan": 0.8,
-                "UK": 0.85,
-                // ...add more as needed
-            };
-        })
-        .catch(() => {
-            // fallback static data
-            pppData = {
-                "USA": 1,
-                "Turkey": 3.5,
-                "Germany": 0.9,
-                "France": 0.95,
-                "Russia": 2.5,
-                "Japan": 0.8,
-                "UK": 0.85,
-                // ...add more as needed
-            };
-        });
+    pppData = { ...defaultPppData };
 }
 
 // Fetch GDP per capita data (World Bank API, latest available year)
 function fetchGDPData() {
-    fetch('https://api.worldbank.org/v2/en/indicator/NY.GDP.PCAP.CD?downloadformat=json')
-        .then(res => res.json())
-        .then(data => {
-            // The API returns a zipped file for download, so let's use a static fallback for now
-            gdpData = {
-                "USA": 70000,
-                "Turkey": 11000,
-                "Germany": 50000,
-                "France": 45000,
-                "Russia": 13000,
-                "Japan": 40000,
-                "UK": 47000,
-                // ...add more as needed
-            };
-        })
-        .catch(() => {
-            // fallback static data
-            gdpData = {
-                "USA": 70000,
-                "Turkey": 11000,
-                "Germany": 50000,
-                "France": 45000,
-                "Russia": 13000,
-                "Japan": 40000,
-                "UK": 47000,
-                // ...add more as needed
-            };
-        });
+    gdpData = { ...defaultGdpData };
 }
 
 // Fetch dynamic data on page load
@@ -109,14 +86,13 @@ function calculateRelativePrices(userPrice, userCountry, limitPercent = 80, opti
         calculationMode: modeOverride // allow override from options
     } = options;
 
-    const mode = modeOverride || calculationMode;
+    const mode = modeOverride || DEFAULT_CALCULATION_MODE;
 
     // Get home country dynamic data
     const homePPP = pppData[userCountry] || 1;
     const homeGDP = gdpData[userCountry] || 1;
 
     return wageData.map(w => {
-        let basePrice = userPrice;
         let targetPPP = pppData[w.country] || 1;
         let targetGDP = gdpData[w.country] || 1;
 
@@ -194,36 +170,6 @@ const countryCurrencyMap = {
     "South Africa": "ZAR"
 };
 
-// Add exchange rates (will be updated from remote API)
-let exchangeRates = {
-    USD: 1,
-    EUR: 0.92,
-    GBP: 0.79,
-    TRY: 32.5,
-    JPY: 157,
-    RUB: 91,
-    GYD: 209,
-    // ...add more as needed
-};
-
-// Fetch exchange rates from remote API
-function fetchExchangeRates() {
-    // Use exchangerate.host for free, no API key needed
-    fetch('https://api.exchangerate.host/latest?base=USD')
-        .then(res => res.json())
-        .then(data => {
-            if (data && data.rates) {
-                exchangeRates = { ...exchangeRates, ...data.rates };
-            }
-        })
-        .catch(() => {
-            // If fetch fails, keep hardcoded rates
-        });
-}
-
-// Fetch rates on page load
-fetchExchangeRates();
-
 // Sorting state
 let currentSort = { by: 'popularity', asc: true };
 
@@ -253,8 +199,8 @@ function sortPrices(prices, by, asc = true) {
 // Update sort button styles
 function updateSortButtonStyles() {
     const sortPopularityBtn = document.getElementById('sort-popularity-btn');
-    const sortCountryBtn = document.getElementById('sort-country-btn');
-    const sortPriceBtn = document.getElementById('sort-price-btn');
+    const sortCountryBtn = document.getElementById('sort-by-country');
+    const sortPriceBtn = document.getElementById('sort-by-price');
     if (sortPopularityBtn) {
         if (currentSort.by === 'popularity') {
             sortPopularityBtn.style.background = '#e53935';
@@ -306,21 +252,21 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null, searchT
     let html = `
     <div style="margin-bottom:1rem;">
         <input id="country-search-box" type="text" placeholder="Search country..." 
-               style="width:100%;padding:0.5rem;border-radius:6px;border:1px solid #e2e8f0;">
+               class="rp-search-input">
     </div>
-    <div style="margin-bottom:1rem;">
-        <button id="sort-popularity-btn" class="sort-btn" style="margin-right:10px;padding:8px 16px;border:1px solid #e2e8f0;border-radius:6px;cursor:pointer;">
+    <div class="rp-controls-row">
+        <button id="sort-popularity-btn" class="sort-btn rp-sort-btn">
             Sort by Popularity ↕
         </button>
-        <button id="sort-by-country" class="sort-btn" style="margin-right:10px;padding:8px 16px;border:1px solid #e2e8f0;border-radius:6px;cursor:pointer;">
+        <button id="sort-by-country" class="sort-btn rp-sort-btn">
             Sort by Country ↕
         </button>
-        <button id="sort-by-price" class="sort-btn" style="padding:8px 16px;border:1px solid #e2e8f0;border-radius:6px;cursor:pointer;">
+        <button id="sort-by-price" class="sort-btn rp-sort-btn">
             Sort by Price ↕
         </button>
     </div>
-    <div style="max-height:60vh;overflow-y:auto;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
-        <table style="width:100%;border-collapse:collapse;background:white;">
+    <div class="rp-table-wrap">
+        <table class="rp-result-table">
             <thead>
                 <tr style="background:#f8fafc;">
                     <th style="padding:12px;text-align:left;">Flag</th>
@@ -375,19 +321,19 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null, searchT
         const localCurrency = countryCurrencyMap[country] || currency;
         // Make sure currency is user's selected currency (from form)
         html += `
-        <tr style="border-bottom:1px solid #e2e8f0;">
-            <td style="padding:12px;">
+        <tr class="rp-row">
+            <td class="rp-cell">
                 ${flagUrl ? `<img src="${flagUrl}" alt="${displayCountryName(country)} flag" 
                  style="width:32px;height:24px;border-radius:4px;">` : ''}
             </td>
-            <td style="padding:12px;">${displayCountryName(country)}</td>
-            <td style="padding:12px;text-align:right;font-weight:500;">
+            <td class="rp-cell">${displayCountryName(country)}</td>
+            <td class="rp-cell rp-cell-right rp-strong">
                 ${price.toFixed(2)} ${currency}
             </td>
-            <td style="padding:12px;text-align:right;font-weight:500;" class="local-price-cell" data-price="${price}" data-currency="${localCurrency}" data-base="${currency}">
+            <td class="rp-cell rp-cell-right rp-strong local-price-cell" data-price="${price}" data-currency="${localCurrency}" data-base="${currency}">
                 Loading...
             </td>
-            <td style="padding:12px;text-align:right;color:${changeColor};font-weight:500;">
+            <td class="rp-cell rp-cell-right rp-strong" style="color:${changeColor};">
                 ${changePercent > 0 ? '+' : ''}${changePercent.toFixed(1)}%
             </td>
         </tr>`;
@@ -398,8 +344,7 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null, searchT
     if (displayPrices.length > shownCount) {
         html += `
         <div style="text-align:center;margin-top:1rem;">
-            <button id="show-more-btn" style="background:#e53935;color:white;
-                    padding:8px 16px;border:none;border-radius:6px;cursor:pointer;">
+            <button id="show-more-btn" class="rp-primary-btn">
                 Show More Results
             </button>
         </div>`;
@@ -499,7 +444,7 @@ document.addEventListener('DOMContentLoaded', function () {
             marketplaceWrapper.innerHTML = `
                 <label style="font-weight:500;">
                     Marketplace:
-                    <select id="marketplace" style="margin-left:47px;">
+                    <select id="marketplace" class="rp-inline-select" style="margin-left:47px;">
                         <option value="Roblox Marketplace">Roblox Marketplace</option>
                         <option value="Google Play Store">Google Play Store</option>
                         <option value="Steam">Steam</option>
@@ -650,8 +595,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Calculation Mode ---
     // Allow user to select calculation mode: wage, PPP, GDP, hybrid
-    let calculationMode = 'hybrid'; // default
-
     // Add calculation mode selector to the form
     if (form && !form.querySelector('#calculation-mode')) {
         const modeDiv = document.createElement('div');
@@ -659,7 +602,7 @@ document.addEventListener('DOMContentLoaded', function () {
         modeDiv.innerHTML = `
             <label style="font-weight:500;">
                 Calculation Mode:
-                <select id="calculation-mode" style="margin-left:8px;">
+                <select id="calculation-mode" class="rp-inline-select" style="margin-left:8px;">
                     <option value="hybrid">Hybrid (Wage + PPP + GDP)</option>
                     <option value="wage">Wage Only</option>
                     <option value="ppp">PPP Only</option>
@@ -668,9 +611,6 @@ document.addEventListener('DOMContentLoaded', function () {
             </label>
         `;
         form.insertBefore(modeDiv, form.firstChild.nextSibling);
-        document.getElementById('calculation-mode').onchange = function (e) {
-            calculationMode = e.target.value;
-        };
     }
 });
 
@@ -696,7 +636,7 @@ function handleRegionalPriceCalculation(event) {
     const maxPrice = maxPriceInput && maxPriceInput.value !== '' ? parseFloat(maxPriceInput.value) : '';
     const rounding = roundingInput ? roundingInput.value : 'none';
     const enableCapping = enableCappingInput ? enableCappingInput.checked : true;
-    const calculationModeValue = modeInput ? modeInput.value : calculationMode;
+    const calculationModeValue = modeInput ? modeInput.value : DEFAULT_CALCULATION_MODE;
 
     const spinner = document.getElementById('spinner');
     const resultContainer = document.getElementById('result-table-container');
@@ -737,4 +677,3 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
-

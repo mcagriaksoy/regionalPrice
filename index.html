@@ -213,6 +213,91 @@
 	<link rel="stylesheet" href="css/ionicons.min.css" media="print" onload="this.media='all'">
 	<link rel="stylesheet" href="css/style.css" media="print" onload="this.media='all'">
 
+
+	<style>
+		/* Calculator UI refinements */
+		.rp-search-input {
+			width: 100%;
+			padding: 0.65rem 0.75rem;
+			border-radius: 8px;
+			border: 1px solid #dbe2ea;
+		}
+
+		.rp-search-input:focus {
+			outline: none;
+			border-color: #e53935;
+			box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.12);
+		}
+
+		.rp-controls-row {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 10px;
+			margin-bottom: 1rem;
+		}
+
+		.rp-sort-btn {
+			padding: 8px 16px;
+			border: 1px solid #e2e8f0;
+			border-radius: 6px;
+			cursor: pointer;
+			transition: all 0.2s ease;
+		}
+
+		.rp-table-wrap {
+			max-height: 60vh;
+			overflow-y: auto;
+			border-radius: 12px;
+			border: 1px solid #edf2f7;
+			box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+			background: #fff;
+		}
+
+		.rp-result-table {
+			width: 100%;
+			border-collapse: collapse;
+			background: #fff;
+		}
+
+		.rp-result-table thead tr {
+			background: #f8fafc;
+		}
+
+		.rp-cell {
+			padding: 12px;
+		}
+
+		.rp-cell-right {
+			text-align: right;
+		}
+
+		.rp-strong {
+			font-weight: 500;
+		}
+
+		.rp-row {
+			border-bottom: 1px solid #e2e8f0;
+		}
+
+		.rp-primary-btn {
+			background: #e53935;
+			color: #fff;
+			padding: 8px 16px;
+			border: none;
+			border-radius: 6px;
+			cursor: pointer;
+			transition: background 0.2s ease;
+		}
+
+		.rp-primary-btn:hover {
+			background: #cf2f2b;
+		}
+
+		.rp-inline-select {
+			min-width: 220px;
+		}
+	</style>
+
 	<!-- Make TermsFeed cookie consent window shorter horizontally -->
 	<style>
 		#cookie-consent-banner,
@@ -1526,14 +1611,6 @@
 			}
 		});
 
-		// Improve scrolling performance by using passive listeners
-		document.addEventListener('scroll', function () {
-			// ...existing scroll-related code...
-		}, { passive: true });
-
-		document.addEventListener('touchmove', function () {
-			// ...existing touchmove-related code...
-		}, { passive: true });
 	</script>
 
 	<!-- Cookie Consent by TermsFeed https://www.TermsFeed.com -->
