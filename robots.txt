@@ -1,2 +1,3 @@
 User-agent: *
 Allow: /
+Sitemap: https://regionalpriceconverter.com/regionalPrice/sitemap.xml

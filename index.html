@@ -23,7 +23,7 @@
 		content="Enter your app price and get recommended regional prices. RegionalPrice helps you make smart pricing decisions for global markets.">
 	<meta name="keywords"
 		content="regional pricing, app pricing, price calculator, global pricing, software pricing, game pricing, currency, PPP, purchasing power, geolocated pricing, country-specific pricing, local currency, SaaS pricing, mobile app pricing, regional price calculator, international software pricing, global app store pricing, price localization, price optimization, market-specific pricing, worldwide software pricing, regional discounts, app store localization, country-based pricing, best price by country, software price by region, app price by country, global market pricing, regional price strategy, price conversion, price recommendation, regional price optimization, local market price, geo-targeted pricing, international app pricing, software price calculator, global SaaS pricing, regional game pricing, digital product pricing, app monetization, app revenue optimization, global e-commerce pricing, country-level price adjustment, regional price intelligence, global digital pricing, app store price research, software price analytics, regional price insights, global price comparison, price by location, geo-pricing, local purchasing power, regional price advisor, global price strategy">
-	<meta name="author" content="Mehmet C.Aksoy">
+	<meta name="author" content="__SITE_AUTHOR_NAME__">
 	<meta name="language" content="en">
 	<meta http-equiv="Content-Language" content="en">
 
@@ -93,14 +93,89 @@
 		href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap"
 		crossorigin="anonymous">
 
-	<!-- Google tag (gtag.js) -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-0GPLWP4J43"></script>
 	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag() { dataLayer.push(arguments); }
-		gtag('js', new Date());
-
-		gtag('config', 'G-0GPLWP4J43');
+		window.RP_ANALYTICS_ID = 'G-0GPLWP4J43';
+	</script>
+	<script type="application/ld+json" data-site-author-schema>
+	{
+		"@context": "https://schema.org",
+		"@graph": [
+			{
+				"@type": "Organization",
+				"@id": "https://regionalpriceconverter.com/#organization",
+				"name": "Regional Price Calculator",
+				"url": "https://regionalpriceconverter.com/",
+				"logo": "https://regionalpriceconverter.com/favicon.ico",
+				"founder": {
+					"@type": "Person",
+					"name": "__SITE_AUTHOR_NAME__"
+				}
+			},
+			{
+				"@type": "WebSite",
+				"@id": "https://regionalpriceconverter.com/#website",
+				"url": "https://regionalpriceconverter.com/",
+				"name": "Regional Price Calculator",
+				"publisher": {
+					"@id": "https://regionalpriceconverter.com/#organization"
+				},
+				"inLanguage": "en"
+			},
+			{
+				"@type": "SoftwareApplication",
+				"name": "Regional Price Calculator",
+				"applicationCategory": "BusinessApplication",
+				"operatingSystem": "Web",
+				"url": "https://regionalpriceconverter.com/",
+				"description": "Regional pricing calculator for apps, games, SaaS, and digital products using purchasing power and market-aware pricing guidance.",
+				"offers": {
+					"@type": "Offer",
+					"price": "0",
+					"priceCurrency": "USD"
+				},
+				"publisher": {
+					"@id": "https://regionalpriceconverter.com/#organization"
+				}
+			},
+			{
+				"@type": "FAQPage",
+				"mainEntity": [
+					{
+						"@type": "Question",
+						"name": "What is regional pricing and why is it important?",
+						"acceptedAnswer": {
+							"@type": "Answer",
+							"text": "Regional pricing adjusts product prices by country or region based on purchasing power, local market conditions, and competitive context. It helps improve conversion, accessibility, and revenue while reducing piracy."
+						}
+					},
+					{
+						"@type": "Question",
+						"name": "How does the Regional Price Calculator work?",
+						"acceptedAnswer": {
+							"@type": "Answer",
+							"text": "The calculator uses purchasing power parity, exchange-rate context, and regional market signals to suggest country-specific pricing ranges for apps, games, and software."
+						}
+					},
+					{
+						"@type": "Question",
+						"name": "Which platforms can use these regional prices?",
+						"acceptedAnswer": {
+							"@type": "Answer",
+							"text": "The pricing guidance can be used for platforms such as Steam, Google Play, app stores, SaaS billing flows, Roblox, and other digital marketplaces."
+						}
+					},
+					{
+						"@type": "Question",
+						"name": "Can I export the recommended prices?",
+						"acceptedAnswer": {
+							"@type": "Answer",
+							"text": "Premium users can export recommended prices in spreadsheet-friendly formats for implementation and analysis."
+						}
+					}
+				]
+			}
+		]
+	}
 	</script>
 
 	<!-- Critical CSS with font fallbacks -->
@@ -298,22 +373,6 @@
 		}
 	</style>
 
-	<!-- Make TermsFeed cookie consent window shorter horizontally -->
-	<style>
-		#cookie-consent-banner,
-		.cc-nb-main-container,
-		.cc-nb-main-container * {
-			max-width: 350px !important;
-			width: 100% !important;
-			min-width: unset !important;
-		}
-
-		.cc-nb-main-container {
-			left: 20px !important;
-			right: auto !important;
-		}
-	</style>
-
 </head>
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300" class="font-loading">
@@ -332,7 +391,7 @@
 					<li class="nav-item"><a href="#calculate-section" class="nav-link"><span>Calculate</span></a></li>
 					<li class="nav-item"><a href="#services-section" class="nav-link"><span>Premium</span></a></li>
 					<li class="nav-item"><a href="blog.html" class="nav-link"><span>Blog</span></a></li>
-					<li class="nav-item"><a href="#whitepaper-section" class="nav-link"><span>Whitepaper</span></a></li>
+							<li class="nav-item"><a href="#whitepaper-section" class="nav-link"><span>Guides</span></a></li>
 					<li class="nav-item"><a href="#contact-section" class="nav-link"><span>Contact Us</span></a></li>
 				</ul>
 			</div>
@@ -462,7 +521,7 @@
 								<span class="number" data-number="3400000">0</span>
 								<span>Apps using Regional Pricing worldwide</span>
 							</p>
-							<p><a href="#whitepaper-section" class="btn btn-primary py-3 px-3">Read Our Research</a></p>
+									<p><a href="#whitepaper-section" class="btn btn-primary py-3 px-3">Browse Guides</a></p>
 						</div>
 					</div>
 				</div>
@@ -572,7 +631,7 @@
 					<p class="mb-4">Have questions or need custom pricing analysis? We're here to help!</p>
 					<p>
 						<strong>Email:</strong> <a
-							href="mailto:admin@regionalpriceconverter.com">admin@regionalpriceconverter.com</a><br>
+							href="mailto:regionalprice@zohomail.eu">regionalprice@zohomail.eu</a><br>
 						<strong>Support:</strong> <a href="#contact-section">Contact Form</a>
 					</p>
 				</div>
@@ -941,7 +1000,7 @@
 							<div class="d-flex align-items-center mb-3 meta">
 								<p class="mb-0">
 									<span class="mr-2">January 12, 2026</span>
-									<a href="mailto:admin@regionalpriceconverter.com" class="mr-2">Admin</a>
+									<a href="mailto:regionalprice@zohomail.eu" class="mr-2">Admin</a>
 									<a href="blog.html" class="meta-chat"><span class="icon-chat"></span> 24 Comments</a>
 								</p>
 							</div>
@@ -961,7 +1020,7 @@
 							<div class="d-flex align-items-center mb-3 meta">
 								<p class="mb-0">
 									<span class="mr-2">January 12, 2026</span>
-									<a href="mailto:admin@regionalpriceconverter.com" class="mr-2">Admin</a>
+									<a href="mailto:regionalprice@zohomail.eu" class="mr-2">Admin</a>
 									<a href="blog.html" class="meta-chat"><span class="icon-chat"></span> 31 Comments</a>
 								</p>
 							</div>
@@ -981,7 +1040,7 @@
 							<div class="d-flex align-items-center mb-3 meta">
 								<p class="mb-0">
 									<span class="mr-2">January 10, 2026</span>
-									<a href="mailto:admin@regionalpriceconverter.com" class="mr-2">Admin</a>
+									<a href="mailto:regionalprice@zohomail.eu" class="mr-2">Admin</a>
 									<a href="blog.html" class="meta-chat"><span class="icon-chat"></span> 18 Comments</a>
 								</p>
 							</div>
@@ -994,43 +1053,57 @@
 				</div>
 				<div class="col-md-4 d-flex ftco-animate">
 					<div class="blog-entry justify-content-end">
-						<a href="blog.html" class="block-20"
+						<a href="blog/research-behind-regional-pricing.html" class="block-20"
 							style="background-image: url('images/countrylist_1.avif');">
 						</a>
 						<div class="text mt-3 float-right d-block">
 							<div class="d-flex align-items-center mb-3 meta">
 								<p class="mb-0">
 									<span class="mr-2">June 01, 2025</span>
-									<a href="mailto:admin@regionalpriceconverter.com" class="mr-2">Blog Admin</a>
+									<a href="mailto:regionalprice@zohomail.eu" class="mr-2">Blog Admin</a>
 									<a href="blog.html#comments-section" class="meta-chat"><span
 											class="icon-chat"></span> 2+ Comments</a>
 								</p>
 							</div>
-							<h3 class="heading"><a href="blog.html">The researches behing the Regional Price</a></h3>
-							<p>Research on regional pricing in the software industry highlights the importance of
-								adapting pricing strategies to different markets.</p>
+							<h3 class="heading"><a href="blog/research-behind-regional-pricing.html">Research Behind Regional Pricing</a></h3>
+							<p>See the economic logic behind regional pricing, from price discrimination to PPP-based affordability and software-market expansion.</p>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-4 d-flex ftco-animate">
 					<div class="blog-entry">
-						<a href="blog.html" class="block-20"
+						<a href="blog/case-studies-regional-pricing-success.html" class="block-20"
 							style="background-image: url('images/dark_theme_map.avif');">
 						</a>
 						<div class="text mt-3 float-right d-block">
 							<div class="d-flex align-items-center mb-3 meta">
 								<p class="mb-0">
 									<span class="mr-2">June 01, 2025</span>
-									<a href="mailto:admin@regionalpriceconverter.com" class="mr-2">Content Admin</a>
+									<a href="mailto:regionalprice@zohomail.eu" class="mr-2">Content Admin</a>
 									<a href="blog.html#discussion" class="meta-chat"><span class="icon-chat"></span> 3+
 										Comments</a>
 								</p>
 							</div>
-							<h3 class="heading"><a href="blog.html">What are the pros and cons of regional pricing?</a>
+							<h3 class="heading"><a href="blog/case-studies-regional-pricing-success.html">Regional Pricing Case Studies That Drove Growth</a>
 							</h3>
-							<p>Regional pricing can be a powerful strategy in the software industry, but like any
-								pricing model, it comes with advantages and disadvantages.</p>
+							<p>Explore practical examples from SaaS, mobile apps, and games to see how localized pricing can expand reach without flattening revenue.</p>
 						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row justify-content-center mt-4">
+				<div class="col-md-10">
+					<div class="p-4 bg-light" style="border-radius: 12px; color: #243447; box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);">
+						<h3 class="mb-3" style="color: #0f172a;">Explore Pricing Guides by Topic</h3>
+						<p class="mb-3" style="color: #475569;">Follow these internal paths to compare platform guides, pricing research, and implementation strategy before you export country-level recommendations.</p>
+						<p class="mb-0" style="color: #334155;">
+							<a href="blog/steam-regional-pricing-guide.html" style="color: #0f4c81; font-weight: 600;">Steam pricing guide</a> |
+							<a href="blog/google-play-pricing-strategy.html" style="color: #0f4c81; font-weight: 600;">Google Play pricing strategy</a> |
+							<a href="blog/roblox-regional-pricing.html" style="color: #0f4c81; font-weight: 600;">Roblox regional pricing</a> |
+							<a href="blog/understanding-purchasing-power-parity.html" style="color: #0f4c81; font-weight: 600;">Purchasing power parity explained</a> |
+							<a href="blog/case-studies-regional-pricing-success.html" style="color: #0f4c81; font-weight: 600;">Regional pricing case studies</a> |
+							<a href="blog.html" style="color: #0f4c81; font-weight: 600;">View all blog posts</a>
+						</p>
 					</div>
 				</div>
 			</div>
@@ -1186,355 +1259,66 @@
 		</div>
 	</section>
 
-	<section class="ftco-section" id="whitepaper-section">
+	<section class="ftco-section" id="whitepaper-section" style="background:#0b0b0b;">
 		<div class="container">
 			<div class="row justify-content-center mb-5 pb-3">
-				<div class="col-md-10 heading-section text-center ftco-animate">
-					<h2 class="big big-2">Research</h2>
-					<h3 class="mb-4">The Science Behind Regional Pricing</h3>
-					<p>Our comprehensive research into global software pricing strategies, economic factors, and market
-						dynamics that drive successful regional pricing implementation.</p>
+				<div class="col-md-9 heading-section text-center ftco-animate">
+					<h2 class="big big-2" style="color:rgba(255,255,255,0.08);">Learn</h2>
+					<h3 class="mb-4" style="color:#ffffff;">Keep the homepage focused, go deeper on dedicated pages</h3>
+					<p style="color:rgba(255,255,255,0.68);">Instead of stacking every explanation here, we now keep the homepage focused on the calculator, key benefits, and the best next steps.</p>
 				</div>
 			</div>
-
-			<div class="row justify-content-center">
-				<div class="col-lg-10 col-xl-8">
-					<div class="card shadow-lg border-0" style="border-radius: 15px;">
-						<div class="card-body p-4 p-md-5">
-							<div class="whitepaper-content">
-								<h4 class="mb-4 text-primary">Executive Summary</h4>
-								<p class="lead mb-4">
-									Regional pricing represents one of the most effective strategies for software
-									companies seeking global expansion. Our research, based on analysis of over 50,000
-									software products across 195 countries, demonstrates that properly implemented
-									regional pricing can increase global revenue by 200-400% while significantly
-									reducing piracy rates.
-								</p>
-
-								<h5 class="mt-5 mb-4 text-primary">The Global Software Market Landscape</h5>
-								<p class="mb-4">
-									The global software market, valued at over $650 billion in 2024, exhibits extreme
-									variation in purchasing power and price sensitivity across different regions. Our
-									analysis reveals that a standardized global pricing strategy leaves significant
-									revenue on the table while creating barriers to adoption in emerging markets.
-								</p>
-
-								<div class="row mb-4">
-									<div class="col-md-6">
-										<div class="bg-light p-4 rounded">
-											<h6 class="text-primary mb-3">Market Size by Region (2024)</h6>
-											<ul class="list-unstyled mb-0">
-												<li class="mb-2">North America: <strong>$280B</strong></li>
-												<li class="mb-2">Europe: <strong>$185B</strong></li>
-												<li class="mb-2">Asia-Pacific: <strong>$145B</strong></li>
-												<li class="mb-2">Latin America: <strong>$25B</strong></li>
-												<li>Others: <strong>$15B</strong></li>
-											</ul>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="bg-light p-4 rounded">
-											<h6 class="text-primary mb-3">Growth Potential</h6>
-											<ul class="list-unstyled mb-0">
-												<li class="mb-2">Emerging Markets: <strong>15-25% CAGR</strong></li>
-												<li class="mb-2">Developed Markets: <strong>5-8% CAGR</strong></li>
-												<li class="mb-2">Mobile Software: <strong>12% CAGR</strong></li>
-												<li class="mb-2">Enterprise SaaS: <strong>18% CAGR</strong></li>
-												<li class="mb-2">Gaming: <strong>9% CAGR</strong></li>
-											</ul>
-										</div>
-									</div>
-								</div>
-
-								<h5 class="mt-5 mb-4 text-primary">Economic Foundations of Regional Pricing</h5>
-								<p class="mb-3">
-									Regional pricing is fundamentally based on the principle of purchasing power parity
-									(PPP), which recognizes that the same nominal price represents different real costs
-									across countries with varying economic conditions.
-								</p>
-
-								<h6 class="mt-4 mb-3">Purchasing Power Analysis</h6>
-								<p class="mb-3">
-									Our research examines the relationship between software prices and local purchasing
-									power across 195 countries. The data reveals significant disparities in
-									affordability when using uniform global pricing.
-								</p>
-
-								<div class="table-responsive mb-4">
-									<table class="table table-bordered">
-										<thead class="thead-light">
-											<tr>
-												<th>Country</th>
-												<th>Avg. Monthly Income (USD)</th>
-												<th>$99 Software as % of Income</th>
-												<th>Recommended Price</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>United States</td>
-												<td>$4,500</td>
-												<td>2.2%</td>
-												<td>$99.00</td>
-											</tr>
-											<tr>
-												<td>Germany</td>
-												<td>$3,800</td>
-												<td>2.6%</td>
-												<td>$89.00</td>
-											</tr>
-											<tr>
-												<td>Brazil</td>
-												<td>$800</td>
-												<td>12.4%</td>
-												<td>$29.00</td>
-											</tr>
-											<tr>
-												<td>India</td>
-												<td>$450</td>
-												<td>22.0%</td>
-												<td>$15.00</td>
-											</tr>
-											<tr>
-												<td>Nigeria</td>
-												<td>$280</td>
-												<td>35.4%</td>
-												<td>$9.00</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-
-								<h5 class="mt-5 mb-4 text-primary">Implementation Methodology</h5>
-								<p class="mb-3">
-									Successful regional pricing implementation requires a systematic approach that
-									considers multiple economic and market factors:
-								</p>
-
-								<div class="row mb-4">
-									<div class="col-md-6">
-										<h6 class="text-primary mb-3">Economic Indicators</h6>
-										<ul class="list-unstyled">
-											<li class="mb-2">• GDP per capita (PPP adjusted)</li>
-											<li class="mb-2">• Median household income</li>
-											<li class="mb-2">• Software spending patterns</li>
-											<li class="mb-2">• Digital economy penetration</li>
-											<li class="mb-2">• Currency stability metrics</li>
-										</ul>
-									</div>
-									<div class="col-md-6">
-										<h6 class="text-primary mb-3">Market Factors</h6>
-										<ul class="list-unstyled">
-											<li class="mb-2">• Competitive landscape analysis</li>
-											<li class="mb-2">• Local pricing conventions</li>
-											<li class="mb-2">• Payment method preferences</li>
-											<li class="mb-2">• Piracy rates and enforcement</li>
-											<li class="mb-2">• Market maturity levels</li>
-										</ul>
-									</div>
-								</div>
-
-								<h5 class="mt-5 mb-4 text-primary">Results and Impact</h5>
-								<p class="mb-3">
-									Our analysis of companies implementing regional pricing strategies shows consistent
-									positive outcomes across different software categories:
-								</p>
-
-								<div class="bg-light p-4 rounded mb-4">
-									<h6 class="text-primary mb-3">Average Performance Improvements</h6>
-									<div class="row">
-										<div class="col-md-4 text-center mb-3">
-											<h4 class="text-dark mb-1">+285%</h4>
-											<small class="text-muted">Revenue Growth</small>
-										</div>
-										<div class="col-md-4 text-center mb-3">
-											<h4 class="text-dark mb-1">+340%</h4>
-											<small class="text-muted">User Acquisition</small>
-										</div>
-										<div class="col-md-4 text-center mb-3">
-											<h4 class="text-dark mb-1">-58%</h4>
-											<small class="text-muted">Piracy Reduction</small>
-										</div>
-									</div>
-								</div>
-
-								<h5 class="mt-5 mb-4 text-primary">Best Practices and Recommendations</h5>
-								<div class="row mb-4">
-									<div class="col-md-6">
-										<div class="card border-primary mb-3">
-											<div class="card-header bg-primary text-white">
-												<h6 class="mb-0">Implementation Strategy</h6>
-											</div>
-											<div class="card-body">
-												<ul class="list-unstyled mb-0">
-													<li class="mb-2">• Start with high-potential markets</li>
-													<li class="mb-2">• Test pricing with A/B experiments</li>
-													<li class="mb-2">• Monitor competitor responses</li>
-													<li class="mb-2">• Adjust based on performance data</li>
-													<li>• Maintain pricing consistency</li>
-												</ul>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="card border-success mb-3">
-											<div class="card-header bg-success text-white">
-												<h6 class="mb-0">Success Factors</h6>
-											</div>
-											<div class="card-body">
-												<ul class="list-unstyled mb-0">
-													<li class="mb-2">• Accurate market research</li>
-													<li class="mb-2">• Flexible pricing infrastructure</li>
-													<li class="mb-2">• Local payment integration</li>
-													<li class="mb-2">• Customer communication</li>
-													<li>• Continuous optimization</li>
-												</ul>
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<h5 class="mt-5 mb-4 text-primary">Conclusion</h5>
-								<p class="mb-4">
-									Regional pricing represents a fundamental shift from one-size-fits-all global
-									pricing to nuanced, market-specific strategies that maximize both accessibility and
-									profitability. Companies that successfully implement regional pricing consistently
-									outperform those using uniform global pricing by significant margins.
-								</p>
-								<p class="mb-4">
-									Our research demonstrates that the question is not whether to implement regional
-									pricing, but how to do it effectively. The Regional Price Calculator provides the
-									data-driven foundation necessary for making informed pricing decisions across global
-									markets.
-								</p>
-
-								<div class="mt-5 text-center">
-									<a href="#calculate-section" class="btn btn-primary btn-lg px-5 py-3 mr-3 mb-3"
-										style="border-radius: 25px;">
-										Start Calculating Prices
-									</a>
-									<a href="#contact-section" class="btn btn-outline-primary btn-lg px-5 py-3 mb-3"
-										style="border-radius: 25px;">
-										Request Full Research
-									</a>
+			<div class="row">
+				<div class="col-lg-8 mb-4">
+					<div class="p-4 p-md-5 h-100" style="background:linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.02) 100%); border:1px solid rgba(255,255,255,0.08); border-radius:24px; box-shadow:0 24px 60px rgba(0,0,0,0.22);">
+						<h4 class="mb-3" style="color:#ffffff;">Start with the essentials</h4>
+						<p class="mb-4" style="color:rgba(255,255,255,0.68);">Use the calculator for quick pricing outputs, then open the exact guide you need instead of digging through a long research block on the homepage.</p>
+						<div class="row">
+							<div class="col-md-6 mb-3">
+								<div class="p-4 h-100" style="background:rgba(255,255,255,0.03);border-radius:18px;border:1px solid rgba(255,255,255,0.08);">
+									<h5 class="mb-3" style="color:#ffffff;">Core Guides</h5>
+									<ul class="list-unstyled mb-0" style="color:rgba(255,255,255,0.76);">
+										<li class="mb-2"><a href="blog/steam-regional-pricing-guide.html" style="color:rgba(255,255,255,0.82);">Steam regional pricing guide</a></li>
+										<li class="mb-2"><a href="blog/google-play-pricing-strategy.html" style="color:rgba(255,255,255,0.82);">Google Play pricing strategy</a></li>
+										<li><a href="blog/roblox-regional-pricing.html" style="color:rgba(255,255,255,0.82);">Roblox pricing walkthrough</a></li>
+									</ul>
 								</div>
 							</div>
+							<div class="col-md-6 mb-3">
+								<div class="p-4 h-100" style="background:rgba(255,255,255,0.03);border-radius:18px;border:1px solid rgba(255,255,255,0.08);">
+									<h5 class="mb-3" style="color:#ffffff;">Research & Strategy</h5>
+									<ul class="list-unstyled mb-0" style="color:rgba(255,255,255,0.76);">
+										<li class="mb-2"><a href="blog/research-behind-regional-pricing.html" style="color:rgba(255,255,255,0.82);">Research behind regional pricing</a></li>
+										<li class="mb-2"><a href="blog/understanding-purchasing-power-parity.html" style="color:rgba(255,255,255,0.82);">Purchasing power parity explained</a></li>
+										<li><a href="blog/case-studies-regional-pricing-success.html" style="color:rgba(255,255,255,0.82);">Regional pricing case studies</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="mt-4">
+							<a href="blog.html" class="btn btn-primary px-4 py-3 mr-3 mb-3">Browse All Guides</a>
+							<a href="#contact-section" class="btn px-4 py-3 mb-3" style="background:transparent;border:1px solid rgba(255,255,255,0.18);color:#ffffff;">Request Pricing Help</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 mb-4">
+					<div class="h-100 d-flex flex-column" style="background:linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.03) 100%); border:1px solid rgba(255,255,255,0.08); border-radius:24px; overflow:hidden; box-shadow:0 24px 60px rgba(0,0,0,0.22);">
+						<a href="https://safepdf.de/" target="_blank" rel="dofollow noopener" style="display:block;">
+							<img src="images/safepdf.avif" alt="SafePDF secure PDF tools" style="width:100%;display:block;max-height:220px;object-fit:cover;">
+						</a>
+						<div class="p-4">
+							<small style="letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.58);">Sponsor</small>
+							<h3 class="mt-2 mb-3" style="color:#ffffff;">SafePDF for secure PDF workflows</h3>
+							<p class="mb-4" style="color:rgba(255,255,255,0.70);">A lightweight homepage ad area for a related tool, without crowding the main calculator flow.</p>
+							<a href="https://safepdf.de/" target="_blank" rel="dofollow noopener" class="btn px-4 py-3" style="background:#ffffff;color:#111111;font-weight:700;">Visit SafePDF</a>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		</div>
 	</section>
 
-	<footer class="ftco-footer ftco-section">
-		<div class="container">
-			<div class="row mb-5">
-				<div class="col-md-3">
-					<div class="ftco-footer-widget mb-4">
-						<h4 class="ftco-heading-2">Regional Price Calculator</h4>
-						<p>The industry-leading tool for software developers, game studios, and SaaS companies to
-							optimize their global pricing strategies. Trusted by thousands of developers worldwide.</p>
-						<ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-3">
-							<li class="ftco-animate"><a href="https://twitter.com/regionalprice"
-									aria-label="Follow us on Twitter"><span class="icon-twitter"></span></a></li>
-							<li class="ftco-animate"><a href="https://facebook.com/regionalprice"
-									aria-label="Follow us on Facebook"><span class="icon-facebook"></span></a></li>
-							<li class="ftco-animate"><a href="https://instagram.com/regionalprice"
-									aria-label="Follow us on Instagram"><span class="icon-instagram"></span></a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="ftco-footer-widget mb-4 ml-md-2">
-						<h4 class="ftco-heading-2">Quick Links</h4>
-						<ul class="list-unstyled">
-							<li><a href="#home-section"><span class="icon-long-arrow-right mr-2"></span>Home</a></li>
-							<li><a href="#about-section"><span class="icon-long-arrow-right mr-2"></span>About Regional
-									Pricing</a></li>
-							<li><a href="#calculate-section"><span class="icon-long-arrow-right mr-2"></span>Price
-									Calculator</a></li>
-							<li><a href="#methodology-section"><span class="icon-long-arrow-right mr-2"></span>Our
-									Methodology</a></li>
-							<li><a href="#case-studies-section"><span class="icon-long-arrow-right mr-2"></span>Success
-									Stories</a></li>
-							<li><a href="#whitepaper-section"><span class="icon-long-arrow-right mr-2"></span>Research &
-									Data</a></li>
-							<li><a href="#contact-section"><span class="icon-long-arrow-right mr-2"></span>Contact
-									Us</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="ftco-footer-widget mb-4">
-						<h4 class="ftco-heading-2">Resources</h4>
-						<ul class="list-unstyled">
-							<li><a href="blog.html"><span class="icon-long-arrow-right mr-2"></span>Pricing Insights
-									Blog</a></li>
-							<li><a href="#faq-section"><span class="icon-long-arrow-right mr-2"></span>Frequently Asked
-									Questions</a></li>
-							<li><a href="https://regionalpricecalculator.com/terms-and-conditions"><span
-										class="icon-long-arrow-right mr-2"></span>Terms & Conditions</a></li>
-							<li><a href="terms-and-conditions.html"><span
-										class="icon-long-arrow-right mr-2"></span>Privacy
-									Policy</a></li>
-							<li><a href="api-docs.html"><span class="icon-long-arrow-right mr-2"></span>API
-									Documentation</a></li>
-							<li><a href="#services-section"><span class="icon-long-arrow-right mr-2"></span>Premium
-									Features</a></li>
-							<li
-								style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
-								<a href="https://safepdf.de/" target="_blank" rel="dofollow"
-									style="font-weight: 600;"><span class="icon-long-arrow-right mr-2"></span>🔒 SafePDF
-									- Secure PDF Tools</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="ftco-footer-widget mb-4">
-						<h4 class="ftco-heading-2">Blog Posts</h4>
-						<ul class="list-unstyled">
-							<li><a href="blog/pros-cons-regional-pricing.html"><span
-										class="icon-long-arrow-right mr-2"></span>Pros and Cons of Regional Pricing</a>
-							</li>
-							<li><a href="blog/case-studies-regional-pricing-success.html"><span
-										class="icon-long-arrow-right mr-2"></span>Case Studies: Regional Pricing
-									Success</a></li>
-							<li><a href="blog/understanding-purchasing-power-parity.html"><span
-										class="icon-long-arrow-right mr-2"></span>Understanding Purchasing Power
-									Parity</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-
-			<!-- BEGIN: TrustLock Badges Row -->
-			<div class="row mt-4">
-				<div class="col-md-12 text-center">
-					<a name="trustbadge" href="https://trustlock.co" rel="noopener" target="_blank"><img name="trustseal" alt="SSL Secure Checkout" style="border: 0; margin: 0 10px;"
-							src="https://trustlock.co/wp-content/uploads/2019/01/ssl-secure-checkout-trust-seal.png" width="171"
-							height="75"></a>
-					<a name="trustbadge" href="https://trustlock.co" rel="noopener" target="_blank"><img name="trustseal" alt="Satisfaction Guaranteed" style="border: 0; margin: 0 10px;"
-							src="https://trustlock.co/wp-content/uploads/2019/01/satisisfaction-guaranteed-badge-iamge-icon-badge.png"
-							width="171" height="75"></a>
-					<a name="trustbadge" href="https://trustlock.co" rel="noopener" target="_blank"><img name="trustseal" alt="Best Price Guaranteed" style="border: 0; margin: 0 10px;"
-							src="https://trustlock.co/wp-content/uploads/2019/01/BEST-PRICE-GUARANTEED-trust-badge.png"
-							width="171" height="75"></a>
-				</div>
-			</div>
-			<!-- End: TrustLock Badges -->
-
-			<div class="row mt-4">
-				<div class="col-md-12 text-center">
-					<p>Copyright &copy;<span id="current-year"></span> Regional Price Calculator. All rights reserved. |
-						Helping developers optimize global pricing strategies since Q1 2025 |
-						<a href="https://colorlib.com" target="_blank">by Colorlib</a>
-					</p>
-				</div>
-			</div>
-		</div>
-	</footer>
+	<div id="footer-placeholder"></div>
 
 	<!-- loader -->
 	<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
@@ -1544,6 +1328,7 @@
 		</svg></div>
 
 
+	<script src="js/common-loader.js"></script>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery-migrate-3.0.1.min.js"></script>
 	<script src="js/popper.min.js"></script>
@@ -1558,6 +1343,7 @@
 	<script src="js/scrollax.min.js"></script>
 	<script src="js/data.js"></script>
 	<script src="js/index.js"></script>
+	<script src="js/site-author.js"></script>
 	<script src="js/main.js"></script>
 	<script src="js/resource-loader.js"></script>
 
@@ -1613,26 +1399,6 @@
 
 	</script>
 
-	<!-- Cookie Consent by TermsFeed https://www.TermsFeed.com -->
-	<script async src="https://www.termsfeed.com/public/cookie-consent/4.2.0/cookie-consent.js" defer
-		onload="window.runCookieConsent && window.runCookieConsent()"></script>
-	<script>
-		window.runCookieConsent = function () {
-			cookieconsent.run({
-				"notice_banner_type": "simple",
-				"consent_type": "express",
-				"palette": "dark",
-				"language": "en",
-				"page_load_consent_levels": ["strictly-necessary"],
-				"notice_banner_reject_button_hide": false,
-				"preferences_center_close_button_hide": false,
-				"page_refresh_confirmation_buttons": false,
-				"website_name": "Regional Price Calculator",
-				"website_privacy_policy_url": "terms-and-conditions.html"
-			});
-		}
-	</script>
-	<!-- End Cookie Consent by TermsFeed https://www.TermsFeed.com -->
 	<script>
 		// Contact form captcha logic and Formspree success popup
 		document.addEventListener('DOMContentLoaded', function () {

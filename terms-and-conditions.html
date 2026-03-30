@@ -35,38 +35,10 @@
 		.terms-container h1, .terms-container h2 { color: #fff; }
 		.terms-container p, .terms-container li { color: #e0e6ed; }
 		.terms-container a { color: #4ea8ff; }
-		/* Make TermsFeed cookie consent window shorter horizontally */
-		#cookie-consent-banner, .cc-nb-main-container, .cc-nb-main-container * {
-			max-width: 350px !important;
-			width: 100% !important;
-			min-width: unset !important;
-		}
-		.cc-nb-main-container {
-			left: 20px !important;
-			right: auto !important;
-		}
 	</style>
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light site-navbar-target" id="ftco-navbar">
-		<div class="container">
-			<a class="navbar-brand" href="index.html">R€gionalPrice</a>
-			<button class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="oi oi-menu"></span> Menu
-			</button>
-			<div class="collapse navbar-collapse" id="ftco-nav">
-				<ul class="navbar-nav nav ml-auto">
-					<li class="nav-item"><a href="index.html#home-section" class="nav-link"><span>Home</span></a></li>
-					<li class="nav-item"><a href="index.html#about-section" class="nav-link"><span>About</span></a></li>
-					<li class="nav-item"><a href="index.html#calculate-section" class="nav-link"><span>Calculate</span></a></li>
-					<li class="nav-item"><a href="index.html#services-section" class="nav-link"><span>Premium</span></a></li>
-					<li class="nav-item"><a href="index.html#blog-section" class="nav-link"><span>Blog</span></a></li>
-					<li class="nav-item"><a href="index.html#contact-section" class="nav-link"><span>Contact Us</span></a></li>
-					<li class="nav-item active"><a href="terms-and-conditions.html" class="nav-link"><span>Terms and Conditions</span></a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
+	<div id="header-placeholder"></div>
 
 	<section class="page-section">
 		<div class="terms-container">
@@ -92,52 +64,9 @@
 		</div>
 	</section>
 
-	<footer class="ftco-footer ftco-section">
-		<div class="container">
-			<div class="row mb-5">
-				<div class="col-md">
-					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">About</h2>
-						<p>Take the guesswork out of pricing! Our regional price calculator helps app, game, and software developers determine recommended prices for each country, ensuring fair and competitive pricing across global markets.</p>
-					</div>
-				</div>
-				<div class="col-md">
-					<div class="ftco-footer-widget mb-4 ml-md-4">
-						<h2 class="ftco-heading-2">Links</h2>
-						<ul class="list-unstyled">
-							<li><a href="index.html"><span class="icon-long-arrow-right mr-2"></span>Home</a></li>
-							<li><a href="index.html#about-section"><span class="icon-long-arrow-right mr-2"></span>About Us</a></li>
-							<li><a href="index.html#calculate-section"><span class="icon-long-arrow-right mr-2"></span>Calculate</a></li>
-							<li><a href="terms-and-conditions.html"><span class="icon-long-arrow-right mr-2"></span>Terms and Conditions</a></li>
-							<li><a href="index.html#contact-section"><span class="icon-long-arrow-right mr-2"></span>Contact</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-md">
-					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">Premium Benefits</h2>
-						<ul class="list-unstyled">
-							<li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Web Design</a></li>
-							<li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Web Development</a></li>
-							<li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Business Strategy</a></li>
-							<li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Data Analysis</a></li>
-							<li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Graphic Design</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12 text-center">
-					<p>
-						Copyright &copy;<span id="current-year"></span> All rights reserved | This template is made with 
-						<i class="icon-heart color-danger" aria-hidden="true"></i> by 
-						<a href="https://colorlib.com" target="_blank">Colorlib</a>
-					</p>
-				</div>
-			</div>
-		</div>
-	</footer>
+	<div id="footer-placeholder"></div>
 
+	<script src="js/common-loader.js"></script>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery-migrate-3.0.1.min.js"></script>
 	<script src="js/popper.min.js"></script>
@@ -154,14 +83,5 @@
 	<script src="js/index.js"></script>
 	<script src="js/main.js"></script>
 	<script src="js/resource-loader.js"></script>
-	<script>
-	// Set copyright year
-	document.addEventListener('DOMContentLoaded', function () {
-		var yearSpan = document.getElementById('current-year');
-		if (yearSpan) {
-			yearSpan.textContent = new Date().getFullYear();
-		}
-	});
-	</script>
 </body>
 </html>
