@@ -131,16 +131,6 @@
               </ul>
             </div>
           </div>
-          <div class="row mb-4">
-            <div class="col-md-12">
-              <div style="padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.10);">
-                <p class="mb-0" style="color: rgba(255,255,255,0.62);">
-                  Partner promotion:
-                  <a href="https://safepdf.de/" target="_blank" rel="dofollow noopener" style="color: #ffffff; font-weight: 600;">SafePDF - Secure PDF Tools</a>
-                </p>
-              </div>
-            </div>
-          </div>
           <div class="row pt-4" style="border-top: 1px solid rgba(255,255,255,0.10);">
             <div class="col-md-7 text-center text-md-left mb-2 mb-md-0">
               <p class="mb-0" style="color: rgba(255,255,255,0.54);">Copyright &copy;<span id="current-year"></span> Regional Price Calculator. All rights reserved.</p>
