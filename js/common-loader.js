@@ -127,6 +127,7 @@
                 <li class="mb-2"><a href="${prefix}terms-and-conditions.html" style="color: rgba(255,255,255,0.78);">Terms</a></li>
                 <li class="mb-2"><a href="${prefix}privacy.html" style="color: rgba(255,255,255,0.78);">Privacy</a></li>
                 <li class="mb-2"><a href="${prefix}cookie-policy.html" style="color: rgba(255,255,255,0.78);">Cookies</a></li>
+                <li class="mb-2"><a href="https://krepza.lt/" style="color: rgba(255,255,255,0.78);">Krepza.lt</a></li>
                 <li><a href="#" onclick="window.openCookiePreferences && window.openCookiePreferences(); return false;" style="color: rgba(255,255,255,0.78);">Cookie Settings</a></li>
               </ul>
             </div>
