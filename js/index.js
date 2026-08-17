@@ -250,6 +250,14 @@ function renderTable(prices, currency, shownCount = 5, userPrice = null, searchT
     const container = document.getElementById('result-table-container');
 
     let html = `
+    <!-- admitad.banner: k0xejf81vuc7a7d1aaaecfba9fca8a hidemyname vpn -->
+    <div class="rp-partner-banner my-3 p-3 text-center" style="background:#ffffff; border:1px solid #cbd5e1; border-radius:14px; box-shadow:0 4px 15px rgba(0,0,0,0.05);">
+        <p style="font-size:0.78rem; font-weight:700; color:#475569; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.05em;">
+            🔒 Verify Regional Store Prices & Currency Offers
+        </p>
+        <a target="_blank" rel="nofollow" href="https://codeaven.com/g/k0xejf81vuc7a7d1aaaecfba9fca8a/?i=4"><img width="336" height="280" border="0" src="https://ad.admitad.com/b/k0xejf81vuc7a7d1aaaecfba9fca8a/" alt="hidemyname vpn" style="max-width:100%; height:auto; border-radius:8px;"/></a>
+    </div>
+    <!-- /admitad.banner -->
     <div style="margin-bottom:1rem;">
         <input id="country-search-box" type="text" placeholder="Search country..." 
                class="rp-search-input">
